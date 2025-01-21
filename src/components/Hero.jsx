@@ -1,6 +1,6 @@
 export default function Hero() {
     return (
-        <div className="hero 2xl:max-w-screen-xl mx-auto font-roboto text-center h-max">
+        <div className="hero 2xl:max-w-screen-xl mx-auto font-roboto text-center">
             <div className="w-full py-36 px-8 text-white">
                 <h1 className="title text-pretty text-5xl font-bold lg:text-7xl bg-gradient-to-b from-zinc-50 to-zinc-300 bg-clip-text text-transparent py-1 w-full md:w-3/4 mx-auto">
                     As melhores vagas da região ao seu alcance.
