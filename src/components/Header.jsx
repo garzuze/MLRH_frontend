@@ -23,7 +23,7 @@ export default function Header() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
             </svg>
 
-            <div className={`absolute text-white xl:hidden top-[72px] left-0 w-full bg-black/55 backdrop-blur-md flex flex-col items-center font-roboto text-lg transform transition-transform ${isMenuOpen ? "opacity-100" : "opacity-0"}`} style={{ transtion: "transform 0.3s ease, opacity 0.3s ease" }}>
+            <div className={`absolute text-white xl:hidden top-[72px] left-0 w-full bg-black/55 backdrop-blur-md flex flex-col items-center font-roboto text-lg transform transition-transform ${isMenuOpen ? "opacity-100" : "hidden"}`} style={{ transtion: "transform 0.3s ease, opacity 0.3s ease" }}>
                 <li className="list-none w-full text-center p-4 transition-all cursor-pointer hover:font-bold">Home</li>
                 <li className="list-none w-full text-center p-4 transition-all cursor-pointer hover:font-bold">Currículo</li>
                 <li className="list-none w-full text-center p-4 transition-all cursor-pointer hover:font-bold">Vagas</li>
