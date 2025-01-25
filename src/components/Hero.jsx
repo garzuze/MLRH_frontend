@@ -1,3 +1,5 @@
+import Button from "./Button"
+
 export default function Hero() {
     return (
         <div className="hero 2xl:max-w-screen-xl mx-auto font-roboto text-center">
@@ -9,12 +11,8 @@ export default function Hero() {
                 Conectamos talentos ao sucesso com compromisso, agilidade e excelência nos serviços personalizados.
                 </p>
                 <div className="cta-buttons mt-8">
-                    <button className="m-2 p-3 rounded-md w-40 bg-zinc-100 hover:bg-zinc-300 text-black font-bold">
-                        Olhar Vagas
-                    </button>
-                    <button className="m-2 p-3 rounded-md w-40 bg-neutral-950 font-bold border-2 border-neutral-800">
-                        Mandar Currículo
-                    </button>
+                    <Button text={"Olhar Vagas"}></Button>
+                    <Button variant="dark" text={"Mandar Currículo"}></Button>
                 </div>
             </div>
         </div>
