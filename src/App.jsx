@@ -1,4 +1,5 @@
 import Curriculum from "./components/Curriculum";
+import Vacancies from "./components/Vacancies";
 import Header from "./components/Header"
 import Hero from "./components/Hero"
 import { useState } from "react"
@@ -13,6 +14,7 @@ export default function App() {
       <Header />
       <Hero />
       <Curriculum />
+      <Vacancies />
     </>
   )
 }

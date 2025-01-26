@@ -15,17 +15,15 @@ export default function Curriculum() {
                 <form className="max-w-sm md:text-left md:ml-12 lg:ml-24 mx-auto">
                     <div className="py-5">
                         <label for="cpf" className="block mb-2 text-sm font-medium text-zinc-200">CPF</label>
-                        <input type="text" id="cpf" className="bg-neutral-950 border border-neutral-800 text-zinc-200 text-sm rounded-lg focus:ring-indigo-950 focus:border-indigo-950 ring-indigo-950 block w-full p-2.5" placeholder="123.456.789-10" required />
+                        <input type="text" id="cpf" className="bg-neutral-950 border border-neutral-800 text-zinc-200 text-sm rounded-lg focus:ring-indigo-950 focus:border-indigo-950 hover:ring-indigo-950 block w-full p-2.5" placeholder="123.456.789-10" required />
                     </div>
                     <div className="mb-5">
                         <label for="bdate" className="block mb-2 text-sm font-medium text-zinc-200">Data de nascimento</label>
                         <input type="date" id="bdate" className="bg-neutral-950 border border-neutral-800 text-zinc-200 text-sm rounded-lg focus:ring-indigo-950 focus:border-indigo-950 ring-indigo-950 block w-full p-2.5" required />
                     </div>
-                    <Button text={"Mandar Currículo"} variant="dark" className={"m-0"} />
+                    <Button text={"Mandar Currículo"} variant="dark" className={"ml-0"} />
                 </form>
             </div>
-
-            
         </div>
     )
 }
