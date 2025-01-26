@@ -6,7 +6,7 @@ export default function Curriculum() {
         <div className="border-y-2 border-neutral-800 w-full font-roboto 2xl:max-w-screen-xl mx-auto">
             <div className="lg:border-l lg:border-l-neutral-700 border-dashed border-b border-b-neutral-700 w-full lg:max-w-screen-lg mx-auto">
                 <Title variant={"h2"} text={"Cadastre seu currículo"} className={"text-center md:text-left md:ml-12 lg:ml-24 pt-8"}></Title>
-                <h5 className="subtitle text-center md:text-left md:ml-12 lg:ml-24 font-normal text-lg text-gray-400 md:text-xl lg:text-2xl mt-2 mb-8">
+                <h5 className="subtitle text-center md:text-left md:ml-12 lg:ml-24 font-normal text-lg text-gray-400 md:text-xl mt-2 mb-8">
                     E tenha acesso às melhores vagas
                 </h5>
             </div>

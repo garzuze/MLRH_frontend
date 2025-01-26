@@ -12,7 +12,7 @@ export default function Vacancies() {
         { id: 8, position: "Desenvolver Jr.", activities: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque ipsa, sit quae vitae nulla harum dolor vel officiis quis quisquam quidem. Praesentium doloribus laboriosam dolorem veniam repudiandae tempore, eius dolor." }
     ]
     return (
-        <div className="bg-gradient-to-b from-neutral-950 via-neutral-900 to-neutral-800">
+        <div className="bg-gradient-to-br from-neutral-950 via-neutral-900 to-indigo-900">
             <div className="w-full font-roboto 2xl:max-w-screen-xl mx-auto">
                 <div className="w-full lg:max-w-screen-lg mx-auto">
                     <Title variant={"h2"} text={"Nossas Vagas"} className={"text-center py-8"} />

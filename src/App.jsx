@@ -3,6 +3,7 @@ import Vacancies from "./components/Vacancies";
 import Header from "./components/Header"
 import Hero from "./components/Hero"
 import { useState } from "react"
+import Services from "./components/Services";
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,6 +16,7 @@ export default function App() {
       <Hero />
       <Curriculum />
       <Vacancies />
+      <Services />
     </>
   )
 }
