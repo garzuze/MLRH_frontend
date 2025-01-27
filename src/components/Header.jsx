@@ -1,5 +1,5 @@
 import { useState } from "react"
-
+import logo from "../assets/logo.png"
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -8,7 +8,7 @@ export default function Header() {
             <header className="sticky top-0 z-50 flex justify-between items-center py-6 px-8 md:px-32 bg-transparent backdrop-blur-md font-roboto">
                 {/* Replace with real logo after rebrand */}
                 <a className="text-white font-bold hover:scale-105 transition-all">
-                    MLRH
+                    <img src={logo} className="md:h-12 h-8"/>
                 </a>
 
                 <ul className="hidden xl:flex items-center gap-12 text-base text-gray-200 font-roboto">
@@ -24,7 +24,7 @@ export default function Header() {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                 </svg>
             </header>
-            <div className={`sticky text-white xl:hidden top-[72px] left-0 w-full bg-transparent backdrop-blur-md flex flex-col items-center font-roboto transform transition-transform text-lg ${isMenuOpen ? "opacity-100" : "hidden"}`} style={{ transtion: "transform 0.3s ease, opacity 0.3s ease" }}>
+            <div className={`fixed text-white xl:hidden top-[72px] left-0 w-full bg-transparent backdrop-blur-md flex flex-col items-center font-roboto transform transition-transform text-lg ${isMenuOpen ? "opacity-100" : "hidden"}`} style={{ transtion: "transform 0.3s ease, opacity 0.3s ease" }}>
                 <li className="list-none w-full text-center p-4 transition-all cursor-pointer hover:font-bold">Home</li>
                 <li className="list-none w-full text-center p-4 transition-all cursor-pointer hover:font-bold">Currículo</li>
                 <li className="list-none w-full text-center p-4 transition-all cursor-pointer hover:font-bold">Vagas</li>
