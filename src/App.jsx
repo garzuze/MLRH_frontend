@@ -5,6 +5,7 @@ import Hero from "./components/Hero"
 import { useState } from "react"
 import Services from "./components/Services";
 import AboutUs from "./components/AboutUs";
+import Contatct from "./components/Contact";
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,7 +19,8 @@ export default function App() {
       <Curriculum />
       <Vacancies />
       <Services />
-      <AboutUs/>
+      <AboutUs />
+      <Contatct />
     </>
   )
 }

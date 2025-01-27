@@ -4,7 +4,7 @@ import Button from "./Button";
 
 export default function AboutUs() {
     return (
-        <div className="w-full font-roboto max-w-screen-lg h-96 mx-auto p-8 mb-8">
+        <div className="w-full font-roboto max-w-screen-lg mx-auto p-8 mb-12">
             <Title variant={"h2"} text={"Sobre nós"} className={"text-center md:text-left mb-8"}></Title>
             <div className="grid grid-cols-5 gap-8">
                 <div className="md:col-span-3 col-span-5 text-pretty">
