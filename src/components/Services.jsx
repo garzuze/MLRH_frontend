@@ -2,8 +2,8 @@ import Title from "./title";
 
 export default function Services() {
     return (
-        <div className="w-full border-y-2 border-neutral-700 pb-8 mb-8">
-            <div className="w-full font-roboto 2xl:max-w-screen-lg mx-auto">
+        <div className="w-full border-y-2 border-neutral-700 pb-8">
+            <div className="w-full font-roboto max-w-screen-lg mx-auto">
                 <div className="w-full lg:max-w-screen-lg mx-auto">
                     <Title variant={"h2"} text={"Nossos serviços"} className={"text-center py-8"} />
                 </div>
@@ -21,19 +21,19 @@ export default function Services() {
                             </svg>
                         </div>
                     </div>
-                    <div className="w-full col-span-3 sm:col-span-1 border-2 border-neutral-800 rounded-lg shadow-sm h-56 mx-auto p-4 relative hover:scale-105 transform transition-transform bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px] cursor-pointer">
+                    <div className="w-full col-span-3 md:col-span-1 border-2 border-neutral-800 rounded-lg shadow-sm h-56 mx-auto p-4 relative hover:scale-105 transform transition-transform bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px] cursor-pointer">
                         <Title variant={"h3"} text={"Avaliação psicológica"} className={"absolute p-8 bottom-0 left-0"} />
                         <p className="mb-3 font-normal text-zinc-300 line-clamp-3 bottom-0 absolute left-8 text-sm">
                             Lorem ipsum dolor sit amet consectetur
                         </p>
                     </div>
-                    <div className="w-full col-span-3 sm:col-span-1 border-2 border-neutral-800 rounded-lg shadow-sm h-56 mx-auto p-4 relative hover:scale-105 transform transition-transform bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px] cursor-pointer">
+                    <div className="w-full col-span-3 md:col-span-1 border-2 border-neutral-800 rounded-lg shadow-sm h-56 mx-auto p-4 relative hover:scale-105 transform transition-transform bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px] cursor-pointer">
                         <Title variant={"h3"} text={"Consultoria em RH"} className={"absolute p-8 bottom-0 left-0"} />
                         <p className="mb-3 font-normal text-zinc-300 line-clamp-3 bottom-0 absolute left-8 text-sm">
                             Lorem ipsum dolor sit amet consectetur
                         </p>
                     </div>
-                    <div className="w-full col-span-3 sm:col-span-1 border-2 border-neutral-800 rounded-lg shadow-sm h-56 mx-auto p-4 relative hover:scale-105 transform transition-transform bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px] cursor-pointer">
+                    <div className="w-full col-span-3 md:col-span-1 border-2 border-neutral-800 rounded-lg shadow-sm h-56 mx-auto p-4 relative hover:scale-105 transform transition-transform bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px] cursor-pointer">
                         <Title variant={"h3"} text={"Recolocação"} className={"absolute p-8 bottom-0 left-0"} />
                         <p className="mb-3 font-normal text-zinc-300 line-clamp-3 bottom-0 absolute left-8 text-sm">
                             Lorem ipsum dolor sit amet consectetur
