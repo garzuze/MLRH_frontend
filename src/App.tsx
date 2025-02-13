@@ -1,24 +1,17 @@
-import Curriculum from "./components/Curriculum";
-import Vacancies from "./components/Vacancies";
-import Header from "./components/Header"
-import Hero from "./components/Hero"
-import Services from "./components/Services";
-import AboutUs from "./components/AboutUs";
-import Contatct from "./components/Contact";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import React from "react";
 
-export default function App() {
-
+function App() {
   return (
-    <>
-      {/* bg from https://bg.ibelick.com/ */}
-      <div className="absolute top-0 z-[-2] h-full w-full bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
-      <Header />
-      <Hero />
-      <Curriculum />
-      <Vacancies />
-      <Services />
-      <AboutUs />
-      <Contatct />
-    </>
-  )
+    <Router basename="/MLRH_frontend">
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<LoginPage />} />
+      </Routes>
+    </Router>
+  );
 }
+
+export default App;
