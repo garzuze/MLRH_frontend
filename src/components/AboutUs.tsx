@@ -1,4 +1,4 @@
-import Title from "./title";
+import Title from "./Title";
 import logo from "../assets/logo.png"
 import Button from "./Button";
 

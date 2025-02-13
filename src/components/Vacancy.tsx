@@ -1,6 +1,7 @@
-import Title from "./title";
+import Title from "./Title";
+import { Profile } from "../types/ProfileType";
 
-export default function Vacancy({ profile }) {
+export default function Vacancy({ profile }: {profile: Profile}) {
     return (
         <div className="max-w-sm p-6 bg-neutral-950 border border-neutral-800 rounded-lg shadow-sm hover:bg-neutral-900">
             <a href="">

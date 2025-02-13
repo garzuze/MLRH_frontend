@@ -1,6 +1,6 @@
-import Title from "./title";
+import Title from "./Title";
 
-export default function Contatct() {
+export default function Contact() {
     return (
         <div className="border-t-2 border-neutral-700 bg-black p-12">
             <div className="max-w-screen-lg mx-auto grid grid-cols-3">

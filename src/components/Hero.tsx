@@ -1,5 +1,5 @@
 import Button from "./Button"
-import Title from "./title"
+import Title from "./Title"
 
 export default function Hero() {
     return (

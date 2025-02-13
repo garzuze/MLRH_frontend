@@ -2,13 +2,11 @@ import Curriculum from "./components/Curriculum";
 import Vacancies from "./components/Vacancies";
 import Header from "./components/Header"
 import Hero from "./components/Hero"
-import { useState } from "react"
 import Services from "./components/Services";
 import AboutUs from "./components/AboutUs";
 import Contatct from "./components/Contact";
 
 export default function App() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <>
