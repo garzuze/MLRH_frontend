@@ -1,5 +1,5 @@
-import Button from "./Button"
-import Title from "./Title"
+import Button from "../ui/Button"
+import Title from "../ui/Title"
 
 export default function Curriculum() {
     return (

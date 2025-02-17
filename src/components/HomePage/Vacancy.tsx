@@ -1,5 +1,5 @@
-import Title from "./Title";
-import { Profile } from "../types/ProfileType";
+import Title from "../ui/Title";
+import { Profile } from "../../types/ProfileType";
 
 export default function Vacancy({ profile }: {profile: Profile}) {
     return (

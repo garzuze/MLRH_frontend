@@ -1,6 +1,6 @@
-import Title from "./Title";
-import logo from "../assets/logo.png"
-import Button from "./Button";
+import Title from "../ui/Title";
+import logo from "../../assets/logo.png"
+import Button from "../ui/Button";
 
 export default function AboutUs() {
     return (

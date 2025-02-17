@@ -1,10 +1,10 @@
-import AboutUs from "../components/AboutUs";
-import Contact from "../components/Contact";
-import Curriculum from "../components/Curriculum";
-import Header from "../components/Header";
-import Hero from "../components/Hero";
-import Services from "../components/Services";
-import Vacancies from "../components/Vacancies";
+import AboutUs from "../components/HomePage/AboutUs";
+import Contact from "../components/HomePage/Contact";
+import Curriculum from "../components/HomePage/Curriculum";
+import Header from "../components/HomePage/Header";
+import Hero from "../components/HomePage/Hero";
+import Services from "../components/HomePage/Services";
+import Vacancies from "../components/HomePage/Vacancies";
 
 export default function HomePage() {
 

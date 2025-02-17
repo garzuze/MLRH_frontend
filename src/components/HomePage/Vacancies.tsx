@@ -1,4 +1,4 @@
-import Title from "./Title"
+import Title from "../ui/Title"
 import Vacancy from "./Vacancy"
 export default function Vacancies() {
     const profiles = [
