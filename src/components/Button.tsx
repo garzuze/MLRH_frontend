@@ -1,4 +1,10 @@
-export default function Button({ variant = 'default', text, className, ...props }: {variant?: 'default' | 'dark', text: string, className?: string}) {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    variant?: "default" | "dark";
+    text: string;
+  }
+  
+
+export default function Button({ variant = 'default', text, className, ...props }: ButtonProps) {
     const variants = {
         default: 'bg-zinc-100 hover:bg-zinc-300 text-black',
         dark: 'bg-neutral-950 border-2 border-neutral-800 text-zinc-50'

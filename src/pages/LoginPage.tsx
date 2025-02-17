@@ -1,8 +1,24 @@
+import { useState } from "react";
 import curitibaImage from "../assets/curitiba.jpg"
 import logo from "../assets/logo.png"
 import Button from "../components/Button";
+import { login } from "../hooks/useAuth";
 
 export default function LoginPage() {
+
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const success = await login(email, password);
+
+    if (success) {
+      window.location.href = "/MLRH_frontend/dashboard";
+    } else {
+      alert("Credenciais inválidas!")
+    }
+  }
 
   return (
     <main className="w-full mx-auto min-h-screen grid grid-cols-4">
@@ -16,14 +32,14 @@ export default function LoginPage() {
               <h1 className="text-xl font-bold leading-tight tracking-tight text-zinc-50 md:text-2xl">
                 Entre na sua conta
               </h1>
-              <form className="space-y-4 md:space-y-6">
+              <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
                 <div>
                   <label className="block mb-2 text-sm font-medium text-zinc-300">Email</label>
-                  <input type="email" name="email" id="email" className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 block w-full p-2.5" placeholder="fulano@email.com" />
+                  <input type="email" name="email" id="email" className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 block w-full p-2.5" placeholder="fulano@email.com" value={email} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}/>
                 </div>
                 <div>
                   <label className="block mb-2 text-sm font-medium text-zinc-300">Senha</label>
-                  <input type="password" name="password" id="password" placeholder="••••••••" className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 block w-full p-2.5" />
+                  <input type="password" name="password" id="password" placeholder="••••••••" className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 block w-full p-2.5" value={password} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}/>
                 </div>
                 <div className="flex items-center justify-between">
                   <a className="text-sm font-medium hover:underline text-zinc-400">Esqueceu a senha?</a>
