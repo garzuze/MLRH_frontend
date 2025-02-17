@@ -8,7 +8,7 @@ const client = axios.create({
 export const login = async (email: string, password: string) => {
     try {
         const response: AxiosResponse = await client.post("/api/token/", {
-            "email": email,
+            "username": email,
             "password": password,
         })
         const tokenResponse: tokenResponse = response.data;
