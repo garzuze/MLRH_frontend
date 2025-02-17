@@ -2,9 +2,11 @@ import { useState } from "react";
 import curitibaImage from "../assets/curitiba.jpg"
 import logo from "../assets/logo.png"
 import Button from "../components/ui/Button";
-import { login } from "../hooks/useAuth";
+import { useAuth } from "../context/AuthContext";
 
 export default function LoginPage() {
+
+  const { login } = useAuth();
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");

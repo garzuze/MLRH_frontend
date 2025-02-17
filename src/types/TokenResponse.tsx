@@ -1,4 +1,4 @@
-interface mlrhUser {
+export interface mlrhUser {
     id: number,
     email: string,
     first_name: string,
