@@ -1,8 +1,10 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
-import Dashboard from "./pages/Dashboard";
 import PrivateRoute from "./components/PrivateRoute";
+import AdminPanel from "./pages/AdminPanel";
+import DashboardPanel from "./components/DashboardPanel/DashboardPanel";
+import Sales from "./pages/Sales";
 
 function App() {
   return (
@@ -11,7 +13,11 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route element={<PrivateRoute />}>
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/admin" element={<AdminPanel />}>
+            <Route index element={<Navigate to="/admin/dashboard" />} />
+            <Route path="dashboard" element={<DashboardPanel />}></Route>
+            <Route path="vendas" element={<Sales />}></Route>
+          </Route>
         </Route>
       </Routes>
     </Router>
