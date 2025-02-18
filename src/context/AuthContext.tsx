@@ -6,7 +6,7 @@ const client = axios.create({
     baseURL: "http://127.0.0.1:8000",
 });
 
-interface AuthContextType{
+interface AuthContextType {
     user: mlrhUser | null;
     token: string | null;
     login: (username: string, password: string) => Promise<boolean>;
@@ -16,7 +16,7 @@ interface AuthContextType{
 
 const AuthContext = createContext<AuthContextType | null>(null)
 
-export function AuthProvider({children}: {children: ReactNode}){
+export function AuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<mlrhUser | null>(null);
     const [token, setToken] = useState<string | null>(localStorage.getItem("access_token"));
     const [refreshToken, setRefreshToken] = useState<string | null>(localStorage.getItem("refresh_token"));
@@ -36,7 +36,7 @@ export function AuthProvider({children}: {children: ReactNode}){
             const response: AxiosResponse = await client.post("/api/token/refresh/", {
                 refresh: refreshToken,
             });
-            
+
             const newAccessToken: string = response.data.access;
             setToken(newAccessToken);
             localStorage.setItem("access_token", newAccessToken);
@@ -56,30 +56,30 @@ export function AuthProvider({children}: {children: ReactNode}){
     }, [refreshToken]);
 
     const login = async (email: string, password: string) => {
-            try {
-                const response: AxiosResponse = await client.post("/api/token/", {
-                    "username": email,
-                    "password": password,
-                })
-                const tokenResponse: tokenResponse = response.data;
-                const { access, refresh, user } = tokenResponse;
+        try {
+            const response: AxiosResponse = await client.post("/api/token/", {
+                "username": email,
+                "password": password,
+            })
+            const tokenResponse: tokenResponse = response.data;
+            const { access, refresh, user } = tokenResponse;
 
-                setToken(access);
-                setRefreshToken(refresh);
-                setUser(user);
+            setToken(access);
+            setRefreshToken(refresh);
+            setUser(user);
 
-                localStorage.setItem("access_token", access);
-                localStorage.setItem("refresh_token", refresh);
-                localStorage.setItem("user", JSON.stringify(user));
+            localStorage.setItem("access_token", access);
+            localStorage.setItem("refresh_token", refresh);
+            localStorage.setItem("user", JSON.stringify(user));
 
-                return true;
-            } catch (error) {
-                console.error("Erro ao fazer login ;(", error);
-                return false;
-            }
-            
+            return true;
+        } catch (error) {
+            console.error("Erro ao fazer login ;(", error);
+            return false;
+        }
+
     };
-    
+
     const logout = () => {
         setToken(null);
         setRefreshToken(null);
