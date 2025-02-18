@@ -4,7 +4,7 @@ import LoginPage from "./pages/LoginPage";
 import PrivateRoute from "./components/PrivateRoute";
 import AdminPanel from "./pages/AdminPanel";
 import DashboardPanel from "./components/DashboardPanel/DashboardPanel";
-import Sales from "./pages/Sales";
+import SalesPage from "./pages/SalesPage";
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
           <Route path="/admin" element={<AdminPanel />}>
             <Route index element={<Navigate to="/admin/dashboard" />} />
             <Route path="dashboard" element={<DashboardPanel />}></Route>
-            <Route path="vendas" element={<Sales />}></Route>
+            <Route path="vendas" element={<SalesPage />}></Route>
           </Route>
         </Route>
       </Routes>
