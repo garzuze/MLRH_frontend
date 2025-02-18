@@ -1,6 +1,10 @@
+import { Key } from "react";
+import { useEconomicActivities } from "../../services/fetchEconomicActivities";
 import Button from "../ui/Button";
 
 export default function ClientForm() {
+    const { economicActivities, loading } = useEconomicActivities();
+
     function handleSubmit() {
 
     }
@@ -65,7 +69,13 @@ export default function ClientForm() {
             </div>
 
             <select name="economic_activity" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full">
-                <option>Atividade econômica</option>
+                <option value="">Atividade econômica</option>
+                {loading ? (<option disabled>Carregando...</option>)
+                    : (
+                        economicActivities.map((activity) => (
+                            <option key={activity.id} value={activity.id}>{activity.title}</option>
+                        ))
+                )}
             </select>
             <select name="benefits" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full">
                 <option>Benefícios</option>
