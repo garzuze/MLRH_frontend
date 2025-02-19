@@ -1,13 +1,18 @@
-import { FormEvent, Key } from "react";
+import { FormEvent, Key, useState } from "react";
 import { useEconomicActivities } from "../../services/useEconomicActivities";
 import Button from "../ui/Button";
 import { useBenefits } from "../../services/useBenefits";
 import axios, { AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from "axios";
 import { useAuth } from "../../context/AuthContext";
+import Snackbar from "../ui/Snackbar";
 
 export default function ClientForm() {
     const { economicActivities, loadingEconomicActivities } = useEconomicActivities();
     const { benefits, loadingBenefits } = useBenefits();
+
+    const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState("");
+
     const { token } = useAuth();
     const states: Record<string, string> = {
         'AC': 'Acre',
@@ -58,104 +63,115 @@ export default function ClientForm() {
 
                 const response: AxiosResponse = await client.post("/clients/clients/", formData, config);
                 if (response.status === 201) {
-                    alert("Cliente criado!!")
+                    setSnackbarMessage("Cliente criado com sucesso!")
+                    setIsSnackbarOpen(true);
+                } else {
+                    setSnackbarMessage("Ops... Alguma coisa deu errado.")
+                    setIsSnackbarOpen(true);
                 }
             } catch (error) {
                 console.log(error)
-            } 
+            }
         }
         createClient();
     }
     return (
-        <form onSubmit={handleSubmit} method="post">
-            <input
-                type="text"
-                placeholder="Razão Social"
-                className="placeholder:text-sm text-sm border-b border-stone-300 w-full focus:outline-none focus:border-stone-700"
-                name="corporate_name"
-            />
-            <input
-                type="text"
-                placeholder="Nome fantasia"
-                className=" placeholder:text-sm text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700"
-                name="trade_name"
-            />
-            <div className="w-full flex gap-x-4">
+        <>
+            <form onSubmit={handleSubmit} method="post">
                 <input
                     type="text"
-                    placeholder="CNPJ"
-                    className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
-                    name="cnpj"
+                    placeholder="Razão Social"
+                    className="placeholder:text-sm text-sm border-b border-stone-300 w-full focus:outline-none focus:border-stone-700"
+                    name="corporate_name"
                 />
                 <input
                     type="text"
-                    placeholder="Inscrição Estadual"
-                    className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
-                    name="state_registration"
+                    placeholder="Nome fantasia"
+                    className=" placeholder:text-sm text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700"
+                    name="trade_name"
                 />
-            </div>
-            <div className="w-full flex gap-x-4">
-                <input
-                    type="int"
-                    placeholder="Número de empregados"
-                    className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
-                    name="number_of_employees"
-                />
-                <input
-                    type="text"
-                    placeholder="CEP"
-                    className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
-                    name="cep"
-                />
-            </div>
-            <div className="w-full flex gap-x-4">
-                <input
-                    type="text"
-                    placeholder="Endereço"
-                    className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
-                    name="address"
-                />
-                <input
-                    type="text"
-                    placeholder="Cidade"
-                    className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
-                    name="city"
-                />
-            </div>
-            <div className="w-full flex gap-x-4">
-                <input
-                    type="text"
-                    placeholder="Bairro"
-                    className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
-                    name="neighborhood"
-                />
-                <select name="state" defaultValue={""} className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2">
-                    <option disabled value={""}>Estado</option>
-                    {Object.keys(states).map((id, _) => (
-                        <option key={id} value={id}>{states[id]}</option>
-                    ))}
-                </select>
-            </div>
+                <div className="w-full flex gap-x-4">
+                    <input
+                        type="text"
+                        placeholder="CNPJ"
+                        className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
+                        name="cnpj"
+                    />
+                    <input
+                        type="text"
+                        placeholder="Inscrição Estadual"
+                        className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
+                        name="state_registration"
+                    />
+                </div>
+                <div className="w-full flex gap-x-4">
+                    <input
+                        type="int"
+                        placeholder="Número de empregados"
+                        className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
+                        name="number_of_employees"
+                    />
+                    <input
+                        type="text"
+                        placeholder="CEP"
+                        className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
+                        name="cep"
+                    />
+                </div>
+                <div className="w-full flex gap-x-4">
+                    <input
+                        type="text"
+                        placeholder="Endereço"
+                        className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
+                        name="address"
+                    />
+                    <input
+                        type="text"
+                        placeholder="Cidade"
+                        className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
+                        name="city"
+                    />
+                </div>
+                <div className="w-full flex gap-x-4">
+                    <input
+                        type="text"
+                        placeholder="Bairro"
+                        className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
+                        name="neighborhood"
+                    />
+                    <select name="state" defaultValue={""} className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2">
+                        <option disabled value={""}>Estado</option>
+                        {Object.keys(states).map((id, _) => (
+                            <option key={id} value={id}>{states[id]}</option>
+                        ))}
+                    </select>
+                </div>
 
-            <select name="economic_activity" defaultValue={""} className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full">
-                <option value="" disabled>Atividade econômica</option>
-                {loadingEconomicActivities ? (<option disabled>Carregando...</option>)
-                    : (
-                        economicActivities.map((activity) => (
-                            <option key={activity.id} value={activity.id}>{activity.title}</option>
-                        ))
-                    )}
-            </select>
-            <select multiple={true} defaultValue={[""]} name="benefits" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full">
-                <option value="" disabled >Benefícios</option>
-                {loadingBenefits ? (<option disabled>Carregando...</option>)
-                    : (
-                        benefits.map((benefit) => (
-                            <option key={benefit.id} value={benefit.id}>{benefit.benefit}</option>
-                        ))
-                    )}
-            </select>
-            <Button text={"Cadastrar cliente"} variant="dark" className="w-full mx-0 p-2 text-sm mt-4"></Button>
-        </form>
+                <select name="economic_activity" defaultValue={""} className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full">
+                    <option value="" disabled>Atividade econômica</option>
+                    {loadingEconomicActivities ? (<option disabled>Carregando...</option>)
+                        : (
+                            economicActivities.map((activity) => (
+                                <option key={activity.id} value={activity.id}>{activity.title}</option>
+                            ))
+                        )}
+                </select>
+                <select multiple={true} defaultValue={[""]} name="benefits" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full">
+                    <option value="" disabled >Benefícios</option>
+                    {loadingBenefits ? (<option disabled>Carregando...</option>)
+                        : (
+                            benefits.map((benefit) => (
+                                <option key={benefit.id} value={benefit.id}>{benefit.benefit}</option>
+                            ))
+                        )}
+                </select>
+                <Button text={"Cadastrar cliente"} variant="dark" className="w-full mx-0 p-2 text-sm mt-4"></Button>
+            </form>
+            <Snackbar
+                message={snackbarMessage}
+                isOpen={isSnackbarOpen}
+                onClose={() => setIsSnackbarOpen(false)}
+            />
+        </>
     )
 }
