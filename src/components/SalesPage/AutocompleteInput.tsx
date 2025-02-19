@@ -9,9 +9,9 @@ interface Client {
 
 const AutocompleteInput = () => {
     const [query, setQuery] = useState("");
+    const [client, setClient] = useState<Client | null>(null)
     const [results, setResults] = useState<Client[]>([]);
     const [selectedIndex, setSelectedIndex] = useState(-1);
-    const [isSelecting, setIsSelecting] = useState(false);
 
     const { token } = useAuth();
 
@@ -22,13 +22,13 @@ const AutocompleteInput = () => {
         }
 
         const fetchClients = async () => {
-            if (!query || isSelecting) return;
+            if (!query || client) return;
             const config: AxiosRequestConfig = {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 } as RawAxiosRequestHeaders
             };
-            
+
             try {
                 const response = await axios.get(`http://127.0.0.1:8000/clients/search_clients?q=${query}`, config)
                 setResults(response.data);
@@ -44,12 +44,9 @@ const AutocompleteInput = () => {
     }, [query])
 
     const handleSelect = (client: Client) => {
-        setIsSelecting(true);
+        setClient(client);
         setQuery(client.corporate_name);
         setResults([]);
-        setTimeout(() => {
-            setIsSelecting(false)
-        }, 100);
     }
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -57,19 +54,21 @@ const AutocompleteInput = () => {
             setSelectedIndex((prev) => Math.min(prev + 1, results.length - 1))
         } else if (event.key === "ArrowUp") {
             setSelectedIndex((prev) => Math.min(prev - 1, 0))
-        } else if (event.key === "Enter" && selectedIndex >= 0) {
-            if (results.length > 0) {
-                handleSelect(results[0]);
+        } else if (event.key === "Enter") {
+            event.preventDefault();
+            if (results[selectedIndex] && selectedIndex >= 0) {
+                handleSelect(results[selectedIndex]);
             }
         }
     }
 
     return (
         <div className="relative">
+            <input type="hidden" name="client" value={client?.id ?? ""}></input>
             <input
                 type="text"
                 value={query}
-                onChange={(e) => setQuery(e.target.value)}
+                onChange={(e) => { setQuery(e.target.value);  setClient(null)}}
                 onKeyDown={handleKeyDown}
                 placeholder="Cliente"
                 className="placeholder:text-sm text-sm border-b border-stone-300 w-full focus:outline-none focus:border-stone-700"
@@ -80,7 +79,9 @@ const AutocompleteInput = () => {
                         <li
                             key={client.id}
                             className={`p-2 cursor-pointer ${index === selectedIndex ? "bg-stone-200" : ""}`}
-                            onClick={() => { setQuery(client.corporate_name); setResults([]) }}
+                            onClick={() => {
+                                setQuery(client.corporate_name); setResults([]); handleSelect(client)
+                            }}
                         >
                             {client.corporate_name}
                         </li>
