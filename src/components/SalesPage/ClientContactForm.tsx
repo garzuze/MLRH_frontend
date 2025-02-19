@@ -1,15 +1,11 @@
 import Button from "../ui/Button";
+import AutocompleteInput from "./AutocompleteInput";
 
 export default function ClientContactForm() {
     return (
         <>
-            <form method="post">
-                <input
-                    type="text"
-                    placeholder="Cliente"
-                    className="placeholder:text-sm text-sm border-b border-stone-300 w-full focus:outline-none focus:border-stone-700"
-                    name="client"
-                />
+            <form method="post" onSubmit={(e) => e.preventDefault()}>
+                <AutocompleteInput />
                 <input
                     type="text"
                     placeholder="Nome"
