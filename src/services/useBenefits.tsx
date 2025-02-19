@@ -2,18 +2,18 @@ import axios, { AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
 
-export interface economicActivityType{
+export interface benefitType{
     id: number;
-    title: string;
+    benefit: string;
 }
 
-export const useEconomicActivities = () => {
+export const useBenefits = () => {
     const { token } = useAuth();
-    const [economicActivities, setEconomicActivities] = useState<economicActivityType[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
+    const [benefits, setBenefits] = useState<benefitType[]>([]);
+    const [loadingBenefits, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        const fetchEconomicActivities = async () => {
+        const fetchBenefits = async () => {
             try {
                 const client = axios.create({
                     baseURL: "http://127.0.0.1:8000/",
@@ -25,16 +25,16 @@ export const useEconomicActivities = () => {
                     } as RawAxiosRequestHeaders,
                 };
 
-                const response: AxiosResponse = await client.get("/clients/economic_activity/", config);
-                setEconomicActivities(response.data);
+                const response: AxiosResponse = await client.get("/clients/benefits/", config);
+                setBenefits(response.data);
             } catch (error) {
                 console.log(error)
             } finally {
                 setLoading(false);
             }
         }
-        fetchEconomicActivities();
+        fetchBenefits();
     }, [token])
 
-    return { economicActivities, loading };
+    return { benefits, loadingBenefits };
 }

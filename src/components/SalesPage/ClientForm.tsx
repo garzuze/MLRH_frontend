@@ -1,9 +1,11 @@
 import { Key } from "react";
-import { useEconomicActivities } from "../../services/fetchEconomicActivities";
+import { useEconomicActivities } from "../../services/useEconomicActivities";
 import Button from "../ui/Button";
+import { useBenefits } from "../../services/useBenefits";
 
 export default function ClientForm() {
-    const { economicActivities, loading } = useEconomicActivities();
+    const { economicActivities, loadingEconomicActivities } = useEconomicActivities();
+    const { benefits, loadingBenefits } = useBenefits();
 
     function handleSubmit() {
 
@@ -69,16 +71,22 @@ export default function ClientForm() {
             </div>
 
             <select name="economic_activity" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full">
-                <option value="">Atividade econômica</option>
-                {loading ? (<option disabled>Carregando...</option>)
+                <option value="" disabled selected={true}>Atividade econômica</option>
+                {loadingEconomicActivities ? (<option disabled>Carregando...</option>)
                     : (
                         economicActivities.map((activity) => (
                             <option key={activity.id} value={activity.id}>{activity.title}</option>
                         ))
                 )}
             </select>
-            <select name="benefits" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full">
-                <option>Benefícios</option>
+            <select multiple name="benefits" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full">
+                <option value="" disabled selected={true}>Benefícios</option>
+                {loadingBenefits ? (<option disabled>Carregando...</option>)
+                    : (
+                        benefits.map((benefit) => (
+                            <option key={benefit.id} value={benefit.id}>{benefit.benefit}</option>
+                        ))
+                )}
             </select>
             <Button text={"Cadastrar cliente"} variant="dark" className="w-full mx-0 p-2 text-sm mt-4"></Button>
         </form>
