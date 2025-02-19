@@ -1,12 +1,15 @@
-import { Key } from "react";
+import { FormEvent, Key } from "react";
 import { useEconomicActivities } from "../../services/useEconomicActivities";
 import Button from "../ui/Button";
 import { useBenefits } from "../../services/useBenefits";
+import axios, { AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from "axios";
+import { useAuth } from "../../context/AuthContext";
 
 export default function ClientForm() {
     const { economicActivities, loadingEconomicActivities } = useEconomicActivities();
     const { benefits, loadingBenefits } = useBenefits();
-    const states:Record<string, string> = {
+    const { token } = useAuth();
+    const states: Record<string, string> = {
         'AC': 'Acre',
         'AL': 'Alagoas',
         'AM': 'Amazonas',
@@ -35,11 +38,36 @@ export default function ClientForm() {
         'TO': 'Tocantins',
     }
 
-    function handleSubmit() {
+    function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        let data: Record<string, FormDataEntryValue> = {}
+        formData.forEach((value, key) => data[key] = value);
 
+        const createClient = async () => {
+            try {
+                const client = axios.create({
+                    baseURL: "http://127.0.0.1:8000/",
+                });
+
+                const config: AxiosRequestConfig = {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    } as RawAxiosRequestHeaders
+                };
+
+                const response: AxiosResponse = await client.post("/clients/clients/", formData, config);
+                if (response.status === 201) {
+                    alert("Cliente criado!!")
+                }
+            } catch (error) {
+                console.log(error)
+            } 
+        }
+        createClient();
     }
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} method="post">
             <input
                 type="text"
                 placeholder="Razão Social"
@@ -63,7 +91,7 @@ export default function ClientForm() {
                     type="text"
                     placeholder="Inscrição Estadual"
                     className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
-                    name="inscricao_estadual"
+                    name="state_registration"
                 />
             </div>
             <div className="w-full flex gap-x-4">
@@ -80,12 +108,20 @@ export default function ClientForm() {
                     name="cep"
                 />
             </div>
-            <input
-                type="text"
-                placeholder="Endereço"
-                className=" placeholder:text-sm text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700"
-                name="address"
-            />
+            <div className="w-full flex gap-x-4">
+                <input
+                    type="text"
+                    placeholder="Endereço"
+                    className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
+                    name="address"
+                />
+                <input
+                    type="text"
+                    placeholder="Cidade"
+                    className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
+                    name="city"
+                />
+            </div>
             <div className="w-full flex gap-x-4">
                 <input
                     type="text"
@@ -93,31 +129,31 @@ export default function ClientForm() {
                     className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
                     name="neighborhood"
                 />
-                <select name="state" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2">
-                    <option disabled selected>Estado</option>
+                <select name="state" defaultValue={""} className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2">
+                    <option disabled value={""}>Estado</option>
                     {Object.keys(states).map((id, _) => (
                         <option key={id} value={id}>{states[id]}</option>
                     ))}
                 </select>
             </div>
 
-            <select name="economic_activity" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full">
-                <option value="" disabled selected={true}>Atividade econômica</option>
+            <select name="economic_activity" defaultValue={""} className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full">
+                <option value="" disabled>Atividade econômica</option>
                 {loadingEconomicActivities ? (<option disabled>Carregando...</option>)
                     : (
                         economicActivities.map((activity) => (
                             <option key={activity.id} value={activity.id}>{activity.title}</option>
                         ))
-                )}
+                    )}
             </select>
-            <select multiple name="benefits" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full">
-                <option value="" disabled selected={true}>Benefícios</option>
+            <select multiple={true} defaultValue={[""]} name="benefits" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full">
+                <option value="" disabled >Benefícios</option>
                 {loadingBenefits ? (<option disabled>Carregando...</option>)
                     : (
                         benefits.map((benefit) => (
                             <option key={benefit.id} value={benefit.id}>{benefit.benefit}</option>
                         ))
-                )}
+                    )}
             </select>
             <Button text={"Cadastrar cliente"} variant="dark" className="w-full mx-0 p-2 text-sm mt-4"></Button>
         </form>

@@ -14,7 +14,7 @@ export default function RouteSelect() {
     return (
         <div className="space-y-1">
             {routes.map((route) => {
-                return <Route Icon={route.icon} title={route.title} destination={route.destination} />;
+                return <Route Icon={route.icon} title={route.title} destination={route.destination} key={route.destination} />;
             })}
         </div>
     )
