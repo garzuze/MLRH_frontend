@@ -6,6 +6,34 @@ import { useBenefits } from "../../services/useBenefits";
 export default function ClientForm() {
     const { economicActivities, loadingEconomicActivities } = useEconomicActivities();
     const { benefits, loadingBenefits } = useBenefits();
+    const states:Record<string, string> = {
+        'AC': 'Acre',
+        'AL': 'Alagoas',
+        'AM': 'Amazonas',
+        'BA': 'Bahia',
+        'CE': 'Ceará',
+        'DF': 'Distrito Federal',
+        'ES': 'Espírito Santo',
+        'GO': 'Goiás',
+        'MA': 'Maranhão',
+        'MT': 'Mato Grosso',
+        'MS': 'Mato Grosso do Sul',
+        'MG': 'Minas Gerais',
+        'PA': 'Pará',
+        'PB': 'Paraíba',
+        'PR': 'Paraná',
+        'PE': 'Pernambuco',
+        'PI': 'Piauí',
+        'RJ': 'Rio de Janeiro',
+        'RN': 'Rio Grande do Norte',
+        'RS': 'Rio Grande do Sul',
+        'RO': 'Rondônia',
+        'RR': 'Roraima',
+        'SC': 'Santa Catarina',
+        'SP': 'São Paulo',
+        'SE': 'Sergipe',
+        'TO': 'Tocantins',
+    }
 
     function handleSubmit() {
 
@@ -66,7 +94,10 @@ export default function ClientForm() {
                     name="neighborhood"
                 />
                 <select name="state" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2">
-                    <option>Estado</option>
+                    <option disabled selected>Estado</option>
+                    {Object.keys(states).map((id, _) => (
+                        <option key={id} value={id}>{states[id]}</option>
+                    ))}
                 </select>
             </div>
 
