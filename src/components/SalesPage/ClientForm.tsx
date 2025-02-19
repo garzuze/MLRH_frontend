@@ -1,4 +1,4 @@
-import { FormEvent, Key, useState } from "react";
+import { useState } from "react";
 import { useEconomicActivities } from "../../services/useEconomicActivities";
 import Button from "../ui/Button";
 import { useBenefits } from "../../services/useBenefits";
@@ -46,8 +46,6 @@ export default function ClientForm() {
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
-        let data: Record<string, FormDataEntryValue> = {}
-        formData.forEach((value, key) => data[key] = value);
 
         const createClient = async () => {
             try {

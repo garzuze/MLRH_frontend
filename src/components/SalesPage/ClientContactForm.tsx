@@ -1,10 +1,54 @@
+import { useState } from "react";
+import { useAuth } from "../../context/AuthContext";
+
+import axios, { AxiosRequestConfig, RawAxiosRequestHeaders, AxiosResponse } from "axios";
 import Button from "../ui/Button";
 import AutocompleteInput from "./AutocompleteInput";
+import Snackbar from "../ui/Snackbar";
 
 export default function ClientContactForm() {
+
+    const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState("");
+
+    const { token } = useAuth();
+
+    function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+
+        const createClientContact = async () => {
+            try {
+                const client = axios.create({
+                    baseURL: "http://127.0.0.1:8000/",
+                });
+
+                const config: AxiosRequestConfig = {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    } as RawAxiosRequestHeaders
+                };
+
+                const response: AxiosResponse = await client.post("/clients/client_contact/", formData, config);
+                if (response.status === 201) {
+                    setSnackbarMessage("Contato criado com sucesso!")
+                    setIsSnackbarOpen(true);
+                } else {
+                    setSnackbarMessage("Ops... Alguma coisa deu errado.")
+                    setIsSnackbarOpen(true);
+                }
+            } catch (error) {
+                console.log(error)
+                setSnackbarMessage("Ops... Alguma coisa deu errado.")
+                setIsSnackbarOpen(true);
+            }
+        }
+        createClientContact();
+    }
+
     return (
         <>
-            <form method="post" onSubmit={(e) => e.preventDefault()}>
+            <form method="post" onSubmit={handleSubmit}>
                 <AutocompleteInput />
                 <input
                     type="text"
@@ -39,6 +83,11 @@ export default function ClientContactForm() {
 
                 <Button text={"Cadastrar contato"} variant="dark" className="w-full mx-0 p-2 text-sm mt-4"></Button>
             </form>
+            <Snackbar
+                message={snackbarMessage}
+                isOpen={isSnackbarOpen}
+                onClose={() => setIsSnackbarOpen(false)}
+            />
         </>
     )
 }
