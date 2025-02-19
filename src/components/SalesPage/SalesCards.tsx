@@ -1,10 +1,11 @@
 import { ReactNode } from "react";
 import ClientForm from "./ClientForm";
+import ClientContactForm from "./ClientContactForm";
 
 export default function SalesCards() {
     return <>
         <Card title="Cadastrar cliente" form={ClientForm} variant="1/3" />
-        <Card title="Cadastrar Contato do cliente" form={ClientForm} variant="1/3" />
+        <Card title="Cadastrar Contato do cliente" form={ClientContactForm} variant="1/3" />
         <Card title="Definir valor dos serviços" form={ClientForm} variant="1/3"/>
     </>
 }
