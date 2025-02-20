@@ -55,18 +55,21 @@ export default function ClientContactForm() {
                     placeholder="Nome"
                     className=" placeholder:text-sm text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700"
                     name="name"
+                    required
                 />
                 <input
                     type="text"
                     placeholder="Departamento"
                     className=" placeholder:text-sm text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700"
                     name="department"
+                    required
                 />
                 <input
                     type="email"
                     placeholder="Email"
                     className=" placeholder:text-sm text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700"
                     name="email"
+                    required
                 />
                 <div className="w-full flex gap-x-4">
                     <input

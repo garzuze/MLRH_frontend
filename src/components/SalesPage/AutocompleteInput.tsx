@@ -73,6 +73,7 @@ const AutocompleteInput = () => {
                 onKeyDown={handleKeyDown}
                 placeholder="Cliente"
                 className="placeholder:text-sm text-sm border-b border-stone-300 w-full focus:outline-none focus:border-stone-700"
+                required
             />
             {results.length > 0 && (
                 <ul className="absolute w-full border border-stone-300 bg-white rounded text-xs mt-1 max-h-40 overflow-y-auto">

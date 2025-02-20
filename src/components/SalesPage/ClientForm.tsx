@@ -85,12 +85,14 @@ export default function ClientForm() {
                     placeholder="Razão Social"
                     className="placeholder:text-sm text-sm border-b border-stone-300 w-full focus:outline-none focus:border-stone-700"
                     name="corporate_name"
+                    required
                 />
                 <input
                     type="text"
                     placeholder="Nome fantasia"
                     className=" placeholder:text-sm text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700"
                     name="trade_name"
+                    required
                 />
                 <div className="w-full flex gap-x-4">
                     <input
@@ -98,6 +100,7 @@ export default function ClientForm() {
                         placeholder="CNPJ"
                         className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
                         name="cnpj"
+                        required
                     />
                     <input
                         type="text"
@@ -126,12 +129,14 @@ export default function ClientForm() {
                         placeholder="Endereço"
                         className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
                         name="address"
+                        required
                     />
                     <input
                         type="text"
                         placeholder="Cidade"
                         className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
                         name="city"
+                        required
                     />
                 </div>
                 <div className="w-full flex gap-x-4">
@@ -140,8 +145,9 @@ export default function ClientForm() {
                         placeholder="Bairro"
                         className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
                         name="neighborhood"
+                        required
                     />
-                    <select name="state" defaultValue={""} className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2">
+                    <select name="state" defaultValue={""} className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2" required>
                         <option disabled value={""}>Estado</option>
                         {Object.keys(states).map((id, _) => (
                             <option key={id} value={id}>{states[id]}</option>
@@ -149,7 +155,7 @@ export default function ClientForm() {
                     </select>
                 </div>
 
-                <select name="economic_activity" defaultValue={""} className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full">
+                <select name="economic_activity" defaultValue={""} className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" required>
                     <option value="" disabled>Atividade econômica</option>
                     {loadingEconomicActivities ? (<option disabled>Carregando...</option>)
                         : (
