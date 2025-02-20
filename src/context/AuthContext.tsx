@@ -12,22 +12,24 @@ interface AuthContextType {
     login: (username: string, password: string) => Promise<boolean>;
     logout: () => void;
     isAuthenticated: boolean;
+    loading: boolean;
 }
 
-const AuthContext = createContext<AuthContextType | null>(null)
+const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<mlrhUser | null>(null);
     const [token, setToken] = useState<string | null>(localStorage.getItem("access_token"));
     const [refreshToken, setRefreshToken] = useState<string | null>(localStorage.getItem("refresh_token"));
+    const [loading, setLoading] = useState<boolean>(true);
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
         if (storedUser) {
             setUser(JSON.parse(storedUser) as mlrhUser);
         }
-
-    }, [])
+    }, []);
 
     const refreshAccessToken = async () => {
         if (!refreshToken) return;
@@ -50,7 +52,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     useEffect(() => {
         const interval = setInterval(() => {
             refreshAccessToken();
-        }, 60 * 60 * 1000);
+        }, 30 * 60 * 1000);
 
         return () => clearInterval(interval);
     }, [refreshToken]);
@@ -58,15 +60,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const login = async (email: string, password: string) => {
         try {
             const response: AxiosResponse = await client.post("/api/token/", {
-                "username": email,
-                "password": password,
-            })
+                username: email,
+                password: password,
+            });
+
             const tokenResponse: tokenResponse = response.data;
             const { access, refresh, user } = tokenResponse;
 
             setToken(access);
             setRefreshToken(refresh);
             setUser(user);
+
 
             localStorage.setItem("access_token", access);
             localStorage.setItem("refresh_token", refresh);
@@ -77,22 +81,51 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             console.error("Erro ao fazer login ;(", error);
             return false;
         }
-
     };
 
     const logout = () => {
         setToken(null);
         setRefreshToken(null);
         setUser(null);
+
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
         localStorage.removeItem("user");
         window.location.href = "/MLRH_frontend/login";
     };
 
-    return <AuthContext.Provider value={{ user, token, login, logout, isAuthenticated: !!token }}>
-        {children}
-    </AuthContext.Provider>
+    useEffect(() => {
+        const isTokenValid = async () => {
+            if (!token) {
+                setIsAuthenticated(false);
+                setLoading(false);
+                return;
+            }
+    
+            try {
+                const response: AxiosResponse = await client.post("/api/token/verify/", {
+                    token: token,
+                });
+
+                if (response.status == 200) {
+                    setIsAuthenticated(true);
+                } else {
+                    setIsAuthenticated(false);
+                }
+            } catch (error) {
+                console.error("Token verification failed", error);
+                setIsAuthenticated(false);
+            }
+            setLoading(false); 
+        };
+        isTokenValid();
+    }, [token]);
+
+    return (
+        <AuthContext.Provider value={{ user, token, login, logout, isAuthenticated, loading }}>
+            {children}
+        </AuthContext.Provider>
+    );
 }
 
 export function useAuth() {
