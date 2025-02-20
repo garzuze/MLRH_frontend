@@ -2,12 +2,15 @@ import { ReactNode } from "react";
 import ClientForm from "./ClientForm";
 import ClientContactForm from "./ClientContactForm";
 import ClientFeeForm from "./ClientFeeForm";
+import { ClientProvider } from "../../contexts/ClientContext";
 
 export default function SalesCards() {
     return <>
-        <Card title="Cadastrar cliente" form={ClientForm} variant="1/3" />
-        <Card title="Cadastrar Contato do cliente" form={ClientContactForm} variant="1/3" />
-        <Card title="Definir valor dos serviços" form={ClientFeeForm} variant="1/3"/>
+        <ClientProvider>
+            <Card title="Cadastrar cliente" form={ClientForm} variant="1/3" />
+            <Card title="Cadastrar Contato do cliente" form={ClientContactForm} variant="1/3" />
+            <Card title="Definir valor dos serviços" form={ClientFeeForm} variant="1/3" />
+        </ClientProvider>
     </>
 }
 

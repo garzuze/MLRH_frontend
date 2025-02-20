@@ -3,8 +3,9 @@ import { useEconomicActivities } from "../../services/useEconomicActivities";
 import Button from "../ui/Button";
 import { useBenefits } from "../../services/useBenefits";
 import axios, { AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from "axios";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 import Snackbar from "../ui/Snackbar";
+import { useClient } from "../../contexts/ClientContext";
 
 export default function ClientForm() {
     const { economicActivities, loadingEconomicActivities } = useEconomicActivities();
@@ -14,6 +15,7 @@ export default function ClientForm() {
     const [snackbarMessage, setSnackbarMessage] = useState("");
 
     const { token } = useAuth();
+    const { setClient } = useClient();
     const states: Record<string, string> = {
         'AC': 'Acre',
         'AL': 'Alagoas',
@@ -63,6 +65,7 @@ export default function ClientForm() {
                 if (response.status === 201) {
                     setSnackbarMessage("Cliente criado com sucesso!")
                     setIsSnackbarOpen(true);
+                    setClient({ id: response.data.id, corporate_name: response.data.corporate_name });
                     (document.getElementById('ClientForm') as HTMLFormElement).reset();
                 } else {
                     setSnackbarMessage("Ops... Alguma coisa deu errado.")

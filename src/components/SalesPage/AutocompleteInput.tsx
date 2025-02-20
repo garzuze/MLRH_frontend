@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios, { AxiosRequestConfig, RawAxiosRequestHeaders } from "axios";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
+import { useClient } from "../../contexts/ClientContext";
 
 interface Client {
     id: number;
@@ -9,7 +10,7 @@ interface Client {
 
 const AutocompleteInput = () => {
     const [query, setQuery] = useState("");
-    const [client, setClient] = useState<Client | null>(null)
+    const { client, setClient } = useClient();
     const [results, setResults] = useState<Client[]>([]);
     const [selectedIndex, setSelectedIndex] = useState(-1);
 
@@ -64,10 +65,10 @@ const AutocompleteInput = () => {
 
     return (
         <div className="relative">
-            <input type="hidden" name="client" value={client?.id ?? ""}></input>
+            <input type="hidden" name="client" id="clientId" value={client?.id ?? ""}></input>
             <input
                 type="text"
-                value={query}
+                value={client?.corporate_name}
                 onChange={(e) => { setQuery(e.target.value);  setClient(null)}}
                 onKeyDown={handleKeyDown}
                 placeholder="Cliente"
