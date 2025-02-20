@@ -5,12 +5,14 @@ import axios, { AxiosRequestConfig, RawAxiosRequestHeaders, AxiosResponse } from
 import Button from "../ui/Button";
 import AutocompleteInput from "./AutocompleteInput";
 import Snackbar from "../ui/Snackbar";
+import { useServices } from "../../services/useServices";
 
 export default function ClientFeeForm() {
 
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const [isServiceFormOpen, setIsServiceFormOpen] = useState<boolean>(false)
+    const { services, loadingServices } = useServices();
 
     const { token } = useAuth();
 
@@ -65,6 +67,13 @@ export default function ClientFeeForm() {
                         <form>
                             <select name="service" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" defaultValue={"servico"}>
                                 <option value={'servico'} disabled>Serviço</option>
+                                {loadingServices ? (
+                                    <option>Carregando....</option>
+                                ) : (
+                                    services.slice(3).map((service, _) => (
+                                        <option value={service.id}>{service.service}</option>
+                                    ))
+                                )}
                             </select>
                             <input type="int" name="percentual" placeholder="Percentual" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" required />
                             <input type="int" name="value" placeholder="Valor" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" />
