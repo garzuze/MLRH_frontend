@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from "axios";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../contexts/AuthContext";
 import { useEffect, useState } from "react";
 
 export interface benefitType{

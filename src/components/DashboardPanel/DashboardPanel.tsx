@@ -1,6 +1,6 @@
 import Grid from "./Grid";
 import TopBar from "./TopBar";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 import getDate from "./getDate";
 
 export default function DashboardPanel() {

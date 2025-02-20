@@ -2,7 +2,7 @@ import { useState } from "react";
 import curitibaImage from "../assets/curitiba.jpg"
 import logo from "../assets/logo.png"
 import Button from "../components/ui/Button";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function LoginPage() {
 
