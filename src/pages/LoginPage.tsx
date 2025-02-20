@@ -16,7 +16,7 @@ export default function LoginPage() {
     const success = await login(email, password);
 
     if (success) {
-      window.location.href = "/MLRH_frontend/admin";
+      window.location.href = "/MLRH_frontend/admin/";
     } else {
       alert("Credenciais inválidas!")
     }

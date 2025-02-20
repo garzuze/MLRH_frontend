@@ -14,7 +14,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route element={<PrivateRoute />}>
           <Route path="/admin" element={<AdminPanel />}>
-            <Route index element={<Navigate to="/admin/dashboard" />} />
+            <Route index element={<Navigate to="/admin/dashboard/" />} />
             <Route path="dashboard" element={<DashboardPanel />}></Route>
             <Route path="vendas" element={<SalesPage />}></Route>
           </Route>

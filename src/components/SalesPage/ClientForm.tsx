@@ -63,6 +63,7 @@ export default function ClientForm() {
                 if (response.status === 201) {
                     setSnackbarMessage("Cliente criado com sucesso!")
                     setIsSnackbarOpen(true);
+                    (document.getElementById('ClientForm') as HTMLFormElement).reset();
                 } else {
                     setSnackbarMessage("Ops... Alguma coisa deu errado.")
                     setIsSnackbarOpen(true);
@@ -75,7 +76,7 @@ export default function ClientForm() {
     }
     return (
         <>
-            <form onSubmit={handleSubmit} method="post">
+            <form onSubmit={handleSubmit} method="post" id="ClientForm">
                 <input
                     type="text"
                     placeholder="Razão Social"
