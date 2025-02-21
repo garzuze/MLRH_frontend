@@ -1,24 +1,53 @@
-import { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
+import { useEffect, useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
 
 import axios, { AxiosRequestConfig, RawAxiosRequestHeaders, AxiosResponse } from "axios";
 import Button from "../ui/Button";
 import AutocompleteInput from "./AutocompleteInput";
 import Snackbar from "../ui/Snackbar";
 import { useServices } from "../../services/useServices";
+import { useClient } from "../../contexts/ClientContext";
+
+interface clientFeeType {
+    client: number;
+    service: number;
+    percentual: number;
+    value?: number;
+    deadline?: number;
+}
 
 export default function ClientFeeForm() {
-
+    const { client } = useClient();
+    const initialFees: clientFeeType[] = [
+        { client: 0, service: 1, percentual: 0 },
+        { client: 0, service: 2, percentual: 0 },
+        { client: 0, service: 3, percentual: 0 }
+    ]
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const [isServiceFormOpen, setIsServiceFormOpen] = useState<boolean>(false)
     const { services, loadingServices } = useServices();
+    const [clientFees, setClientFees] = useState<clientFeeType[]>(initialFees);
+
 
     const { token } = useAuth();
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
     }
+
+
+    const handleChange = (serviceId: number, name: string, value: number) => {
+        const fees = clientFees.map(fee => fee.service === serviceId ? { ...fee, [name]: value } : fee);
+        setClientFees(fees);
+        console.log(clientFees)
+    };
+
+    useEffect(() => {
+        setClientFees((prevFees) =>
+            prevFees.map((fee) => ({ ...fee, client: client?.id || 0 }))
+        );
+    }, [client]);
 
     return (
         <>
@@ -30,10 +59,10 @@ export default function ClientFeeForm() {
                             Operacional e Administrativo
                         </p>
                         <div className="service flex gap-x-4 w-full">
-                            <input hidden name="service" value={1}></input>
-                            <input type="int" name="percentual" placeholder="Percentual" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" required />
-                            <input type="int" name="value" placeholder="Valor" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" />
-                            <input type="int" name="deadline" placeholder="Prazo" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" />
+                            <input hidden readOnly name="service" value={1} required></input>
+                            <input type="number" name="percentual" placeholder="Percentual" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" required onChange={(e) => handleChange(1, e.target.name, Number(e.target.value))} />
+                            <input type="number" name="value" placeholder="Valor" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(1, e.target.name, Number(e.target.value))} />
+                            <input type="number" name="deadline" placeholder="Prazo" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(1, e.target.name, Number(e.target.value))} />
                         </div>
                     </div>
                     <div className="w-full">
@@ -41,10 +70,10 @@ export default function ClientFeeForm() {
                             Técnicos e Especializados
                         </p>
                         <div className="service flex gap-x-4 w-full">
-                            <input hidden name="service" value={2}></input>
-                            <input type="int" name="percentual" placeholder="Percentual" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" required />
-                            <input type="int" name="value" placeholder="Valor" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" />
-                            <input type="int" name="deadline" placeholder="Prazo" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" />
+                            <input hidden readOnly name="service" value={2} required></input>
+                            <input type="number" name="percentual" placeholder="Percentual" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" required onChange={(e) => handleChange(2, e.target.name, Number(e.target.value))} />
+                            <input type="number" name="value" placeholder="Valor" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(2, e.target.name, Number(e.target.value))} />
+                            <input type="number" name="deadline" placeholder="Prazo" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(2, e.target.name, Number(e.target.value))} />
                         </div>
                     </div>
                     <div className="w-full">
@@ -52,10 +81,10 @@ export default function ClientFeeForm() {
                             Liderança, Coordenação, Supervisão e Gerência
                         </p>
                         <div className="service flex gap-x-4 w-full">
-                            <input hidden name="service" value={3}></input>
-                            <input type="int" name="percentual" placeholder="Percentual" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" required />
-                            <input type="int" name="value" placeholder="Valor" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" />
-                            <input type="int" name="deadline" placeholder="Prazo" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" />
+                            <input hidden readOnly name="service" value={3} required></input>
+                            <input type="number" name="percentual" placeholder="Percentual" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" required onChange={(e) => handleChange(3, e.target.name, Number(e.target.value))} />
+                            <input type="number" name="value" placeholder="Valor" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(3, e.target.name, Number(e.target.value))} />
+                            <input type="number" name="deadline" placeholder="Prazo" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(3, e.target.name, Number(e.target.value))} />
                         </div>
                     </div>
                 </div>
@@ -66,18 +95,20 @@ export default function ClientFeeForm() {
                         </p>
                         <form>
                             <select name="service" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" defaultValue={"servico"}>
-                                <option value={'servico'} disabled>Serviço</option>
+                                <option value={'servico'} key={"servico"} disabled>Serviço</option>
                                 {loadingServices ? (
                                     <option>Carregando....</option>
                                 ) : (
                                     services.slice(3).map((service, _) => (
-                                        <option value={service.id}>{service.service}</option>
+                                        <option value={service.id} key={service.id}>{service.service}</option>
                                     ))
                                 )}
                             </select>
-                            <input type="int" name="percentual" placeholder="Percentual" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" required />
-                            <input type="int" name="value" placeholder="Valor" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" />
-                            <input type="int" name="deadline" placeholder="Prazo" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" />
+                            <div className="w-full flex gap-x-4">
+                                <input type="number" name="percentual" placeholder="Percentual" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" required />
+                                <input type="number" name="value" placeholder="Valor" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" />
+                                <input type="number" name="deadline" placeholder="Prazo" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" />
+                            </div>
                         </form>
                     </>
                 )
