@@ -8,16 +8,18 @@ interface Client {
 interface ClientContextType {
     client: Client | null;
     setClient: (client: Client | null) => void;
+    proposalComponent: boolean;
+    setProposalComponent: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ClientContext = createContext<ClientContextType | null>(null);
 
 export function ClientProvider({ children }: { children: ReactNode }) {
-    const [client, setClient] = useState<Client | null>(null);
-
+    const [client, setClient] = useState<Client | null>({ id: 8, corporate_name: "Simoldes Plásticos Indústria Limitada"});
+    const [proposalComponent, setProposalComponent] = useState<boolean>(true);
 
     return (
-        <ClientContext.Provider value={{ client, setClient }}>
+        <ClientContext.Provider value={{ client, setClient, proposalComponent, setProposalComponent }}>
             {children}
         </ClientContext.Provider>
     )

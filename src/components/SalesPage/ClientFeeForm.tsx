@@ -17,7 +17,7 @@ interface clientFeeType {
 }
 
 export default function ClientFeeForm() {
-    const { client } = useClient();
+    const { client, setProposalComponent } = useClient();
     const initialFees: clientFeeType[] = [
         { client: 0, service: 1, percentual: 0 },
         { client: 0, service: 2, percentual: 0 },
@@ -28,11 +28,13 @@ export default function ClientFeeForm() {
     const [isServiceFormOpen, setIsServiceFormOpen] = useState<boolean>(false)
     const { services, loadingServices } = useServices();
     const [clientFees, setClientFees] = useState<clientFeeType[]>(initialFees);
+    const [isCreateProposalOpen, setIsCreateProposalOpen] = useState<boolean>(false);
 
     const { token } = useAuth();
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
+        setIsCreateProposalOpen(true);
         const createClientFee = async () => {
             try {
                 const client = axios.create({
@@ -125,7 +127,7 @@ export default function ClientFeeForm() {
                             Novo serviço
                         </p>
                         <div>
-                            <select name="service" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" defaultValue={"servico"} onChange={(event) => setClientFees((prevFees) => prevFees.map((fee) => (fee.service === prevFees[prevFees.length - 1].service ? {...fee, service: Number(event.target.value)}: fee)))}>
+                            <select name="service" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" defaultValue={"servico"} onChange={(event) => setClientFees((prevFees) => prevFees.map((fee) => (fee.service === prevFees[prevFees.length - 1].service ? { ...fee, service: Number(event.target.value) } : fee)))}>
                                 <option value={'servico'} key={"servico"} disabled>Serviço</option>
                                 {loadingServices ? (
                                     <option>Carregando....</option>
@@ -137,21 +139,26 @@ export default function ClientFeeForm() {
                             </select>
                             <div className="w-full flex gap-x-4">
                                 <input type="number" name="percentual" placeholder="Percentual" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" required
-                                onChange={(event) => handleChange(clientFees[clientFees.length - 1].service, event.target.name, Number(event.target.value))}
+                                    onChange={(event) => handleChange(clientFees[clientFees.length - 1].service, event.target.name, Number(event.target.value))}
                                 />
-                                <input type="number" name="value" placeholder="Valor" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(event) => handleChange(clientFees[clientFees.length - 1].service, event.target.name, Number(event.target.value))}/>
-                                <input type="number" name="deadline" placeholder="Prazo" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(event) => handleChange(clientFees[clientFees.length - 1].service, event.target.name, Number(event.target.value))}/>
+                                <input type="number" name="value" placeholder="Valor" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(event) => handleChange(clientFees[clientFees.length - 1].service, event.target.name, Number(event.target.value))} />
+                                <input type="number" name="deadline" placeholder="Prazo" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(event) => handleChange(clientFees[clientFees.length - 1].service, event.target.name, Number(event.target.value))} />
                             </div>
                         </div>
                     </>
                 )
-                    : <p className="my-4 text-sm text-right underline cursor-pointer text-stone-700" onClick={() => { setIsServiceFormOpen(true);  setClientFees([...clientFees, {client: client?.id || 0, service: 4, percentual: 0}])}}>
+                    : <p className="my-4 text-sm text-right underline cursor-pointer text-stone-700" onClick={() => { setIsServiceFormOpen(true); setClientFees([...clientFees, { client: client?.id || 0, service: 4, percentual: 0 }]) }}>
                         Adicionar mais um serviço
                     </p>
                 }
 
-                <Button text={"Cadastrar Valores dos serviços"} variant="dark" className="w-full mx-0 p-2 text-sm mt-4" onClick={() => handleSubmit}></Button>
+                <Button text={"Cadastrar Valores dos serviços"} variant="dark" className="w-full mx-0 p-2 text-sm mt-4" onClick={() => { handleSubmit}}></Button>
             </form>
+            {isCreateProposalOpen ? (
+                <p className="my-4 text-sm text-right underline cursor-pointer text-stone-700" onClick={() => setProposalComponent(true)}>
+                Deseja criar uma proposta? Clique aqui.
+            </p>
+            ): <></>}
             <Snackbar
                 message={snackbarMessage}
                 isOpen={isSnackbarOpen}
