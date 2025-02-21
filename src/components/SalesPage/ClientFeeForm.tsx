@@ -7,18 +7,11 @@ import AutocompleteInput from "./AutocompleteInput";
 import Snackbar from "../ui/Snackbar";
 import { useServices } from "../../services/useServices";
 import { useClient } from "../../contexts/ClientContext";
-
-interface clientFeeType {
-    client: number;
-    service: number;
-    percentual: number;
-    value?: number;
-    deadline?: number;
-}
+import { ClientFeeType } from "../../types/ClientFeeType";
 
 export default function ClientFeeForm() {
     const { client, setProposalComponent } = useClient();
-    const initialFees: clientFeeType[] = [
+    const initialFees: ClientFeeType[] = [
         { client: 0, service: 1, percentual: 0 },
         { client: 0, service: 2, percentual: 0 },
         { client: 0, service: 3, percentual: 0 },
@@ -27,7 +20,7 @@ export default function ClientFeeForm() {
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const [isServiceFormOpen, setIsServiceFormOpen] = useState<boolean>(false)
     const { services, loadingServices } = useServices();
-    const [clientFees, setClientFees] = useState<clientFeeType[]>(initialFees);
+    const [clientFees, setClientFees] = useState<ClientFeeType[]>(initialFees);
     const [isCreateProposalOpen, setIsCreateProposalOpen] = useState<boolean>(false);
 
     const { token } = useAuth();

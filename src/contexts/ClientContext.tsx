@@ -15,7 +15,7 @@ interface ClientContextType {
 const ClientContext = createContext<ClientContextType | null>(null);
 
 export function ClientProvider({ children }: { children: ReactNode }) {
-    const [client, setClient] = useState<Client | null>({ id: 8, corporate_name: "Simoldes Plásticos Indústria Limitada"});
+    const [client, setClient] = useState<Client | null>({ id: 167, corporate_name: "Giovana LTDA"});
     const [proposalComponent, setProposalComponent] = useState<boolean>(true);
 
     return (
