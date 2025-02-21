@@ -29,7 +29,6 @@ export default function ClientFeeForm() {
     const { services, loadingServices } = useServices();
     const [clientFees, setClientFees] = useState<clientFeeType[]>(initialFees);
 
-
     const { token } = useAuth();
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -125,8 +124,8 @@ export default function ClientFeeForm() {
                         <p className="placeholder:text-sm text-sm w-full mt-4">
                             Novo serviço
                         </p>
-                        <form>
-                            <select name="service" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" defaultValue={"servico"}>
+                        <div>
+                            <select name="service" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" defaultValue={"servico"} onChange={(event) => setClientFees((prevFees) => prevFees.map((fee) => (fee.service === prevFees[prevFees.length - 1].service ? {...fee, service: Number(event.target.value)}: fee)))}>
                                 <option value={'servico'} key={"servico"} disabled>Serviço</option>
                                 {loadingServices ? (
                                     <option>Carregando....</option>
@@ -137,19 +136,21 @@ export default function ClientFeeForm() {
                                 )}
                             </select>
                             <div className="w-full flex gap-x-4">
-                                <input type="number" name="percentual" placeholder="Percentual" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" required />
-                                <input type="number" name="value" placeholder="Valor" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" />
-                                <input type="number" name="deadline" placeholder="Prazo" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" />
+                                <input type="number" name="percentual" placeholder="Percentual" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" required
+                                onChange={(event) => handleChange(clientFees[clientFees.length - 1].service, event.target.name, Number(event.target.value))}
+                                />
+                                <input type="number" name="value" placeholder="Valor" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(event) => handleChange(clientFees[clientFees.length - 1].service, event.target.name, Number(event.target.value))}/>
+                                <input type="number" name="deadline" placeholder="Prazo" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(event) => handleChange(clientFees[clientFees.length - 1].service, event.target.name, Number(event.target.value))}/>
                             </div>
-                        </form>
+                        </div>
                     </>
                 )
-                    : <p className="my-4 text-sm text-right underline cursor-pointer text-stone-700" onClick={() => setIsServiceFormOpen(true)}>
+                    : <p className="my-4 text-sm text-right underline cursor-pointer text-stone-700" onClick={() => { setIsServiceFormOpen(true);  setClientFees([...clientFees, {client: client?.id || 0, service: 4, percentual: 0}])}}>
                         Adicionar mais um serviço
                     </p>
                 }
 
-                <Button text={"Cadastrar Valores dos serviços"} variant="dark" className="w-full mx-0 p-2 text-sm mt-4"></Button>
+                <Button text={"Cadastrar Valores dos serviços"} variant="dark" className="w-full mx-0 p-2 text-sm mt-4" onClick={() => handleSubmit}></Button>
             </form>
             <Snackbar
                 message={snackbarMessage}
