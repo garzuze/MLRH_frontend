@@ -38,14 +38,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             const response: AxiosResponse = await client.post("/api/token/refresh/", {
                 refresh: refreshToken,
             });
-
-            const newAccessToken: string = response.data.access;
-            setToken(newAccessToken);
-            localStorage.setItem("access_token", newAccessToken);
-            return newAccessToken;
+            if (response.status === 200) {
+                const newAccessToken: string = response.data.access;
+                setToken(newAccessToken);
+                localStorage.setItem("access_token", newAccessToken);
+                return true;
+            } else {
+                return false;
+            }
         } catch (error) {
             console.error("Failed to refresh token", error);
             logout();
+            return false
         }
     };
 
@@ -95,13 +99,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
 
     useEffect(() => {
+        let isRefreshAccessTokenValid;
         const isTokenValid = async () => {
             if (!token) {
                 setIsAuthenticated(false);
                 setLoading(false);
                 return;
             }
-    
+
             try {
                 const response: AxiosResponse = await client.post("/api/token/verify/", {
                     token: token,
@@ -110,16 +115,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 if (response.status == 200) {
                     setIsAuthenticated(true);
                 } else {
-                    setIsAuthenticated(false);
+                    isRefreshAccessTokenValid = refreshAccessToken();
+                    if (await isRefreshAccessTokenValid === true) {
+                        isTokenValid();
+                    } else {
+                        setIsAuthenticated(false);
+                    }
                 }
             } catch (error) {
                 console.error("Token verification failed", error);
-                setIsAuthenticated(false);
+                isRefreshAccessTokenValid = refreshAccessToken();
+                if (await isRefreshAccessTokenValid === true) {
+                    isTokenValid();
+                } else {
+                    setIsAuthenticated(false);
+                }
             }
-            setLoading(false); 
+            setLoading(false);
         };
         isTokenValid();
-    }, [token]);
+    }, []);
 
     return (
         <AuthContext.Provider value={{ user, token, login, logout, isAuthenticated, loading }}>
