@@ -7,6 +7,7 @@ import { ClientType } from "../../types/ClientType";
 import { ClientContactType } from "../../types/ClientContactType";
 import Button from "../ui/Button";
 import { ClientFeeType } from "../../types/ClientFeeType";
+import { useServices } from "../../services/useServices";
 
 export default function ProposalForm() {
     const { client } = useClient();
@@ -18,6 +19,8 @@ export default function ProposalForm() {
     const [clientData, setClientData] = useState<ClientType>();
     const [clientContactData, setClientContactData] = useState<ClientContactType[]>();
     const [clientFeeData, setClientFeeData] = useState<ClientFeeType[]>();
+
+    const { services, loadingServices } = useServices();
 
     const [isContactSelectOpen, setIsContactSelectOpen] = useState<boolean>(false);
 
@@ -117,7 +120,6 @@ export default function ProposalForm() {
     }, [])
 
     useEffect(() => {
-        console.log(clientContactData)
         if (clientContactData && clientContactData.length > 1) {
             setIsContactSelectOpen(true);
         } else {
@@ -138,13 +140,18 @@ export default function ProposalForm() {
                                 onClick={() => setClientContactData(clientContactData?.filter(c => c.id === contact.id))}
                                 className="cursor-pointer hover:underline"
                             >
-                                {contact.name}
+                                {contact.name} - {contact.department}
                             </li>
                         })}
                     </ul>
                 </>
-            ) : <p>{clientContactData ? (clientContactData[0].name) : ""}</p>}
-            {clientFeeData? `${clientFeeData[0].percentual} %` : null}
+            ) : <p>{loadingServices ? ("Carregando...")
+                : clientFeeData ? (
+                    clientFeeData.map((fee) => {
+                        return <li key={fee.id} value={fee.id}>{services[fee.service].service} - {fee.percentual}%</li>
+                    })
+                ) : "cade os honorarios lllkkkkk"}</p>}
+
             <Snackbar
                 message={snackbarMessage}
                 isOpen={isSnackbarOpen}
