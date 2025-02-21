@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 
-import axios, { AxiosRequestConfig, RawAxiosRequestHeaders, AxiosResponse } from "axios";
+import axios, { AxiosRequestConfig, RawAxiosRequestHeaders, AxiosResponse, AxiosError } from "axios";
 import Button from "../ui/Button";
 import AutocompleteInput from "./AutocompleteInput";
 import Snackbar from "../ui/Snackbar";
@@ -40,22 +40,26 @@ export default function ClientFeeForm() {
                     } as RawAxiosRequestHeaders
                 };
 
-                const response = await Promise.all(clientFees.map((fee) => {
+                const responses = await Promise.all(clientFees.map((fee) => {
                     return client.post("/clients/client_fee/", fee, config);
-
                 }))
-                console.log(response);
-                if (response[2].status === 201) {
-                    setSnackbarMessage("Valor de serviço criado com sucesso!")
-                    setIsSnackbarOpen(true);
-                } else {
-                    setSnackbarMessage("Ops... Alguma coisa deu errado.")
-                    setIsSnackbarOpen(true);
-                }
 
+                responses.forEach(response => {
+                    if (response.status === 201) {
+                        setSnackbarMessage("Valores para serviços cadastrados!");
+                        setIsSnackbarOpen(true);
+                    }
+                });
             } catch (error) {
-                console.log(error)
-                setSnackbarMessage("Ops... Alguma coisa deu errado.")
+                if (error instanceof AxiosError) {
+                    if (error.response?.status === 400) {
+                        setSnackbarMessage("Um honorário para esse serviço já foi cadastrado!");
+                    } else {
+                        setSnackbarMessage(`Erro no servidor: ${error.response?.status || "Desconhecido"}`);
+                    }
+                } else {
+                    setSnackbarMessage("Ops... Alguma coisa deu errado.");
+                }
                 setIsSnackbarOpen(true);
             }
         }
