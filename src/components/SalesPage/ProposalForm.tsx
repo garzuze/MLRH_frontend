@@ -1,13 +1,14 @@
 import axios, { AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from "axios";
 import { useClient } from "../../contexts/ClientContext"
 import { useAuth } from "../../contexts/AuthContext";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import Snackbar from "../ui/Snackbar";
 import { ClientType } from "../../types/ClientType";
 import { ClientContactType } from "../../types/ClientContactType";
 import Button from "../ui/Button";
 import { ClientFeeType } from "../../types/ClientFeeType";
 import { useServices } from "../../services/useServices";
+import getDate from "../DashboardPanel/getDate";
 
 export default function ProposalForm() {
     const { client } = useClient();
@@ -21,6 +22,7 @@ export default function ProposalForm() {
     const [clientFeeData, setClientFeeData] = useState<ClientFeeType[]>();
 
     const { services, loadingServices } = useServices();
+    const currentDate = getDate();
 
     const [isContactSelectOpen, setIsContactSelectOpen] = useState<boolean>(false);
 
@@ -145,12 +147,29 @@ export default function ProposalForm() {
                         })}
                     </ul>
                 </>
-            ) : <p>{loadingServices ? ("Carregando...")
-                : clientFeeData ? (
-                    clientFeeData.map((fee) => {
-                        return <li key={fee.id} value={fee.id}>{services[fee.service].service} - {fee.percentual}%</li>
-                    })
-                ) : "cade os honorarios lllkkkkk"}</p>}
+            ) : (loadingServices ? (
+                <p>Carregando...</p>
+            ) : (
+                (clientData && clientContactData && clientFeeData) ? (
+                    <div>
+                        <p>Empresa: <b>{clientData.corporate_name}</b></p>
+                        <p>{clientData.city} - {clientData.state}</p>
+                        <p>Contato: <b>{clientContactData[0].name} - {clientContactData[0].department}</b></p>
+                        <p><b>Investimento</b></p>
+                        <ul className="space-y-1 list-disc list-inside">
+                            {clientFeeData.map((fee) => {
+                                return <li key={fee.id} value={fee.id}>
+                                    {services[fee.service].service} -
+                                    {(fee.percentual && fee.value) ? `${fee.percentual}% - ${fee.value}` : (
+                                        fee.percentual ? (`${fee.percentual}%`) : (`R$${fee.value}%`)
+                                    )} {(fee.deadline || fee.deadline !== null) ?? (`Prazo: ${fee.deadline}`)} </li>
+                            })}
+                        </ul>
+                        <Button variant="dark" text="Gerar PDF"></Button>
+                    </div>
+                ) : (<p>Não conseguimos recuperar todos os dados...</p>)
+            )
+            )}
 
             <Snackbar
                 message={snackbarMessage}

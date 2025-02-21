@@ -20,7 +20,7 @@ function Cards() {
         <Card title="Cadastrar Contato do cliente" form={ClientContactForm} variant="1/3" />
         <Card title="Definir valor dos serviços" form={ClientFeeForm} variant="1/3" />
         {proposalComponent ? (
-            <Card title="Criar proposta" form={ProposalForm} variant="full"></Card>
+            <Card title="Prévia de dados da proposta" form={ProposalForm} variant="full"></Card>
         ) : null}
     </>)
 }
