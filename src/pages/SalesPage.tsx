@@ -5,7 +5,7 @@ import Grid from "../components/SalesPage/Grid";
 export default function SalesPage() {
     const currentDate = getDate();
     return (
-        <div className="bg-white border rounded-lg pb-4 shadow h-[220vh]">
+        <div className="bg-white border rounded-lg pb-4 shadow h-full">
             <TopBar title="Vendas" subtitle={currentDate}></TopBar>
             <Grid/>
         </div>
