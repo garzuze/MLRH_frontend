@@ -21,7 +21,7 @@ export default function ClientFeeForm() {
     const initialFees: clientFeeType[] = [
         { client: 0, service: 1, percentual: 0 },
         { client: 0, service: 2, percentual: 0 },
-        { client: 0, service: 3, percentual: 0 }
+        { client: 0, service: 3, percentual: 0 },
     ]
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
@@ -34,6 +34,38 @@ export default function ClientFeeForm() {
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
+        const createClientFee = async () => {
+            try {
+                const client = axios.create({
+                    baseURL: "http://127.0.0.1:8000/",
+                });
+
+                const config: AxiosRequestConfig = {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    } as RawAxiosRequestHeaders
+                };
+
+                const response = await Promise.all(clientFees.map((fee) => {
+                    return client.post("/clients/client_fee/", fee, config);
+
+                }))
+                console.log(response);
+                if (response[2].status === 201) {
+                    setSnackbarMessage("Valor de serviço criado com sucesso!")
+                    setIsSnackbarOpen(true);
+                } else {
+                    setSnackbarMessage("Ops... Alguma coisa deu errado.")
+                    setIsSnackbarOpen(true);
+                }
+
+            } catch (error) {
+                console.log(error)
+                setSnackbarMessage("Ops... Alguma coisa deu errado.")
+                setIsSnackbarOpen(true);
+            }
+        }
+        createClientFee();
     }
 
 
