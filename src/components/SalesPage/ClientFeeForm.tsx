@@ -48,6 +48,9 @@ export default function ClientFeeForm() {
                     if (response.status === 201) {
                         setSnackbarMessage("Valores para serviços cadastrados!");
                         setIsSnackbarOpen(true);
+                    } else if (response.status === 200) {
+                        setSnackbarMessage("Valores atualizados com sucesso!")
+                        setIsSnackbarOpen(true);
                     }
                 });
             } catch (error) {
@@ -140,7 +143,7 @@ export default function ClientFeeForm() {
                             <input hidden readOnly name="service" value={3} required></input>
                             <input type="number" name="percentual" placeholder="Percentual" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" required onChange={(e) => handleChange(3, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 3)?.percentual || ""} />
                             <input type="number" name="value" placeholder="Valor" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(3, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 3)?.value || ""} />
-                            <input type="number" name="deadline" placeholder="Prazo" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(3, e.target.name, Number(e.target.value))} value={clientFees[2].deadline} />
+                            <input type="number" name="deadline" placeholder="Prazo" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(3, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 3)?.deadline || ""} />
                         </div>
                     </div>
                 </div>
