@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 
-import axios, { AxiosRequestConfig, RawAxiosRequestHeaders, AxiosResponse, AxiosError } from "axios";
+import axios, { AxiosRequestConfig, RawAxiosRequestHeaders, AxiosResponse, AxiosError, Axios } from "axios";
 import Button from "../ui/Button";
 import AutocompleteInput from "./AutocompleteInput";
 import Snackbar from "../ui/Snackbar";
@@ -10,7 +10,7 @@ import { useClient } from "../../contexts/ClientContext";
 import { ClientFeeType } from "../../types/ClientFeeType";
 
 export default function ClientFeeForm() {
-    const { client, proposalComponent ,setProposalComponent } = useClient();
+    const { client, proposalComponent, setProposalComponent } = useClient();
     const initialFees: ClientFeeType[] = [
         { client: 0, service: 1, percentual: 50 },
         { client: 0, service: 2, percentual: 70 },
@@ -66,6 +66,28 @@ export default function ClientFeeForm() {
         createClientFee();
     }
 
+    async function getPrevFeeData(clientId: number) {
+        try {
+            const client = axios.create({
+                baseURL: "http://127.0.0.1:8000/",
+            });
+
+            const config: AxiosRequestConfig = {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                } as RawAxiosRequestHeaders
+            };
+
+            const response: AxiosResponse = await client.get(`/clients/get_client_fees/?q=${clientId}`, config);
+            if (response.data.length >= 3) {
+                setIsCreateProposalOpen(true)
+                setClientFees(response.data);
+            }
+        } catch (error) {
+            setSnackbarMessage("Ops... Alguma coisa deu errado.");
+            setIsSnackbarOpen(true);
+        }
+    }
 
     const handleChange = (serviceId: number, name: string, value: number) => {
         const fees = clientFees.map(fee => fee.service === serviceId ? { ...fee, [name]: value } : fee);
@@ -74,9 +96,13 @@ export default function ClientFeeForm() {
     };
 
     useEffect(() => {
-        setClientFees((prevFees) =>
-            prevFees.map((fee) => ({ ...fee, client: client?.id || 0 }))
-        );
+        if (client) {
+            getPrevFeeData(client.id);
+            setClientFees((prevFees) =>
+                prevFees.map((fee) => ({ ...fee, client: client?.id || 0 }))
+            );
+            console.log(clientFees);
+        }
     }, [client]);
 
     return (
@@ -90,9 +116,9 @@ export default function ClientFeeForm() {
                         </p>
                         <div className="service flex gap-x-4 w-full">
                             <input hidden readOnly name="service" value={1} required></input>
-                            <input type="number" name="percentual" placeholder="Percentual" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" required onChange={(e) => handleChange(1, e.target.name, Number(e.target.value))} defaultValue={"50"} />
-                            <input type="number" name="value" placeholder="Valor" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(1, e.target.name, Number(e.target.value))} />
-                            <input type="number" name="deadline" placeholder="Prazo" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(1, e.target.name, Number(e.target.value))} />
+                            <input type="number" name="percentual" placeholder="Percentual" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" required onChange={(e) => handleChange(1, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 1)?.percentual || ""} />
+                            <input type="number" name="value" placeholder="Valor" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(1, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 1)?.value || ""} />
+                            <input type="number" name="deadline" placeholder="Prazo" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(1, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 1)?.deadline || ""} />
                         </div>
                     </div>
                     <div className="w-full">
@@ -101,9 +127,9 @@ export default function ClientFeeForm() {
                         </p>
                         <div className="service flex gap-x-4 w-full">
                             <input hidden readOnly name="service" value={2} required></input>
-                            <input type="number" name="percentual" placeholder="Percentual" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" required onChange={(e) => handleChange(2, e.target.name, Number(e.target.value))} defaultValue={"70"} />
-                            <input type="number" name="value" placeholder="Valor" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(2, e.target.name, Number(e.target.value))} />
-                            <input type="number" name="deadline" placeholder="Prazo" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(2, e.target.name, Number(e.target.value))} />
+                            <input type="number" name="percentual" placeholder="Percentual" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" required onChange={(e) => handleChange(2, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 2)?.percentual || ""} />
+                            <input type="number" name="value" placeholder="Valor" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(2, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 2)?.value || ""} />
+                            <input type="number" name="deadline" placeholder="Prazo" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(2, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 2)?.deadline || ""} />
                         </div>
                     </div>
                     <div className="w-full">
@@ -112,9 +138,9 @@ export default function ClientFeeForm() {
                         </p>
                         <div className="service flex gap-x-4 w-full">
                             <input hidden readOnly name="service" value={3} required></input>
-                            <input type="number" name="percentual" placeholder="Percentual" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" required onChange={(e) => handleChange(3, e.target.name, Number(e.target.value))} defaultValue={"100"} />
-                            <input type="number" name="value" placeholder="Valor" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(3, e.target.name, Number(e.target.value))} />
-                            <input type="number" name="deadline" placeholder="Prazo" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(3, e.target.name, Number(e.target.value))} />
+                            <input type="number" name="percentual" placeholder="Percentual" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" required onChange={(e) => handleChange(3, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 3)?.percentual || ""} />
+                            <input type="number" name="value" placeholder="Valor" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(3, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 3)?.value || ""} />
+                            <input type="number" name="deadline" placeholder="Prazo" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(3, e.target.name, Number(e.target.value))} value={clientFees[2].deadline} />
                         </div>
                     </div>
                 </div>
@@ -152,7 +178,7 @@ export default function ClientFeeForm() {
                 <Button text={"Cadastrar Valores dos serviços"} variant="dark" className="w-full mx-0 p-2 text-sm mt-4" onClick={() => { handleSubmit }}></Button>
             </form>
             {isCreateProposalOpen ? (
-                <p className="my-4 text-sm text-right underline cursor-pointer text-stone-700" onClick={() => { setProposalComponent(!proposalComponent);}}>
+                <p className="my-4 text-sm text-right underline cursor-pointer text-stone-700" onClick={() => { setProposalComponent(!proposalComponent); }}>
                     Deseja criar uma proposta? Clique aqui.
                 </p>
             ) : <></>}
