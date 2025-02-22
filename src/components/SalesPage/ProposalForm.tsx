@@ -8,7 +8,6 @@ import { ClientContactType } from "../../types/ClientContactType";
 import Button from "../ui/Button";
 import { ClientFeeType } from "../../types/ClientFeeType";
 import { useServices } from "../../services/useServices";
-import getDate from "../DashboardPanel/getDate";
 
 export default function ProposalForm() {
     const { client } = useClient();
@@ -18,11 +17,10 @@ export default function ProposalForm() {
     const [snackbarMessage, setSnackbarMessage] = useState("");
 
     const [clientData, setClientData] = useState<ClientType>();
-    const [clientContactData, setClientContactData] = useState<ClientContactType[]>();
-    const [clientFeeData, setClientFeeData] = useState<ClientFeeType[]>();
+    const [clientContactData, setClientContactData] = useState<ClientContactType[]>([]);
+    const [clientFeeData, setClientFeeData] = useState<ClientFeeType[]>([]);
 
     const { services, loadingServices } = useServices();
-    const currentDate = getDate();
 
     const [isContactSelectOpen, setIsContactSelectOpen] = useState<boolean>(false);
 
@@ -114,6 +112,11 @@ export default function ProposalForm() {
     }
 
     useEffect(() => {
+        if (client && clientContactData.length < 1) {
+            setSnackbarMessage("Você precisa cadastrar um contato!")
+            setIsSnackbarOpen(true);
+        }
+
         if (client) {
             getClientData(client.id);
             getClientContactData(client.id);
@@ -127,34 +130,39 @@ export default function ProposalForm() {
         } else {
             setIsContactSelectOpen(false);
         }
-    }, [clientContactData]);
+    }, [clientContactData, client]);
 
-    return (
-        <>
-            {isContactSelectOpen ? (
-                <>
-                    <p>Opa! Parece que tem mais de um contato para essa empresa. Qual deles você quer na proposta?</p>
-                    <ul className="space-y-1 list-disc list-inside">
-                        {clientContactData?.map((contact) => {
-                            return <li
-                                value={contact.id}
-                                key={contact.id}
-                                onClick={() => setClientContactData(clientContactData?.filter(c => c.id === contact.id))}
-                                className="cursor-pointer hover:underline"
-                            >
-                                {contact.name} - {contact.department}
-                            </li>
-                        })}
-                    </ul>
-                </>
-            ) : (loadingServices ? (
-                <p>Carregando...</p>
-            ) : (
-                (clientData && clientContactData && clientFeeData) ? (
+    if (!clientData || !clientContactData || !clientFeeData) {
+        return <div>Carregando...</div>
+    } else {
+        return (
+            <>
+                {isContactSelectOpen ? (
+                    <>
+                        <p>Opa! Parece que tem mais de um contato para essa empresa. Qual deles você quer na proposta?</p>
+                        <ul className="space-y-1 list-disc list-inside">
+                            {clientContactData?.map((contact) => {
+                                return <li
+                                    value={contact.id}
+                                    key={contact.id}
+                                    onClick={() => setClientContactData(clientContactData?.filter(c => c.id === contact.id))}
+                                    className="cursor-pointer hover:underline"
+                                >
+                                    {contact.name} - {contact.department}
+                                </li>
+                            })}
+                        </ul>
+                    </>
+                ) : loadingServices ? (
+                    <p>Carregando...</p>
+                ) : (
                     <div>
                         <p>Empresa: <b>{clientData.corporate_name}</b></p>
                         <p>{clientData.city} - {clientData.state}</p>
-                        <p>Contato: <b>{clientContactData[0].name} - {clientContactData[0].department}</b></p>
+                        <p>Contato: <b>{clientContactData.length > 0
+                            ? `${clientContactData[0].name} - ${clientContactData[0].department}`
+                            : "Nenhum contato disponível. Favor cadastrar contato"}</b>
+                        </p>
                         <p><b>Investimento</b></p>
                         <ul className="space-y-1 list-disc list-inside">
                             {clientFeeData.map((fee) => {
@@ -167,15 +175,16 @@ export default function ProposalForm() {
                         </ul>
                         <Button variant="dark" text="Gerar PDF"></Button>
                     </div>
-                ) : (<p>Não conseguimos recuperar todos os dados...</p>)
-            )
-            )}
+                )
+                }
 
-            <Snackbar
-                message={snackbarMessage}
-                isOpen={isSnackbarOpen}
-                onClose={() => setIsSnackbarOpen(false)}
-            />
-        </>
-    )
+                <Snackbar
+                    message={snackbarMessage}
+                    isOpen={isSnackbarOpen}
+                    onClose={() => setIsSnackbarOpen(false)}
+                />
+            </>
+        )
+    };
+
 }
