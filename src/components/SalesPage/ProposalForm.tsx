@@ -9,12 +9,18 @@ import Button from "../ui/Button";
 import { ClientFeeType } from "../../types/ClientFeeType";
 import { useServices } from "../../services/useServices";
 
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import { ProposalPDF } from "./pdf/ProposalPdf";
+import getDate from "../DashboardPanel/getDate";
+
 export default function ProposalForm() {
     const { client } = useClient();
     const { token } = useAuth();
+    const currentDate = getDate();
 
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
+    const [isContactSelectOpen, setIsContactSelectOpen] = useState<boolean>(false);
 
     const [clientData, setClientData] = useState<ClientType>();
     const [clientContactData, setClientContactData] = useState<ClientContactType[]>([]);
@@ -22,7 +28,6 @@ export default function ProposalForm() {
 
     const { services, loadingServices } = useServices();
 
-    const [isContactSelectOpen, setIsContactSelectOpen] = useState<boolean>(false);
 
     const getClientData = async (clientId: number) => {
         try {
@@ -173,7 +178,14 @@ export default function ProposalForm() {
                                     )} {(fee.deadline || fee.deadline !== null) ?? (`Prazo: ${fee.deadline}`)} </li>
                             })}
                         </ul>
-                        <Button variant="dark" text="Gerar PDF"></Button>
+                        <button value="Exportar para pdf" className="p-2 bg-black font-semibold rounded text-stone-100">
+                        <PDFDownloadLink
+                                document={<ProposalPDF clientData={clientData} clientContactData={clientContactData[0]} clientFeeData={clientFeeData} services={services} />}
+                                fileName={`Proposta - ${client?.corporate_name} - ${currentDate}.pdf`}
+                            >
+                                {({ loading }) => (loading ? "Gerando PDF..." : "Baixar PDF")}
+                            </PDFDownloadLink>
+                        </button>
                     </div>
                 )
                 }
