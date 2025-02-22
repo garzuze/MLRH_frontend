@@ -167,7 +167,7 @@ export default function ProposalForm() {
                         <ul className="space-y-1 list-disc list-inside">
                             {clientFeeData.map((fee) => {
                                 return <li key={fee.id} value={fee.id}>
-                                    {services[fee.service].service} -
+                                    {services.find(s => s.id === fee.service)?.service} -
                                     {(fee.percentual && fee.value) ? `${fee.percentual}% - ${fee.value}` : (
                                         fee.percentual ? (`${fee.percentual}%`) : (`R$${fee.value}%`)
                                     )} {(fee.deadline || fee.deadline !== null) ?? (`Prazo: ${fee.deadline}`)} </li>
