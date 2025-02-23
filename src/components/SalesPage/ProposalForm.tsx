@@ -9,8 +9,8 @@ import Button from "../ui/Button";
 import { ClientFeeType } from "../../types/ClientFeeType";
 import { useServices } from "../../services/useServices";
 
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import { ProposalPDF } from "./pdf/ProposalPdf";
+import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
+import { ProposalPDF } from "./pdf/ProposalPDF";
 import getDate from "../DashboardPanel/getDate";
 
 export default function ProposalForm() {
@@ -178,13 +178,14 @@ export default function ProposalForm() {
                                     )} {(fee.deadline || fee.deadline !== null) ?? (`Prazo: ${fee.deadline}`)} </li>
                             })}
                         </ul>
-                        <button value="Exportar para pdf" className="p-2 bg-black font-semibold rounded text-stone-100">
-                        <PDFDownloadLink
+                        <button className="p-2 bg-black font-semibold rounded text-stone-100">
+                            <PDFDownloadLink
                                 document={<ProposalPDF clientData={clientData} clientContactData={clientContactData[0]} clientFeeData={clientFeeData} services={services} />}
                                 fileName={`Proposta - ${client?.corporate_name} - ${currentDate}.pdf`}
                             >
-                                {({ loading }) => (loading ? "Gerando PDF..." : "Baixar PDF")}
+                                {({ loading }) => (loading ? "Gerando PDF..." : "Exportar para PDF")}
                             </PDFDownloadLink>
+
                         </button>
                     </div>
                 )
@@ -200,3 +201,4 @@ export default function ProposalForm() {
     };
 
 }
+
