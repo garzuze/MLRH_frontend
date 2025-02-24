@@ -101,7 +101,7 @@ export function ProposalPDF({ clientData, clientContactData, clientFeeData, serv
                         <Text key={fee.id} style={styles.listItem}>
                              • {(fee.percentual && fee.value) ? `${fee.percentual}% - R$ ${fee.value}` : (
                                 fee.percentual ? (`${fee.percentual}%`) : (`R$${fee.value}%`)
-                            )} - {services.find(s => s.id === fee.service)?.service}{fee.deadline && ` - Prazo: ${fee.deadline} dias`}
+                            )} - {services.find(s => s.id === fee.service)?.service}`z'
                         </Text>
                     ))}
                     <Text style={styles.text}><Text style={[{ fontFamily: "Helvetica-Bold" }, styles.text]}>Obs: </Text>O faturamento mínimo de nossos honorários é de R$ 650,00 (seiscentos e cinquenta reais) por vaga. </Text>

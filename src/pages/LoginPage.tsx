@@ -3,6 +3,7 @@ import curitibaImage from "../assets/curitiba.jpg"
 import logo from "../assets/logo.png"
 import Button from "../components/ui/Button";
 import { useAuth } from "../contexts/AuthContext";
+import Snackbar from "../components/ui/Snackbar";
 
 export default function LoginPage() {
 
@@ -11,6 +12,9 @@ export default function LoginPage() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState<boolean>(false);
+  const [snackbarMessage, setSnackbarMessage] = useState<string>("");
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const success = await login(email, password);
@@ -18,7 +22,9 @@ export default function LoginPage() {
     if (success) {
       window.location.href = "/MLRH_frontend/admin/";
     } else {
-      alert("Credenciais inválidas!")
+      setSnackbarMessage("Credenciais inválidas!")
+      setIsSnackbarOpen(true);
+
     }
   }
 
@@ -54,6 +60,7 @@ export default function LoginPage() {
       </div>
       <div id="loginImage" style={{ backgroundImage: `url(${curitibaImage})` }} className="col-span-4 sm:col-span-1 md:col-span-2 bg-cover bg-center h-screen">
       </div>
+      <Snackbar message={snackbarMessage} isOpen={isSnackbarOpen} onClose={() => setIsSnackbarOpen(false)} ></Snackbar>
     </main>
   );
 }
