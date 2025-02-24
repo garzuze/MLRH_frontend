@@ -133,7 +133,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             }
             setLoading(false);
         };
-        isTokenValid();
+        if (!isAuthenticated) {
+            isTokenValid();
+        }
     }, []);
 
     return (
