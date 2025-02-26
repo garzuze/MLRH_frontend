@@ -4,15 +4,15 @@ import Title from "../ui/Title"
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { useAuth } from "../../contexts/AuthContext";
 
-export default function Curriculum() {
+export default function Resume() {
     const client = axios.create({
         baseURL: "http://127.0.0.1:8000",
     });
 
     const { login, register } = useAuth();
 
-    const [email, setEmail] = useState<string>();
-    const [password, setPassword] = useState<string>();
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
     const [cpf, setCpf] = useState<string>("");
     const [action, setAction] = useState<"cpf" | "login" | "register">("cpf");
     const [message, setMessage] = useState<string>();
