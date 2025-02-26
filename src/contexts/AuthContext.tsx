@@ -10,6 +10,7 @@ interface AuthContextType {
     user: mlrhUser | null;
     token: string | null;
     login: (username: string, password: string) => Promise<boolean>;
+    register: (username: string, password: string) => Promise<boolean>;
     logout: () => void;
     isAuthenticated: boolean;
     loading: boolean;
@@ -87,6 +88,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     };
 
+    const register = async (email: string, password: string) => {
+        try {
+            const response: AxiosResponse = await client.post("/api/register/", {
+                email: email,
+                password: password,
+            });
+
+            if (response.status === 201) {
+                return true;
+            } 
+
+            return false;
+        } catch (error) {
+            console.error("Erro ao fazer login ;(", error);
+            return false;
+        }
+    };
+
     const logout = () => {
         setToken(null);
         setRefreshToken(null);
@@ -139,7 +158,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user, token, login, logout, isAuthenticated, loading }}>
+        <AuthContext.Provider value={{ user, token, login, register, logout, isAuthenticated, loading }}>
             {children}
         </AuthContext.Provider>
     );

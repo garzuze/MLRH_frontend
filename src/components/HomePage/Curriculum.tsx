@@ -1,15 +1,50 @@
 import { useState } from "react"
 import Button from "../ui/Button"
 import Title from "../ui/Title"
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function Curriculum() {
+    const client = axios.create({
+        baseURL: "http://127.0.0.1:8000",
+    });
+
+    const { login, register } = useAuth();
 
     const [email, setEmail] = useState<string>();
     const [password, setPassword] = useState<string>();
-    const [cpf, setCpf] = useState<string>();
+    const [cpf, setCpf] = useState<string>("");
+    const [action, setAction] = useState<"cpf" | "login" | "register">("cpf");
+    const [message, setMessage] = useState<string>();
 
-    function handleSubmit(email: string, password: string) {
+    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+        if (cpf) {
+            try {
+                const response: AxiosResponse = await client.get(`hr/get_resume_cpf?cpf=${cpf}`)
+                if (response.status === 200) {
+                    setAction("login");
+                } else {
+                    setAction("register");
+                }
+            } catch (error) {
+                if (error instanceof AxiosError) {
+                    if (error.response?.status === 404) {
+                        setAction("register");
+                    }
+                }
+            }
+        }
 
+        if (action === "login" && email && password) {
+            login(email, password);
+            // TODO: Redirect to Resume page
+        } else if (action === "register" && email && password) {
+            const isEmailSent = await register(email, password);
+            if (isEmailSent) {
+                setMessage("Cadastro recebido com sucesso! Se os dados fornecidos forem válidos, você receberá um e-mail com instruções para ativar sua conta.");
+            }
+        }
     }
 
     return (
@@ -21,10 +56,9 @@ export default function Curriculum() {
                 </h5>
             </div>
             <div className="lg:border-l lg:border-l-zinc-700 border-dashed pb-8 w-full lg:max-w-screen-lg mx-auto">
-                <form className="max-w-sm md:text-left md:ml-12 lg:ml-24 mx-auto">
-                    <div className="py-5">
+                <form className="max-w-sm md:text-left md:ml-12 lg:ml-24 mx-auto" onSubmit={handleSubmit}>
+                    <div className="pt-5">
                         <label htmlFor="cpf" className="block mb-2 text-sm font-medium text-zinc-200">CPF</label>
-                        {/*  */}
                         <input
                             type="text"
                             id="cpf"
@@ -32,36 +66,50 @@ export default function Curriculum() {
                             placeholder="123.456.789-10"
                             required
                             value={cpf}
-                            onChange={(e) => setCpf(e.target.value.replace(/\D/g, '').length >= 11 ? e.target.value.replace(/[^0-9]/g,'').replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, "$1.$2.$3-$4") : e.target.value)}
+                            onChange={(e) => setCpf(e.target.value.replace(/\D/g, "").length >= 11 ? e.target.value.replace(/[^0-9]/g, "").replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, "$1.$2.$3-$4") : e.target.value)}
                             minLength={11}
                             maxLength={14}
                         />
                     </div>
-                    {/* <div className="py-5">
-                        <label htmlFor="email" className="block mb-2 text-sm font-medium text-zinc-200">Email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            className="bg-neutral-950 border border-neutral-800 text-zinc-200 text-sm rounded-lg focus:ring-indigo-950 focus:border-indigo-950 hover:ring-indigo-950 block w-full p-2.5"
-                            placeholder="fulano@email.com"
-                            required
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </div>
-                    <div className="mb-5">
-                        <label htmlFor="password" className="block mb-2 text-sm font-medium text-zinc-200">Senha</label>
-                        <input
-                            type="password"
-                            id="password"
-                            className="bg-neutral-950 border border-neutral-800 text-zinc-200 text-sm rounded-lg focus:ring-indigo-950 focus:border-indigo-950 ring-indigo-950 block w-full p-2.5"
-                            required
-                            value={password}
-                            placeholder="*******"
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                    </div> */}
-                    <Button text={"Continuar"} variant="dark" className={"ml-0"} />
+                    {(action !== "cpf") && (
+                        <div>
+                            <Title variant={"h3"} text={"Por favor, insira seus dados para continuar."} className={"pt-5"}></Title>
+                            <p className="text-zinc-200 py-2">
+                                Após uma análise interna, o sistema pode enviar o email de verificação (no caso de novo cadastro) ou liberar o acesso (para login).
+
+                            </p>
+                            <div className="email py-5">
+                                <label htmlFor="email" className="block mb-2 text-sm font-medium text-zinc-200">Email</label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    className="bg-neutral-950 border border-neutral-800 text-zinc-200 text-sm rounded-lg focus:ring-indigo-950 focus:border-indigo-950 hover:ring-indigo-950 block w-full p-2.5"
+                                    placeholder="fulano@email.com"
+                                    required
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                            </div>
+                            <div className="password mb-5">
+                                <label htmlFor="password" className="block mb-2 text-sm font-medium text-zinc-200">Senha</label>
+                                <input
+                                    type="password"
+                                    id="password"
+                                    className="bg-neutral-950 border border-neutral-800 text-zinc-200 text-sm rounded-lg focus:ring-indigo-950 focus:border-indigo-950 ring-indigo-950 block w-full p-2.5"
+                                    required
+                                    value={password}
+                                    placeholder="*******"
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                            </div>
+                            {message ?? (
+                                <p className="text-zinc-200 py-2">
+                                    {message}
+                                </p>
+                            )}
+                        </div>)
+                    }
+                    <Button text={"Continuar"} variant="dark" className={"ml-0"} type="submit" />
                 </form>
             </div>
         </div>
