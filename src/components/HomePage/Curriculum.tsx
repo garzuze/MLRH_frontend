@@ -1,7 +1,17 @@
+import { useState } from "react"
 import Button from "../ui/Button"
 import Title from "../ui/Title"
 
 export default function Curriculum() {
+
+    const [email, setEmail] = useState<string>();
+    const [password, setPassword] = useState<string>();
+    const [cpf, setCpf] = useState<string>();
+
+    function handleSubmit(email: string, password: string) {
+
+    }
+
     return (
         <div className="border-y-2 border-neutral-800 w-full font-roboto 2xl:max-w-screen-xl mx-auto">
             <div className="lg:border-l lg:border-l-neutral-700 border-dashed border-b border-b-neutral-700 w-full lg:max-w-screen-lg mx-auto">
@@ -14,13 +24,44 @@ export default function Curriculum() {
                 <form className="max-w-sm md:text-left md:ml-12 lg:ml-24 mx-auto">
                     <div className="py-5">
                         <label htmlFor="cpf" className="block mb-2 text-sm font-medium text-zinc-200">CPF</label>
-                        <input type="text" id="cpf" className="bg-neutral-950 border border-neutral-800 text-zinc-200 text-sm rounded-lg focus:ring-indigo-950 focus:border-indigo-950 hover:ring-indigo-950 block w-full p-2.5" placeholder="123.456.789-10" required />
+                        {/*  */}
+                        <input
+                            type="text"
+                            id="cpf"
+                            className="bg-neutral-950 border border-neutral-800 text-zinc-200 text-sm rounded-lg focus:ring-indigo-950 focus:border-indigo-950 hover:ring-indigo-950 block w-full p-2.5"
+                            placeholder="123.456.789-10"
+                            required
+                            value={cpf}
+                            onChange={(e) => setCpf(e.target.value.replace(/\D/g, '').length >= 11 ? e.target.value.replace(/[^0-9]/g,'').replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, "$1.$2.$3-$4") : e.target.value)}
+                            minLength={11}
+                            maxLength={14}
+                        />
+                    </div>
+                    {/* <div className="py-5">
+                        <label htmlFor="email" className="block mb-2 text-sm font-medium text-zinc-200">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            className="bg-neutral-950 border border-neutral-800 text-zinc-200 text-sm rounded-lg focus:ring-indigo-950 focus:border-indigo-950 hover:ring-indigo-950 block w-full p-2.5"
+                            placeholder="fulano@email.com"
+                            required
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
                     </div>
                     <div className="mb-5">
-                        <label htmlFor="bdate" className="block mb-2 text-sm font-medium text-zinc-200">Data de nascimento</label>
-                        <input type="date" id="bdate" className="bg-neutral-950 border border-neutral-800 text-zinc-200 text-sm rounded-lg focus:ring-indigo-950 focus:border-indigo-950 ring-indigo-950 block w-full p-2.5" required />
-                    </div>
-                    <Button text={"Mandar Currículo"} variant="dark" className={"ml-0"} />
+                        <label htmlFor="password" className="block mb-2 text-sm font-medium text-zinc-200">Senha</label>
+                        <input
+                            type="password"
+                            id="password"
+                            className="bg-neutral-950 border border-neutral-800 text-zinc-200 text-sm rounded-lg focus:ring-indigo-950 focus:border-indigo-950 ring-indigo-950 block w-full p-2.5"
+                            required
+                            value={password}
+                            placeholder="*******"
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div> */}
+                    <Button text={"Continuar"} variant="dark" className={"ml-0"} />
                 </form>
             </div>
         </div>
