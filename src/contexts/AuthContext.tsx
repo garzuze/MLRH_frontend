@@ -64,7 +64,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const login = async (email: string, password: string) => {
         try {
             const response: AxiosResponse = await client.post("/api/token/", {
-                username: email,
+                email: email,
                 password: password,
             });
 

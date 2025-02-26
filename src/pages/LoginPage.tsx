@@ -17,6 +17,9 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!email) return;
+    if (!password) return;
+
     const success = await login(email, password);
 
     if (success) {
@@ -24,7 +27,6 @@ export default function LoginPage() {
     } else {
       setSnackbarMessage("Credenciais inválidas!")
       setIsSnackbarOpen(true);
-
     }
   }
 
@@ -43,11 +45,11 @@ export default function LoginPage() {
               <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
                 <div>
                   <label className="block mb-2 text-sm font-medium text-zinc-300">Email</label>
-                  <input type="email" name="email" id="email" className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 block w-full p-2.5" placeholder="fulano@email.com" value={email} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}/>
+                  <input type="email" name="email" id="email" className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 block w-full p-2.5" placeholder="fulano@email.com" value={email} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)} required/>
                 </div>
                 <div>
                   <label className="block mb-2 text-sm font-medium text-zinc-300">Senha</label>
-                  <input type="password" name="password" id="password" placeholder="••••••••" className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 block w-full p-2.5" value={password} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}/>
+                  <input type="password" name="password" id="password" placeholder="••••••••" className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 block w-full p-2.5" value={password} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} required/>
                 </div>
                 <div className="flex items-center justify-between">
                   <a className="text-sm font-medium hover:underline text-zinc-400">Esqueceu a senha?</a>
