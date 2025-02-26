@@ -1,0 +1,52 @@
+import { educationLevels, genders, languageLevels, maritalStatus, states, status } from "../utils/constants";
+
+type StateAbbreviation = keyof typeof states;
+type EducationLevelAbbreviation = keyof typeof educationLevels;
+type GenderAbbreviation = keyof typeof genders;
+type languageLevelAbbreviation = keyof typeof languageLevels;
+type statusAbbreviation = keyof typeof status;
+type maritalStatusAbbreviation = keyof typeof maritalStatus;
+
+export interface Resume{
+    id?: number;
+    name: string;
+    user: number;
+    cpf: string;
+    gender: GenderAbbreviation;
+    birthPlace: string;
+    birthDate: string;
+    address: string;
+    neighborhood: string;
+    city: string;
+    state: StateAbbreviation;
+    cep: string;
+    phone: string;
+    email: string;
+    educationLevel: EducationLevelAbbreviation;
+    educationDetails: string;
+    englishLevel: languageLevelAbbreviation;
+    spanishLevel: languageLevelAbbreviation;
+    desiredPositions: number[];
+    status: statusAbbreviation;
+    maritalStatus: maritalStatusAbbreviation;
+    spouseName?: string;
+    spouseProfession?: string;
+    hasChildren?: boolean;
+    childrenAges?: string;
+    isSmoker?: boolean;
+    hasCar?: boolean;
+    hasDisability?: boolean;
+    disabilityCid?: string;
+    contactPhone?: string;
+    linkedin?: string;
+    otherLanguages?: string;
+    computerSkills?: string;
+    additionalCourse?: string;
+    expectedSalary?: number;
+    availableFullTime?: boolean;
+    availableMorningAfternoon?: boolean;
+    availableAfternoonNight?: boolean;
+    availableNightShift?: boolean;
+    available1236?: boolean;
+    availableAsSubstitute?: boolean;
+}
