@@ -5,7 +5,7 @@ import { useClient } from "../../contexts/ClientContext";
 
 interface Client {
     id: number;
-    corporate_name: string;
+    corporateName: string;
 }
 
 const AutocompleteInput = () => {
@@ -46,7 +46,7 @@ const AutocompleteInput = () => {
 
     const handleSelect = (client: Client) => {
         setClient(client);
-        setQuery(client.corporate_name);
+        setQuery(client.corporateName);
         setResults([]);
     }
 
@@ -68,7 +68,7 @@ const AutocompleteInput = () => {
             <input type="hidden" name="client" id="clientId" value={client?.id ?? ""}></input>
             <input
                 type="text"
-                value={client?.corporate_name}
+                value={client?.corporateName}
                 onChange={(e) => { setQuery(e.target.value);  setClient(null)}}
                 onKeyDown={handleKeyDown}
                 placeholder="Cliente"
@@ -82,10 +82,10 @@ const AutocompleteInput = () => {
                             key={client.id}
                             className={`p-2 cursor-pointer ${index === selectedIndex ? "bg-stone-200" : ""}`}
                             onClick={() => {
-                                setQuery(client.corporate_name); setResults([]); handleSelect(client)
+                                setQuery(client.corporateName); setResults([]); handleSelect(client)
                             }}
                         >
-                            {client.corporate_name}
+                            {client.corporateName}
                         </li>
                     ))}
                 </ul>

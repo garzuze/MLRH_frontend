@@ -1,10 +1,10 @@
 export interface mlrhUser {
     id: number,
     email: string,
-    first_name: string,
-    last_name: string,
-    is_staff: boolean,
-    is_superuser: boolean
+    firstName: string,
+    lastName: string,
+    isStaff: boolean,
+    isSuperuser: boolean
 }
 
 export interface tokenResponse {

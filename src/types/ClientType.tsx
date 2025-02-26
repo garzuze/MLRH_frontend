@@ -6,10 +6,10 @@ export interface ClientType{
     address: string;
     cnpj: string;
     neighborhood: string;
-    corporate_name: string;
-    trade_name: string;
-    number_of_employees?: number;
-    state_registration?: string;
-    economic_activity: number;
+    corporateName: string;
+    tradeName: string;
+    numberOfEmployees?: number;
+    stateRegistration?: string;
+    economicActivity: number;
     benefits: number[];
 }

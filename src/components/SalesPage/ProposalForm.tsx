@@ -44,7 +44,7 @@ export default function ProposalForm() {
             const response: AxiosResponse = await axiosClient.get(`/clients/clients/${clientId}`, config);
             if (response.status === 200) {
                 // deu boa
-                setSnackbarMessage(`Recuperando dados do cliente: ${client!.corporate_name}`)
+                setSnackbarMessage(`Recuperando dados do cliente: ${client!.corporateName}`)
                 setIsSnackbarOpen(true);
                 setClientData(response.data);
             } else {
@@ -162,7 +162,7 @@ export default function ProposalForm() {
                     <p>Carregando...</p>
                 ) : (
                     <div>
-                        <p>Empresa: <b>{clientData.corporate_name}</b></p>
+                        <p>Empresa: <b>{clientData.corporateName}</b></p>
                         <p>{clientData.city} - {clientData.state}</p>
                         <p>Contato: <b>{clientContactData.length > 0
                             ? `${clientContactData[0].name} - ${clientContactData[0].department}`
@@ -181,7 +181,7 @@ export default function ProposalForm() {
                         <button className="p-2 bg-black font-semibold rounded text-stone-100">
                             <PDFDownloadLink
                                 document={<ProposalPDF clientData={clientData} clientContactData={clientContactData[0]} clientFeeData={clientFeeData} services={services} />}
-                                fileName={`Proposta - ${client?.corporate_name} - ${currentDate}.pdf`}
+                                fileName={`Proposta - ${client?.corporateName} - ${currentDate}.pdf`}
                             >
                                 {({ loading }) => (loading ? "Gerando PDF..." : "Exportar para PDF")}
                             </PDFDownloadLink>

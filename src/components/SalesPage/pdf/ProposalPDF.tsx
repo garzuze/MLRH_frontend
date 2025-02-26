@@ -62,7 +62,7 @@ export function ProposalPDF({ clientData, clientContactData, clientFeeData, serv
             <Page size="A4" style={styles.body}>
                 <View style={styles.section}>
                     <Text style={styles.text}>{currentDate}</Text>
-                    <Text style={styles.text}>À {clientData.corporate_name}</Text>
+                    <Text style={styles.text}>À {clientData.corporateName}</Text>
                     <Text style={styles.text}>A/C: {clientContactData.name}</Text>
                     <Text style={styles.text}>{clientData.city} - {clientData.state}</Text>
                 </View>
@@ -92,7 +92,7 @@ export function ProposalPDF({ clientData, clientContactData, clientFeeData, serv
                     <Text style={styles.listItem}> • 5 (Cinco) dias úteis para cargos operacionais; </Text>
                     <Text style={styles.listItem}> • 10 (Dez) dias úteis para cargos administrativos, analistas, especializados, técnicos e de estágios;  </Text>
                     <Text style={styles.listItem}> • 20 (vinte) dias úteis para cargos de liderança, supervisão e gerência. </Text>
-                    <Text style={[{ fontFamily: "Helvetica-Bold" }, styles.text]}>Esse prazo, porém, poderá alterar dependendo das características do cargo, da complexidade em atrair a mão de obra necessária e da urgência da {clientData.corporate_name}.</Text>
+                    <Text style={[{ fontFamily: "Helvetica-Bold" }, styles.text]}>Esse prazo, porém, poderá alterar dependendo das características do cargo, da complexidade em atrair a mão de obra necessária e da urgência da {clientData.corporateName}.</Text>
                 </View>
                 <View style={styles.section}>
                     <Text style={styles.title}>INVESTIMENTO</Text>
@@ -100,8 +100,8 @@ export function ProposalPDF({ clientData, clientContactData, clientFeeData, serv
                     {clientFeeData.map((fee) => (
                         <Text key={fee.id} style={styles.listItem}>
                              • {(fee.percentual && fee.value) ? `${fee.percentual}% - R$ ${fee.value}` : (
-                                fee.percentual ? (`${fee.percentual}%`) : (`R$${fee.value}%`)
-                            )} - {services.find(s => s.id === fee.service)?.service}`z'
+                                fee.percentual ? (`${fee.percentual}%`) : (`R${fee.value}`)
+                            )} - {services.find(s => s.id === fee.service)?.service}
                         </Text>
                     ))}
                     <Text style={styles.text}><Text style={[{ fontFamily: "Helvetica-Bold" }, styles.text]}>Obs: </Text>O faturamento mínimo de nossos honorários é de R$ 650,00 (seiscentos e cinquenta reais) por vaga. </Text>
@@ -112,7 +112,7 @@ export function ProposalPDF({ clientData, clientContactData, clientFeeData, serv
             </Page>
             <Page size="A4" style={styles.body}>
             <Text style={styles.title}>CANCELAMENTO</Text>
-                <Text style={styles.paragraph}>No caso de cancelamento da vaga ao longo do processo seletivo por parte da <Text style={[{ fontFamily: "Helvetica-Bold" }, styles.text]}>{clientData.corporate_name}</Text> será cobrado o total de 50% (cinquenta por cento) da taxa acertada, que servirá para o reembolso dos custos operacionais incorridos.  O cancelamento automático da vaga poderá acontecer por parte da <Text style={[{ fontFamily: "Helvetica-Bold" }, styles.text]}>ML GESTÃO DE PESSOAS</Text> no caso da <Text style={[{ fontFamily: "Helvetica-Bold" }, styles.text]}>{clientData.corporate_name}</Text>, não se pronunciar em 10 (dez) dias após a apresentação dos candidatos, incidindo desta forma a cobrança do percentual acima informado. O vencimento da fatura ocorrerá após 05 (cinco) dias da formalização do cancelamento.</Text>
+                <Text style={styles.paragraph}>No caso de cancelamento da vaga ao longo do processo seletivo por parte da <Text style={[{ fontFamily: "Helvetica-Bold" }, styles.text]}>{clientData.corporateName}</Text> será cobrado o total de 50% (cinquenta por cento) da taxa acertada, que servirá para o reembolso dos custos operacionais incorridos.  O cancelamento automático da vaga poderá acontecer por parte da <Text style={[{ fontFamily: "Helvetica-Bold" }, styles.text]}>ML GESTÃO DE PESSOAS</Text> no caso da <Text style={[{ fontFamily: "Helvetica-Bold" }, styles.text]}>{clientData.corporateName}</Text>, não se pronunciar em 10 (dez) dias após a apresentação dos candidatos, incidindo desta forma a cobrança do percentual acima informado. O vencimento da fatura ocorrerá após 05 (cinco) dias da formalização do cancelamento.</Text>
                 <Text style={styles.title}>REPOSIÇÃO DE CANDIDATOS </Text>
                 <Text style={styles.paragraph}>Caso ocorra eventual não adaptação do Profissional contratado, por questões de ordem funcional ou de desempenho que resulte no seu desligamento da empresa em um prazo de até 30 (trinta) dias para os níveis operacional (ais) e administrativo (os) e 45 (quarenta e cinco) para os demais cargos, após a respectiva data de admissão, a primeira substituição será realizada, sem custo adicional.</Text>
                 <Text style={styles.text}>Sendo assim, colocamo-nos a sua disposição para maiores esclarecimentos que se fizerem necessários.</Text>

@@ -6,6 +6,7 @@ import axios, { AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from
 import { useAuth } from "../../contexts/AuthContext";
 import Snackbar from "../ui/Snackbar";
 import { useClient } from "../../contexts/ClientContext";
+import { states } from "../../utils/states";
 
 export default function ClientForm() {
     const { economicActivities, loadingEconomicActivities } = useEconomicActivities();
@@ -16,34 +17,7 @@ export default function ClientForm() {
 
     const { token } = useAuth();
     const { setClient } = useClient();
-    const states: Record<string, string> = {
-        'AC': 'Acre',
-        'AL': 'Alagoas',
-        'AM': 'Amazonas',
-        'BA': 'Bahia',
-        'CE': 'Ceará',
-        'DF': 'Distrito Federal',
-        'ES': 'Espírito Santo',
-        'GO': 'Goiás',
-        'MA': 'Maranhão',
-        'MT': 'Mato Grosso',
-        'MS': 'Mato Grosso do Sul',
-        'MG': 'Minas Gerais',
-        'PA': 'Pará',
-        'PB': 'Paraíba',
-        'PR': 'Paraná',
-        'PE': 'Pernambuco',
-        'PI': 'Piauí',
-        'RJ': 'Rio de Janeiro',
-        'RN': 'Rio Grande do Norte',
-        'RS': 'Rio Grande do Sul',
-        'RO': 'Rondônia',
-        'RR': 'Roraima',
-        'SC': 'Santa Catarina',
-        'SP': 'São Paulo',
-        'SE': 'Sergipe',
-        'TO': 'Tocantins',
-    }
+    
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -65,7 +39,7 @@ export default function ClientForm() {
                 if (response.status === 201) {
                     setSnackbarMessage("Cliente criado com sucesso!")
                     setIsSnackbarOpen(true);
-                    setClient({ id: response.data.id, corporate_name: response.data.corporate_name });
+                    setClient({ id: response.data.id, corporateName: response.data.corporateName });
                     (document.getElementById('ClientForm') as HTMLFormElement).reset();
                 } else {
                     setSnackbarMessage("Ops... Alguma coisa deu errado.")
@@ -84,14 +58,14 @@ export default function ClientForm() {
                     type="text"
                     placeholder="Razão Social"
                     className="placeholder:text-sm text-sm border-b border-stone-300 w-full focus:outline-none focus:border-stone-700"
-                    name="corporate_name"
+                    name="corporateName"
                     required
                 />
                 <input
                     type="text"
                     placeholder="Nome fantasia"
                     className=" placeholder:text-sm text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700"
-                    name="trade_name"
+                    name="tradeName"
                     required
                 />
                 <div className="w-full flex gap-x-4">
@@ -106,7 +80,7 @@ export default function ClientForm() {
                         type="text"
                         placeholder="Inscrição Estadual"
                         className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
-                        name="state_registration"
+                        name="stateRegistration"
                     />
                 </div>
                 <div className="w-full flex gap-x-4">
@@ -114,7 +88,7 @@ export default function ClientForm() {
                         type="int"
                         placeholder="Número de empregados"
                         className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
-                        name="number_of_employees"
+                        name="numberOfEmployees"
                     />
                     <input
                         type="text"
@@ -155,7 +129,7 @@ export default function ClientForm() {
                     </select>
                 </div>
 
-                <select name="economic_activity" defaultValue={""} className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" required>
+                <select name="economicActivity" defaultValue={""} className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" required>
                     <option value="" disabled>Atividade econômica</option>
                     {loadingEconomicActivities ? (<option disabled>Carregando...</option>)
                         : (

@@ -2,7 +2,7 @@ import { createContext, ReactNode, useContext, useEffect, useState } from "react
 
 interface Client {
     id: number;
-    corporate_name: string;
+    corporateName: string;
 }
 
 interface ClientContextType {
@@ -15,7 +15,7 @@ interface ClientContextType {
 const ClientContext = createContext<ClientContextType | null>(null);
 
 export function ClientProvider({ children }: { children: ReactNode }) {
-    const [client, setClient] = useState<Client | null>({id: 168, corporate_name: "Piponildo LTDA"});
+    const [client, setClient] = useState<Client | null>({id: 168, corporateName: "Piponildo LTDA"});
     const [proposalComponent, setProposalComponent] = useState<boolean>(false);
 
     return (

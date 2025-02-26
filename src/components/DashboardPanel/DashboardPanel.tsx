@@ -9,7 +9,7 @@ export default function DashboardPanel() {
     return (
         <div className="bg-white border rounded-lg pb-4 shadow h-full">
 
-            <TopBar title={`Bom dia, ${user?.first_name}!`} subtitle={currentDate} />
+            <TopBar title={`Bom dia, ${user?.firstName}!`} subtitle={currentDate} />
             <Grid />
         </div>
     )
