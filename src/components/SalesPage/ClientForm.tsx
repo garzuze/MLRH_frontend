@@ -6,7 +6,7 @@ import axios, { AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from
 import { useAuth } from "../../contexts/AuthContext";
 import Snackbar from "../ui/Snackbar";
 import { useClient } from "../../contexts/ClientContext";
-import { states } from "../../utils/states";
+import { states } from "../../utils/constants";
 
 export default function ClientForm() {
     const { economicActivities, loadingEconomicActivities } = useEconomicActivities();
@@ -123,8 +123,8 @@ export default function ClientForm() {
                     />
                     <select name="state" defaultValue={""} className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2" required>
                         <option disabled value={""}>Estado</option>
-                        {Object.keys(states).map((id, _) => (
-                            <option key={id} value={id}>{states[id]}</option>
+                        {Object.entries(states).map(([key, value]) => (
+                            <option key={key} value={key}>{value}</option>
                         ))}
                     </select>
                 </div>
