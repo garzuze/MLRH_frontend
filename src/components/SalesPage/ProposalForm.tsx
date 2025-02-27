@@ -12,6 +12,7 @@ import { useServices } from "../../services/useServices";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { ProposalPDF } from "./pdf/ProposalPDF";
 import getDate from "../DashboardPanel/getDate";
+import { axiosClient, axiosConfig } from "../../utils/constants";
 
 export default function ProposalForm() {
     const { client } = useClient();
@@ -31,17 +32,7 @@ export default function ProposalForm() {
 
     const getClientData = async (clientId: number) => {
         try {
-            const axiosClient = axios.create({
-                baseURL: "http://127.0.0.1:8000/",
-            });
-
-            const config: AxiosRequestConfig = {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                } as RawAxiosRequestHeaders
-            };
-
-            const response: AxiosResponse = await axiosClient.get(`/clients/clients/${clientId}`, config);
+            const response: AxiosResponse = await axiosClient.get(`/clients/clients/${clientId}`, axiosConfig);
             if (response.status === 200) {
                 // deu boa
                 setSnackbarMessage(`Recuperando dados do cliente: ${client!.corporateName}`)
@@ -61,17 +52,7 @@ export default function ProposalForm() {
 
     const getClientContactData = async (clientId: number) => {
         try {
-            const axiosClient = axios.create({
-                baseURL: "http://127.0.0.1:8000/",
-            });
-
-            const config: AxiosRequestConfig = {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                } as RawAxiosRequestHeaders
-            };
-
-            const response: AxiosResponse = await axiosClient.get(`/clients/get_client_contacts/?q=${clientId}`, config);
+            const response: AxiosResponse = await axiosClient.get(`/clients/get_client_contacts/?q=${clientId}`, axiosConfig);
             if (response.status === 200) {
                 const newContactData: ClientContactType[] = response.data;
 
@@ -90,17 +71,7 @@ export default function ProposalForm() {
 
     const getClientFeeData = async (clientId: number) => {
         try {
-            const axiosClient = axios.create({
-                baseURL: "http://127.0.0.1:8000/",
-            });
-
-            const config: AxiosRequestConfig = {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                } as RawAxiosRequestHeaders
-            };
-
-            const response: AxiosResponse = await axiosClient.get(`/clients/get_client_fees/?q=${clientId}`, config);
+            const response: AxiosResponse = await axiosClient.get(`/clients/get_client_fees/?q=${clientId}`, axiosConfig);
             if (response.status === 200) {
                 const newClientFeeData: ClientFeeType[] = response.data;
                 setClientFeeData(newClientFeeData);

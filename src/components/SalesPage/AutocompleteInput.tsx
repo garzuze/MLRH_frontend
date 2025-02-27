@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios, { AxiosRequestConfig, RawAxiosRequestHeaders } from "axios";
 import { useAuth } from "../../contexts/AuthContext";
 import { useClient } from "../../contexts/ClientContext";
+import { axiosConfig } from "../../utils/constants";
 
 interface Client {
     id: number;
@@ -24,14 +25,8 @@ const AutocompleteInput = () => {
 
         const fetchClients = async () => {
             if (!query || client) return;
-            const config: AxiosRequestConfig = {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                } as RawAxiosRequestHeaders
-            };
-
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/clients/search_clients?q=${query}`, config)
+                const response = await axios.get(`http://127.0.0.1:8000/clients/search_clients?q=${query}`, axiosConfig)
                 setResults(response.data);
             } catch (error) {
                 console.error("Deu ruim: ", error)

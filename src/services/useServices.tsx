@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from "axios";
 import { useAuth } from "../contexts/AuthContext";
 import { useEffect, useState } from "react";
-import { axiosClient } from "../utils/constants";
+import { axiosClient, axiosConfig } from "../utils/constants";
 
 export interface serviceType{
     id: number;
@@ -16,13 +16,7 @@ export const useServices = () => {
     useEffect(() => {
         const fetchServices = async () => {
             try {
-                const config: AxiosRequestConfig = {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                    } as RawAxiosRequestHeaders,
-                };
-
-                const response: AxiosResponse = await axiosClient.get("/clients/services/", config);
+                const response: AxiosResponse = await axiosClient.get("/clients/services/", axiosConfig);
                 setServices(response.data);
             } catch (error) {
                 console.log(error)

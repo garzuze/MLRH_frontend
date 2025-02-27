@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from "axios";
 import { useAuth } from "../contexts/AuthContext";
 import { useEffect, useState } from "react";
-import { axiosClient } from "../utils/constants";
+import { axiosClient, axiosConfig } from "../utils/constants";
 
 export interface economicActivityType{
     id: number;
@@ -16,13 +16,7 @@ export const useEconomicActivities = () => {
     useEffect(() => {
         const fetchEconomicActivities = async () => {
             try {
-                const config: AxiosRequestConfig = {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                    } as RawAxiosRequestHeaders,
-                };
-
-                const response: AxiosResponse = await axiosClient.get("/clients/economic_activity/", config);
+                const response: AxiosResponse = await axiosClient.get("/clients/economic_activity/", axiosConfig);
                 setEconomicActivities(response.data);
             } catch (error) {
                 console.log(error)

@@ -1,4 +1,6 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig, RawAxiosRequestHeaders } from "axios";
+import { useAuth } from "../contexts/AuthContext";
+const token = localStorage.getItem("access_token");
 
 export const educationLevels = {
     EF: "Ensino Fundamental",
@@ -67,3 +69,9 @@ export const status = {
 export const axiosClient = axios.create({
     baseURL: "http://127.0.0.1:8000",
 });
+
+export const axiosConfig: AxiosRequestConfig = {
+    headers: {
+        'Authorization': `Bearer ${token}`,
+    } as RawAxiosRequestHeaders,
+};
