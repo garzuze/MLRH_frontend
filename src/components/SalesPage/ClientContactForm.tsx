@@ -5,6 +5,7 @@ import axios, { AxiosRequestConfig, RawAxiosRequestHeaders, AxiosResponse } from
 import Button from "../ui/Button";
 import AutocompleteInput from "./AutocompleteInput";
 import Snackbar from "../ui/Snackbar";
+import { axiosClient } from "../../utils/constants";
 
 export default function ClientContactForm() {
 
@@ -19,17 +20,13 @@ export default function ClientContactForm() {
 
         const createClientContact = async () => {
             try {
-                const client = axios.create({
-                    baseURL: "http://127.0.0.1:8000/",
-                });
-
                 const config: AxiosRequestConfig = {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                     } as RawAxiosRequestHeaders
                 };
 
-                const response: AxiosResponse = await client.post("/clients/client_contact/", formData, config);
+                const response: AxiosResponse = await axiosClient.post("/clients/client_contact/", formData, config);
                 if (response.status === 201) {
                     setSnackbarMessage("Contato criado com sucesso!")
                     setIsSnackbarOpen(true);

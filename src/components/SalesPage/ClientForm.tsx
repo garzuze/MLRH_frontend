@@ -6,7 +6,7 @@ import axios, { AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from
 import { useAuth } from "../../contexts/AuthContext";
 import Snackbar from "../ui/Snackbar";
 import { useClient } from "../../contexts/ClientContext";
-import { states } from "../../utils/constants";
+import { axiosClient, states } from "../../utils/constants";
 
 export default function ClientForm() {
     const { economicActivities, loadingEconomicActivities } = useEconomicActivities();
@@ -25,17 +25,13 @@ export default function ClientForm() {
 
         const createClient = async () => {
             try {
-                const client = axios.create({
-                    baseURL: "http://127.0.0.1:8000/",
-                });
-
                 const config: AxiosRequestConfig = {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                     } as RawAxiosRequestHeaders
                 };
 
-                const response: AxiosResponse = await client.post("/clients/clients/", formData, config);
+                const response: AxiosResponse = await axiosClient.post("/clients/clients/", formData, config);
                 if (response.status === 201) {
                     setSnackbarMessage("Cliente criado com sucesso!")
                     setIsSnackbarOpen(true);

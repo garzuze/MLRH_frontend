@@ -1,10 +1,7 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { mlrhUser, tokenResponse } from "../types/TokenResponse";
 import axios, { AxiosResponse } from "axios";
-
-const client = axios.create({
-    baseURL: "http://127.0.0.1:8000",
-});
+import { axiosClient } from "../utils/constants";
 
 interface AuthContextType {
     user: mlrhUser | null;
@@ -36,7 +33,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (!refreshToken) return;
 
         try {
-            const response: AxiosResponse = await client.post("/api/token/refresh/", {
+            const response: AxiosResponse = await axiosClient.post("/api/token/refresh/", {
                 refresh: refreshToken,
             });
             if (response.status === 200) {
@@ -64,7 +61,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const login = async (email: string, password: string) => {
         try {
-            const response: AxiosResponse = await client.post("/api/token/", {
+            const response: AxiosResponse = await axiosClient.post("/api/token/", {
                 email: email,
                 password: password,
             });
@@ -90,7 +87,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const register = async (email: string, password: string) => {
         try {
-            const response: AxiosResponse = await client.post("/api/register/", {
+            const response: AxiosResponse = await axiosClient.post("/api/register/", {
                 email: email,
                 password: password,
             });
@@ -127,7 +124,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             }
 
             try {
-                const response: AxiosResponse = await client.post("/api/token/verify/", {
+                const response: AxiosResponse = await axiosClient.post("/api/token/verify/", {
                     token: token,
                 });
 

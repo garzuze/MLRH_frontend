@@ -8,6 +8,7 @@ import Snackbar from "../ui/Snackbar";
 import { useServices } from "../../services/useServices";
 import { useClient } from "../../contexts/ClientContext";
 import { ClientFeeType } from "../../types/ClientFeeType";
+import { axiosClient } from "../../utils/constants";
 
 export default function ClientFeeForm() {
     const { client, proposalComponent, setProposalComponent } = useClient();
@@ -30,10 +31,6 @@ export default function ClientFeeForm() {
         setIsCreateProposalOpen(true);
         const createClientFee = async () => {
             try {
-                const client = axios.create({
-                    baseURL: "http://127.0.0.1:8000/",
-                });
-
                 const config: AxiosRequestConfig = {
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -41,7 +38,7 @@ export default function ClientFeeForm() {
                 };
 
                 const responses = await Promise.all(clientFees.map((fee) => {
-                    return client.post("/clients/client_fee/", fee, config);
+                    return axiosClient.post("/clients/client_fee/", fee, config);
                 }))
 
                 responses.forEach(response => {
@@ -71,17 +68,13 @@ export default function ClientFeeForm() {
 
     async function getPrevFeeData(clientId: number) {
         try {
-            const client = axios.create({
-                baseURL: "http://127.0.0.1:8000/",
-            });
-
             const config: AxiosRequestConfig = {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 } as RawAxiosRequestHeaders
             };
 
-            const response: AxiosResponse = await client.get(`/clients/get_client_fees/?q=${clientId}`, config);
+            const response: AxiosResponse = await axiosClient.get(`/clients/get_client_fees/?q=${clientId}`, config);
             if (response.data.length >= 3) {
                 setIsCreateProposalOpen(true)
                 setClientFees(response.data);

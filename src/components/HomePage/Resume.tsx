@@ -3,11 +3,9 @@ import Button from "../ui/Button"
 import Title from "../ui/Title"
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { useAuth } from "../../contexts/AuthContext";
+import { axiosClient } from "../../utils/constants";
 
 export default function Resume() {
-    const client = axios.create({
-        baseURL: "http://127.0.0.1:8000",
-    });
 
     const { login, register } = useAuth();
 
@@ -21,7 +19,7 @@ export default function Resume() {
         event.preventDefault();
         if (cpf) {
             try {
-                const response: AxiosResponse = await client.get(`hr/get_resume_cpf?cpf=${cpf}`)
+                const response: AxiosResponse = await axiosClient.get(`hr/get_resume_cpf?cpf=${cpf}`)
                 if (response.status === 200) {
                     setAction("login");
                 } else {

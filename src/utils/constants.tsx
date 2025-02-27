@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export const educationLevels = {
     EF: "Ensino Fundamental",
     EM: "Ensino Médio",
@@ -61,3 +63,7 @@ export const status = {
     A: "Ativo",
     I: "Inativo",
 } as const;
+
+export const axiosClient = axios.create({
+    baseURL: "http://127.0.0.1:8000",
+});
