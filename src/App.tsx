@@ -5,6 +5,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import AdminPanel from "./pages/AdminPanel";
 import DashboardPanel from "./components/DashboardPanel/DashboardPanel";
 import SalesPage from "./pages/SalesPage";
+import ResumePage from "./pages/ResumePage"
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/curriculo" element={<ResumePage />} />
         <Route element={<PrivateRoute />}>
           <Route path="/admin" element={<AdminPanel />}>
             <Route index element={<Navigate to="/admin/dashboard/" />} />

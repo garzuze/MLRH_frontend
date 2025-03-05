@@ -1,14 +1,14 @@
 import { useState } from "react"
 import Button from "../ui/Button"
 import Title from "../ui/Title"
-import axios, { AxiosError, AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { useAuth } from "../../contexts/AuthContext";
-import { axiosClient } from "../../utils/constants";
+import { axiosClient, axiosConfig } from "../../utils/constants";
+import { useResume } from "../../contexts/ResumeContext";
 
 export default function Resume() {
 
     const { login, register } = useAuth();
-
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [cpf, setCpf] = useState<string>("");
@@ -35,8 +35,8 @@ export default function Resume() {
         }
 
         if (action === "login" && email && password) {
-            login(email, password);
-            // TODO: Redirect to Resume page
+            await login(email, password);
+            window.location.href = "/MLRH_frontend/curriculo/";
         } else if (action === "register" && email && password) {
             const isEmailSent = await register(email, password);
             if (isEmailSent) {

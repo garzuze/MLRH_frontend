@@ -7,27 +7,14 @@ type languageLevelAbbreviation = keyof typeof languageLevels;
 type statusAbbreviation = keyof typeof status;
 type maritalStatusAbbreviation = keyof typeof maritalStatus;
 
-export interface Resume{
-    id?: number;
+export interface ResumeType {
+    id: number;
     name: string;
     user: number;
     cpf: string;
     gender: GenderAbbreviation;
-    birthPlace: string;
     birthDate: string;
-    address: string;
-    neighborhood: string;
-    city: string;
-    state: StateAbbreviation;
-    cep: string;
-    phone: string;
-    email: string;
-    educationLevel: EducationLevelAbbreviation;
-    educationDetails: string;
-    englishLevel: languageLevelAbbreviation;
-    spanishLevel: languageLevelAbbreviation;
-    desiredPositions: number[];
-    status: statusAbbreviation;
+    birthPlace: string;
     maritalStatus: maritalStatusAbbreviation;
     spouseName?: string;
     spouseProfession?: string;
@@ -37,11 +24,23 @@ export interface Resume{
     hasCar?: boolean;
     hasDisability?: boolean;
     disabilityCid?: string;
+    address: string;
+    neighborhood: string;
+    city: string;
+    state: StateAbbreviation;
+    cep: string;
+    phone: string;
     contactPhone?: string;
+    email: string;
     linkedin?: string;
+    educationLevel: EducationLevelAbbreviation;
+    educationDetails: string;
+    englishLevel: languageLevelAbbreviation;
+    spanishLevel: languageLevelAbbreviation;
     otherLanguages?: string;
     computerSkills?: string;
-    additionalCourse?: string;
+    additionalCourses?: string;
+    desiredPositions: number[];
     expectedSalary?: number;
     availableFullTime?: boolean;
     availableMorningAfternoon?: boolean;
@@ -49,4 +48,5 @@ export interface Resume{
     availableNightShift?: boolean;
     available1236?: boolean;
     availableAsSubstitute?: boolean;
+    status: statusAbbreviation;
 }
