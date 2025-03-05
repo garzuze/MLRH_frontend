@@ -3,7 +3,6 @@ import { useEconomicActivities } from "../../services/useEconomicActivities";
 import Button from "../ui/Button";
 import { useBenefits } from "../../services/useBenefits";
 import axios, { AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from "axios";
-import { useAuth } from "../../contexts/AuthContext";
 import Snackbar from "../ui/Snackbar";
 import { useClient } from "../../contexts/ClientContext";
 import { axiosClient, axiosConfig, states } from "../../utils/constants";
@@ -15,7 +14,6 @@ export default function ClientForm() {
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
 
-    const { token } = useAuth();
     const { setClient } = useClient();
     
 

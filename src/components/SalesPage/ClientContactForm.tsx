@@ -1,7 +1,5 @@
 import { useState } from "react";
-import { useAuth } from "../../contexts/AuthContext";
-
-import axios, { AxiosRequestConfig, RawAxiosRequestHeaders, AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import Button from "../ui/Button";
 import AutocompleteInput from "./AutocompleteInput";
 import Snackbar from "../ui/Snackbar";
@@ -11,8 +9,6 @@ export default function ClientContactForm() {
 
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
-
-    const { token } = useAuth();
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();

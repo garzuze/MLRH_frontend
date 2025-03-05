@@ -30,30 +30,38 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }, []);
 
     const refreshAccessToken = async () => {
-        if (!refreshToken) return;
+        if (!refreshToken) {
+            logout();
+            return false;
+        }
 
         try {
             const response: AxiosResponse = await axiosClient.post("/api/token/refresh/", {
                 refresh: refreshToken,
             });
+
             if (response.status === 200) {
                 const newAccessToken: string = response.data.access;
                 setToken(newAccessToken);
                 localStorage.setItem("access_token", newAccessToken);
                 return true;
-            } else {
-                return false;
             }
         } catch (error) {
             console.error("Failed to refresh token", error);
             logout();
-            return false
         }
+
+        return false;
     };
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            refreshAccessToken();
+        if (!refreshToken) return;
+
+        const interval = setInterval(async () => {
+            const refreshed = await refreshAccessToken();
+            if (!refreshed) {
+                clearInterval(interval);
+            }
         }, 30 * 60 * 1000);
 
         return () => clearInterval(interval);
@@ -114,41 +122,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         window.location.href = "/MLRH_frontend/login";
     };
 
-    useEffect(() => {
-        let isRefreshAccessTokenValid;
-        const isTokenValid = async () => {
-            if (!token) {
-                setIsAuthenticated(false);
-                setLoading(false);
-                return;
-            }
-
-            try {
-                const response: AxiosResponse = await axiosClient.post("/api/token/verify/", {
-                    token: token,
-                });
-
-                if (response.status == 200) {
-                    setIsAuthenticated(true);
-                } else {
-                    isRefreshAccessTokenValid = refreshAccessToken();
-                    if (await isRefreshAccessTokenValid === true) {
-                        isTokenValid();
-                    } else {
-                        setIsAuthenticated(false);
-                    }
-                }
-            } catch (error) {
-                console.error("Token verification failed", error);
-                isRefreshAccessTokenValid = refreshAccessToken();
-                if (await isRefreshAccessTokenValid === true) {
-                    isTokenValid();
-                } else {
-                    setIsAuthenticated(false);
-                }
-            }
+    const isTokenValid = async () => {
+        if (!token) {
+            setIsAuthenticated(false);
             setLoading(false);
-        };
+            return;
+        }
+
+        try {
+            const response: AxiosResponse = await axiosClient.post("/api/token/verify/", { token });
+
+            if (response.status === 200) {
+                setIsAuthenticated(true);
+            } else {
+                const refreshed = await refreshAccessToken();
+                setIsAuthenticated(refreshed);
+            }
+        } catch (error) {
+            console.error("Deu ruim", error);
+            const refreshed = await refreshAccessToken();
+            setIsAuthenticated(refreshed);
+        }
+
+        setLoading(false);
+    };
+
+    useEffect(() => {
         if (!isAuthenticated) {
             isTokenValid();
         }

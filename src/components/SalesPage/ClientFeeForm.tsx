@@ -24,8 +24,6 @@ export default function ClientFeeForm() {
     const [clientFees, setClientFees] = useState<ClientFeeType[]>(initialFees);
     const [isCreateProposalOpen, setIsCreateProposalOpen] = useState<boolean>(false);
 
-    const { token } = useAuth();
-
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         setIsCreateProposalOpen(true);
