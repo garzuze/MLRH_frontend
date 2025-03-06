@@ -100,11 +100,9 @@ export default function Resume() {
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
                             </div>
-                            {message ?? (
-                                <p className="text-zinc-200 py-2">
-                                    {message}
-                                </p>
-                            )}
+                            <p className="text-zinc-200 py-2">
+                                {message}
+                            </p>
                         </div>)
                     }
                     <Button text={"Continuar"} variant="dark" className={"ml-0"} type="submit" />
