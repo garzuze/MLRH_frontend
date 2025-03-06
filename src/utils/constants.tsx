@@ -1,5 +1,4 @@
 import axios, { AxiosRequestConfig, RawAxiosRequestHeaders } from "axios";
-import { useAuth } from "../contexts/AuthContext";
 const token = localStorage.getItem("access_token");
 
 export const educationLevels = {

@@ -36,7 +36,7 @@ export default function Resume() {
 
         if (action === "login" && email && password) {
             await login(email, password);
-            window.location.href = "/MLRH_frontend/curriculo/";
+            window.location.href = "/curriculo/";
         } else if (action === "register" && email && password) {
             const isEmailSent = await register(email, password);
             if (isEmailSent) {

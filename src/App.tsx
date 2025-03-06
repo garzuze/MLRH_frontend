@@ -9,7 +9,7 @@ import ResumePage from "./pages/ResumePage"
 
 function App() {
   return (
-    <Router basename="/MLRH_frontend">
+    <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />

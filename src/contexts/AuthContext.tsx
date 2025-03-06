@@ -62,7 +62,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             if (!refreshed) {
                 clearInterval(interval);
             }
-        }, 30 * 60 * 1000);
+        }, 59 * 60 * 1000);
 
         return () => clearInterval(interval);
     }, [refreshToken]);
@@ -80,7 +80,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             setToken(access);
             setRefreshToken(refresh);
             setUser(user);
-
 
             localStorage.setItem("access_token", access);
             localStorage.setItem("refresh_token", refresh);
@@ -106,7 +105,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
             return false;
         } catch (error) {
-            console.error("Erro ao fazer login ;(", error);
+            console.error("Erro ao se cadastrar ;(", error);
             return false;
         }
     };
@@ -119,7 +118,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
         localStorage.removeItem("user");
-        window.location.href = "/MLRH_frontend/login";
+        window.location.href = "/login";
     };
 
     const isTokenValid = async () => {
