@@ -4,7 +4,6 @@ import Title from "../ui/Title"
 import { AxiosError, AxiosResponse } from "axios";
 import { useAuth } from "../../contexts/AuthContext";
 import { axiosClient, axiosConfig } from "../../utils/constants";
-import { useResume } from "../../contexts/ResumeContext";
 
 export default function Resume() {
 
