@@ -6,6 +6,7 @@ import AdminPanel from "./pages/AdminPanel";
 import DashboardPanel from "./components/DashboardPanel/DashboardPanel";
 import SalesPage from "./pages/SalesPage";
 import ResumePage from "./pages/ResumePage"
+import VerifyEmailPage from "./pages/VerifyEmailPage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/curriculo" element={<ResumePage />} />
+        <Route path="/verify-email" element={<VerifyEmailPage />} />
         <Route element={<PrivateRoute />}>
           <Route path="/admin" element={<AdminPanel />}>
             <Route index element={<Navigate to="/admin/dashboard/" />} />
