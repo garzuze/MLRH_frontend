@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { axiosClient, axiosConfig, educationLevels, genders, languageLevels, maritalStatus, states } from "../../utils/constants";
 import { ResumeFormProps } from "../../pages/ResumePage";
 import Button from "../ui/Button";
@@ -7,20 +7,18 @@ import Snackbar from "../ui/Snackbar";
 import { useAuth } from "../../contexts/AuthContext";
 
 
-export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
+export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => {
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
-
-    const { user } = useAuth();
+    console.log(axiosConfig);
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
-
         const createOrUpdateResume = async () => {
             try {
                 const response: AxiosResponse = await axiosClient.post("/hr/resume/", formData, axiosConfig);
-                if (response.status === 200) {
+                if (response.status === 200 || response.status === 201) {
                     setSnackbarMessage("Currículo atualizado com sucesso!")
                     setIsSnackbarOpen(true);
                 } else {
@@ -40,9 +38,6 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
         <>
             <form className="space-y-6" onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    <input type="hidden" name="id" value={resume.id} readOnly></input>
-                    <input type="hidden" name="user" value={user?.id} readOnly></input>
-
                     {/* Nome */}
                     <div className="flex flex-col items-start">
                         <label htmlFor="name" className="mb-2 text-sm font-medium text-zinc-300">
@@ -52,7 +47,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                             type="text"
                             name="name"
                             id="name"
-                            defaultValue={resume.name}
+                            defaultValue={resume?.name}
                             required
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
                     </div>
@@ -66,7 +61,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                             type="text"
                             name="cpf"
                             id="cpf"
-                            defaultValue={resume.cpf}
+                            defaultValue={resume ? resume.cpf : basicInfo?.cpf}
                             required
                             readOnly
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
@@ -81,7 +76,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                             type="date"
                             name="birthDate"
                             id="birthDate"
-                            defaultValue={resume.birthDate}
+                            defaultValue={resume?.birthDate}
                             required
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
                     </div>
@@ -95,7 +90,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                             type="text"
                             name="birthPlace"
                             id="birthPlace"
-                            defaultValue={resume.birthPlace}
+                            defaultValue={resume?.birthPlace}
                             required
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
                     </div>
@@ -108,7 +103,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                         <select
                             name="gender"
                             id="gender"
-                            defaultValue={resume.gender}
+                            defaultValue={resume?.gender}
                             required
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
@@ -128,7 +123,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                         <select
                             name="maritalStatus"
                             id="maritalStatus"
-                            defaultValue={resume.maritalStatus}
+                            defaultValue={resume?.maritalStatus}
                             required
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
@@ -149,7 +144,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                             type="email"
                             name="email"
                             id="email"
-                            defaultValue={resume.email}
+                            defaultValue={resume ? resume.email : basicInfo?.email}
                             required
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
                     </div>
@@ -161,9 +156,9 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                         </label>
                         <input
                             type="text"
-                            name="text"
+                            name="phone"
                             id="phone"
-                            defaultValue={resume.phone}
+                            defaultValue={resume?.phone}
                             required
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
                     </div>
@@ -177,7 +172,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                             type="text"
                             name="spouseName"
                             id="spouseName"
-                            defaultValue={resume.spouseName}
+                            defaultValue={resume?.spouseName}
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
                     </div>
 
@@ -190,7 +185,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                             type="text"
                             name="spouseProfession"
                             id="spouseProfession"
-                            defaultValue={resume.spouseProfession}
+                            defaultValue={resume?.spouseProfession}
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
                     </div>
 
@@ -202,7 +197,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                         <select
                             name="hasChildren"
                             id="hasChildren"
-                            defaultValue={Number(resume.hasChildren)}
+                            defaultValue={Number(resume?.hasChildren)}
                             required
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
@@ -220,14 +215,14 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                             type="text"
                             name="childrenAges"
                             id="childrenAges"
-                            defaultValue={resume.childrenAges}
+                            defaultValue={resume?.childrenAges}
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
                     </div>
 
                     {/* É fumante? */}
                     <div className="flex items-end">
                         <div className="flex items-center ps-4 border border-neutral-800 rounded-lg w-full md:w-64">
-                            <input defaultChecked={resume.isSmoker} id="isSmoker" type="checkbox" name="isSmoker" className="w-4 h-4 text-indigo-900 bg-gray-100 border-gray-300 rounded-sm focus:ring-indigo-900" />
+                            <input defaultChecked={resume?.isSmoker} id="isSmoker" type="checkbox" name="isSmoker" className="w-4 h-4 text-indigo-900 bg-gray-100 border-gray-300 rounded-sm focus:ring-indigo-900" />
                             <label htmlFor="isSmoker" className="w-full py-4 ms-2 text-sm font-medium text-zinc-300">É Fumante?</label>
                         </div>
                     </div>
@@ -235,7 +230,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                     {/* Tem carro? */}
                     <div className="flex items-end">
                         <div className="flex items-center ps-4 border border-neutral-800 rounded-lg w-full md:w-64">
-                            <input defaultChecked={resume.hasCar} id="hasCar" type="checkbox" name="hasCar" className="w-4 h-4 text-indigo-900 bg-gray-100 border-gray-300 rounded-sm focus:ring-indigo-900" />
+                            <input defaultChecked={resume?.hasCar} id="hasCar" type="checkbox" name="hasCar" className="w-4 h-4 text-indigo-900 bg-gray-100 border-gray-300 rounded-sm focus:ring-indigo-900" />
                             <label htmlFor="hasCar" className="w-full py-4 ms-2 text-sm font-medium text-zinc-300">Tem Carro?</label>
                         </div>
                     </div>
@@ -243,7 +238,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                     {/* Tem deficiência? */}
                     <div className="flex items-end">
                         <div className="flex items-center ps-4 border border-neutral-800 rounded-lg w-full md:w-64">
-                            <input defaultChecked={resume.hasDisability} id="hasDisability" type="checkbox" name="hasDisability" className="w-4 h-4 text-indigo-900 bg-gray-100 border-gray-300 rounded-sm focus:ring-indigo-900" />
+                            <input defaultChecked={resume?.hasDisability} id="hasDisability" type="checkbox" name="hasDisability" className="w-4 h-4 text-indigo-900 bg-gray-100 border-gray-300 rounded-sm focus:ring-indigo-900" />
                             <label htmlFor="hasDisability" className="w-full py-4 ms-2 text-sm font-medium text-zinc-300">Tem deficiência?</label>
                         </div>
                     </div>
@@ -257,7 +252,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                             type="text"
                             name="disabilityCid"
                             id="disabilityCid"
-                            defaultValue={resume.disabilityCid}
+                            defaultValue={resume?.disabilityCid}
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
                     </div>
 
@@ -270,7 +265,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                             type="text"
                             name="cep"
                             id="cep"
-                            defaultValue={resume.cep}
+                            defaultValue={resume?.cep}
                             required
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
                     </div>
@@ -284,7 +279,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                             type="text"
                             name="address"
                             id="address"
-                            defaultValue={resume.address}
+                            defaultValue={resume?.address}
                             required
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
                     </div>
@@ -298,7 +293,21 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                             type="text"
                             name="neighborhood"
                             id="neighborhood"
-                            defaultValue={resume.neighborhood}
+                            defaultValue={resume?.neighborhood}
+                            required
+                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
+                    </div>
+
+                    {/* Cidade   */}
+                    <div className="flex flex-col items-start">
+                        <label htmlFor="city" className="mb-2 text-sm font-medium text-zinc-300">
+                            Cidade
+                        </label>
+                        <input
+                            type="text"
+                            name="city"
+                            id="city"
+                            defaultValue={resume?.city}
                             required
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
                     </div>
@@ -311,7 +320,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                         <select
                             name="state"
                             id="state"
-                            defaultValue={resume.state}
+                            defaultValue={resume?.state}
                             required
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
@@ -332,7 +341,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                             type="text"
                             name="linkedin"
                             id="linkedin"
-                            defaultValue={resume.linkedin}
+                            defaultValue={resume?.linkedin}
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
                     </div>
 
@@ -344,7 +353,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                         <select
                             name="englishLevel"
                             id="englishLevel"
-                            defaultValue={resume.englishLevel}
+                            defaultValue={resume?.englishLevel}
                             required
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
@@ -358,13 +367,13 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
 
                     {/* Nível de Espnahol */}
                     <div className="flex flex-col items-start">
-                        <label htmlFor="educationLevel" className="mb-2 text-sm font-medium text-zinc-300">
+                        <label htmlFor="spanishLevel" className="mb-2 text-sm font-medium text-zinc-300">
                             Nível de Espnahol
                         </label>
                         <select
-                            name="educationLevel"
-                            id="educationLevel"
-                            defaultValue={resume.spanishLevel}
+                            name="spanishLevel"
+                            id="spanishLevel"
+                            defaultValue={resume?.spanishLevel}
                             required
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
@@ -385,7 +394,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                             type="text"
                             name="otherLanguages"
                             id="otherLanguages"
-                            defaultValue={resume.otherLanguages}
+                            defaultValue={resume?.otherLanguages}
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
                     </div>
 
@@ -397,7 +406,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                         <select
                             name="educationLevel"
                             id="educationLevel"
-                            defaultValue={resume.educationLevel}
+                            defaultValue={resume?.educationLevel}
                             required
                             className="bg-neutral-900 border border-neutral-900 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
@@ -414,7 +423,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                         <label htmlFor="educationDetails" className="mb-2 text-sm font-medium text-zinc-300">
                             Detalhes da educação
                         </label>
-                        <textarea id="educationDetails" defaultValue={resume.educationDetails} rows={4} className="block p-2.5 w-full text-sm text-zinc-300 bg-neutral-900 rounded-lg border border-neutral-900" required></textarea>
+                        <textarea id="educationDetails" name="educationDetails" defaultValue={resume?.educationDetails} rows={4} className="block p-2.5 w-full text-sm text-zinc-300 bg-neutral-900 rounded-lg border border-neutral-900" required></textarea>
                     </div>
 
                     {/* Habilidades em informática */}
@@ -422,7 +431,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                         <label htmlFor="computerSkills" className="mb-2 text-sm font-medium text-zinc-300">
                             Habilidades em informática
                         </label>
-                        <textarea id="computerSkills" defaultValue={resume.computerSkills} rows={4} className="block p-2.5 w-full text-sm text-zinc-300 bg-neutral-900 rounded-lg border border-neutral-900"></textarea>
+                        <textarea id="computerSkills" name="computerSkills" defaultValue={resume?.computerSkills} rows={4} className="block p-2.5 w-full text-sm text-zinc-300 bg-neutral-900 rounded-lg border border-neutral-900"></textarea>
                     </div>
 
                     {/* Outros cursos */}
@@ -430,7 +439,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                         <label htmlFor="additionalCourses" className="mb-2 text-sm font-medium text-zinc-300">
                             Outros cursos
                         </label>
-                        <textarea id="additionalCourses" defaultValue={resume.additionalCourses} rows={4} className="block p-2.5 w-full text-sm text-zinc-300 bg-neutral-900 rounded-lg border border-neutral-900"></textarea>
+                        <textarea id="additionalCourses" name="additionalCourses" defaultValue={resume?.additionalCourses} rows={4} className="block p-2.5 w-full text-sm text-zinc-300 bg-neutral-900 rounded-lg border border-neutral-900"></textarea>
                     </div>
 
                     {/* Expectativa salarial */}
@@ -442,7 +451,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                             type="number"
                             name="expectedSalary"
                             id="expectedSalary"
-                            defaultValue={resume.expectedSalary}
+                            defaultValue={resume?.expectedSalary}
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
                     </div>
 
@@ -453,16 +462,16 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                         </label>
                         <input
                             type="text"
-                            name="text"
+                            name="contactPhone"
                             id="contactPhone"
-                            defaultValue={resume.contactPhone}
+                            defaultValue={resume?.contactPhone}
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
                     </div>
 
                     {/* Horário comercial? */}
                     <div className="flex items-end">
                         <div className="flex items-center ps-4 border border-neutral-800 rounded-lg w-full md:w-64">
-                            <input defaultChecked={resume.availableFullTime} id="availableFullTime" type="checkbox" name="availableFullTime" className="w-4 h-4 text-indigo-900 bg-gray-100 border-gray-300 rounded-sm focus:ring-indigo-900" />
+                            <input defaultChecked={resume?.availableFullTime} id="availableFullTime" type="checkbox" name="availableFullTime" className="w-4 h-4 text-indigo-900 bg-gray-100 border-gray-300 rounded-sm focus:ring-indigo-900" />
                             <label htmlFor="availableFullTime" className="w-full py-4 ms-2 text-sm font-medium text-zinc-300">Disponível horário comercial?</label>
                         </div>
                     </div>
@@ -470,7 +479,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                     {/* Horário manhã-tarde? */}
                     <div className="flex items-end">
                         <div className="flex items-center ps-4 border border-neutral-800 rounded-lg w-full md:w-64">
-                            <input defaultChecked={resume.availableMorningAfternoon} id="availableMorningAfternoon" type="checkbox" name="availableMorningAfternoon" className="w-4 h-4 text-indigo-900 bg-gray-100 border-gray-300 rounded-sm focus:ring-indigo-900" />
+                            <input defaultChecked={resume?.availableMorningAfternoon} id="availableMorningAfternoon" type="checkbox" name="availableMorningAfternoon" className="w-4 h-4 text-indigo-900 bg-gray-100 border-gray-300 rounded-sm focus:ring-indigo-900" />
                             <label htmlFor="availableMorningAfternoon" className="w-full py-4 ms-2 text-sm font-medium text-zinc-300">Disponível Manhã - Tarde?</label>
                         </div>
                     </div>
@@ -478,7 +487,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                     {/* Horário Tarde - Noite? */}
                     <div className="flex items-end">
                         <div className="flex items-center ps-4 border border-neutral-800 rounded-lg w-full md:w-64">
-                            <input defaultChecked={resume.availableAfternoonNight} id="availableAfternoonNight" type="checkbox" name="availableAfternoonNight" className="w-4 h-4 text-indigo-900 bg-gray-100 border-gray-300 rounded-sm focus:ring-indigo-900" />
+                            <input defaultChecked={resume?.availableAfternoonNight} id="availableAfternoonNight" type="checkbox" name="availableAfternoonNight" className="w-4 h-4 text-indigo-900 bg-gray-100 border-gray-300 rounded-sm focus:ring-indigo-900" />
                             <label htmlFor="availableAfternoonNight" className="w-full py-4 ms-2 text-sm font-medium text-zinc-300">Disponível Tarde - Noite?</label>
                         </div>
                     </div>
@@ -486,7 +495,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                     {/* Horário Madrugada? */}
                     <div className="flex items-end">
                         <div className="flex items-center ps-4 border border-neutral-800 rounded-lg w-full md:w-64">
-                            <input defaultChecked={resume.availableNightShift} id="availableNightShift" type="checkbox" name="availableNightShift" className="w-4 h-4 text-indigo-900 bg-gray-100 border-gray-300 rounded-sm focus:ring-indigo-900" />
+                            <input defaultChecked={resume?.availableNightShift} id="availableNightShift" type="checkbox" name="availableNightShift" className="w-4 h-4 text-indigo-900 bg-gray-100 border-gray-300 rounded-sm focus:ring-indigo-900" />
                             <label htmlFor="availableNightShift" className="w-full py-4 ms-2 text-sm font-medium text-zinc-300">Disponível Madrugada?</label>
                         </div>
                     </div>
@@ -494,7 +503,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                     {/* Horário Escala 12x36? */}
                     <div className="flex items-end">
                         <div className="flex items-center ps-4 border border-neutral-800 rounded-lg w-full md:w-64">
-                            <input defaultChecked={resume.available1236} id="available1236" type="checkbox" name="available1236" className="w-4 h-4 text-indigo-900 bg-gray-100 border-gray-300 rounded-sm focus:ring-indigo-900" />
+                            <input defaultChecked={resume?.available1236} id="available1236" type="checkbox" name="available1236" className="w-4 h-4 text-indigo-900 bg-gray-100 border-gray-300 rounded-sm focus:ring-indigo-900" />
                             <label htmlFor="available1236" className="w-full py-4 ms-2 text-sm font-medium text-zinc-300">Disponível Escala 12x36?</label>
                         </div>
                     </div>
@@ -502,7 +511,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume }) => {
                     {/* Horário Folguista? */}
                     <div className="flex items-end">
                         <div className="flex items-center ps-4 border border-neutral-800 rounded-lg w-full md:w-64">
-                            <input defaultChecked={resume.availableAsSubstitute} id="availableAsSubstitute" type="checkbox" name="availableAsSubstitute" className="w-4 h-4 text-indigo-900 bg-gray-100 border-gray-300 rounded-sm focus:ring-indigo-900" />
+                            <input defaultChecked={resume?.availableAsSubstitute} id="availableAsSubstitute" type="checkbox" name="availableAsSubstitute" className="w-4 h-4 text-indigo-900 bg-gray-100 border-gray-300 rounded-sm focus:ring-indigo-900" />
                             <label htmlFor="availableAsSubstitute" className="w-full py-4 ms-2 text-sm font-medium text-zinc-300">Disponível Folguista?</label>
                         </div>
                     </div>

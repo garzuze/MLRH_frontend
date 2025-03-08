@@ -4,6 +4,8 @@ import Title from "../ui/Title"
 import { AxiosError, AxiosResponse } from "axios";
 import { useAuth } from "../../contexts/AuthContext";
 import { axiosClient, axiosConfig } from "../../utils/constants";
+import { BasicInfoType } from "../../pages/ResumePage";
+import { mlrhUser } from "../../types/TokenResponse";
 
 export default function Resume() {
 
@@ -40,6 +42,8 @@ export default function Resume() {
             const isEmailSent = await register(email, password);
             if (isEmailSent) {
                 setMessage("Cadastro recebido com sucesso! Se os dados fornecidos forem válidos, você receberá um e-mail com instruções para ativar sua conta.");
+                const basicInfo: BasicInfoType = { email: email, cpf: cpf, password: password };
+                localStorage.setItem("basic_info", JSON.stringify(basicInfo));
             }
         }
     }
