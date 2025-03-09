@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../../contexts/AuthContext";
 
-import axios, { AxiosRequestConfig, RawAxiosRequestHeaders, AxiosResponse, AxiosError, Axios } from "axios";
+import axios, { AxiosResponse, AxiosError } from "axios";
 import Button from "../ui/Button";
-import AutocompleteInput from "./AutocompleteInput";
+import AutocompleteInput from "../form/AutocompleteInput";
 import Snackbar from "../ui/Snackbar";
 import { useServices } from "../../services/useServices";
 import { useClient } from "../../contexts/ClientContext";

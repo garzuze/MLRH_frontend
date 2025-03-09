@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { AxiosResponse } from "axios";
 import Button from "../ui/Button";
-import AutocompleteInput from "./AutocompleteInput";
+import AutocompleteInput from "../form/AutocompleteInput";
 import Snackbar from "../ui/Snackbar";
 import { axiosClient, axiosConfig } from "../../utils/constants";
 

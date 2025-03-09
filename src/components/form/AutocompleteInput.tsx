@@ -1,6 +1,5 @@
+// TODO: make this component reusable
 import { useState, useEffect } from "react";
-import axios, { AxiosRequestConfig, RawAxiosRequestHeaders } from "axios";
-import { useAuth } from "../../contexts/AuthContext";
 import { useClient } from "../../contexts/ClientContext";
 import { axiosClient, axiosConfig } from "../../utils/constants";
 
@@ -14,8 +13,6 @@ const AutocompleteInput = () => {
     const { client, setClient } = useClient();
     const [results, setResults] = useState<Client[]>([]);
     const [selectedIndex, setSelectedIndex] = useState(-1);
-
-    const { token } = useAuth();
 
     useEffect(() => {
         if (query.length < 2) {

@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
-import DashboardPanel from "../components/DashboardPanel/DashboardPanel";
-import Sidebar from "../components/Sidebar/Sidebar";
+import Sidebar from "../layout/Sidebar/Sidebar";
 
 export default function AdminPanel() {
     return (
