@@ -159,7 +159,7 @@ export default function ClientFeeForm() {
                 <Button text={"Cadastrar Valores dos serviços"} variant="dark" className="w-full mx-0 p-2 text-sm mt-4" onClick={() => { handleSubmit }}></Button>
             </form>
             {isCreateProposalOpen ? (
-                <p className="my-4 text-sm text-right underline cursor-pointer text-stone-700" onClick={() => { setProposalComponent(!proposalComponent); }}>
+                <p className="my-4 text-sm text-right underline cursor-pointer text-stone-700" onClick={() => { setProposalComponent(true); }}>
                     Deseja criar uma proposta? Clique aqui.
                 </p>
             ) : <></>}

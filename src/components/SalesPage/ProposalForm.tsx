@@ -5,7 +5,6 @@ import { ReactNode, useEffect, useState } from "react";
 import Snackbar from "../ui/Snackbar";
 import { ClientType } from "../../types/ClientType";
 import { ClientContactType } from "../../types/ClientContactType";
-import Button from "../ui/Button";
 import { ClientFeeType } from "../../types/ClientFeeType";
 import { useServices } from "../../services/useServices";
 
@@ -14,6 +13,7 @@ import { ProposalPDF } from "./pdf/ProposalPDF";
 import getDate from "../DashboardPanel/getDate";
 import { axiosClient, axiosConfig } from "../../utils/constants";
 import { fetchClientContactData } from "../../services/useClientContact";
+import { fetchClientFees } from "../../services/useClientFees";
 
 export default function ProposalForm() {
     const { client } = useClient();
@@ -35,9 +35,6 @@ export default function ProposalForm() {
         try {
             const response: AxiosResponse = await axiosClient.get(`/clients/clients/${clientId}`, axiosConfig);
             if (response.status === 200) {
-                // deu boa
-                setSnackbarMessage(`Recuperando dados do cliente: ${client!.corporateName}`)
-                setIsSnackbarOpen(true);
                 setClientData(response.data);
             } else {
                 setSnackbarMessage("Opsss, alguma coisa deu errado...")
@@ -63,51 +60,31 @@ export default function ProposalForm() {
     }
 
     const getClientFeeData = async (clientId: number) => {
-        try {
-            const response: AxiosResponse = await axiosClient.get(`/clients/get_client_fees/?q=${clientId}`, axiosConfig);
-            if (response.status === 200) {
-                const newClientFeeData: ClientFeeType[] = response.data;
-                setClientFeeData(newClientFeeData);
-            } else {
-                setSnackbarMessage("Opsss, alguma coisa deu errado...")
-                setIsSnackbarOpen(false)
-            }
-
-        } catch (error) {
-            console.log(error)
-            setSnackbarMessage("Opsss, alguma coisa deu errado...")
-            setIsSnackbarOpen(false)
+        const newClientFeeData = await fetchClientFees(clientId);
+        if (Array.isArray(newClientFeeData) && newClientFeeData.length > 0) {
+            setClientFeeData(newClientFeeData);
+        } else {
+            setSnackbarMessage("Nenhum dado de honorário encontrado...")
+            setIsSnackbarOpen(true)
         }
     }
 
     useEffect(() => {
-        if (client && clientContactData.length < 1) {
-            setSnackbarMessage("Você precisa cadastrar um contato!")
-            setIsSnackbarOpen(true);
-        }
-
         if (client) {
-            getClientData(client.id);
             getClientContactData(client.id);
+            getClientData(client.id);
             getClientFeeData(client.id)
         }
     }, [client])
 
     useEffect(() => {
-        if (clientContactData.length === 0) {
-            setSnackbarMessage("Você precisa cadastrar um contato!");
-            setIsSnackbarOpen(true);
-        } else if (clientContactData && clientContactData.length > 1) {
-            setIsContactSelectOpen(true);
-        } else {
-            setIsContactSelectOpen(false);
-        }
-    }, [clientContactData, client]);
+        setIsContactSelectOpen(clientContactData.length > 1);
+    }, [clientContactData]);
 
-    if (!clientData || !clientContactData || !clientFeeData || clientContactData.length > 0) {
+    if (!clientData || !clientContactData || !clientFeeData || clientContactData.length === 0) {
         return (
             <>
-                <div>Carregando...</div>
+                {snackbarMessage}
                 <Snackbar
                     message={snackbarMessage}
                     isOpen={isSnackbarOpen}
