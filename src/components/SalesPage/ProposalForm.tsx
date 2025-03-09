@@ -13,6 +13,7 @@ import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { ProposalPDF } from "./pdf/ProposalPDF";
 import getDate from "../DashboardPanel/getDate";
 import { axiosClient, axiosConfig } from "../../utils/constants";
+import { fetchClientContactData } from "../../services/useClientContact";
 
 export default function ProposalForm() {
     const { client } = useClient();
@@ -50,22 +51,14 @@ export default function ProposalForm() {
         }
     }
 
+
     const getClientContactData = async (clientId: number) => {
-        try {
-            const response: AxiosResponse = await axiosClient.get(`/clients/get_client_contacts/?q=${clientId}`, axiosConfig);
-            if (response.status === 200) {
-                const newContactData: ClientContactType[] = response.data;
-
-                setClientContactData(newContactData);
-            } else {
-                setSnackbarMessage("Opsss, alguma coisa deu errado...")
-                setIsSnackbarOpen(false)
-            }
-
-        } catch (error) {
-            console.log(error)
-            setSnackbarMessage("Opsss, alguma coisa deu errado...")
-            setIsSnackbarOpen(false)
+        const newContactData = await fetchClientContactData(clientId);
+        if (Array.isArray(newContactData) && newContactData.length > 0) {
+            setClientContactData(newContactData);
+        } else {
+            setSnackbarMessage("Você precisa cadastrar um contato...")
+            setIsSnackbarOpen(true)
         }
     }
 
@@ -98,18 +91,30 @@ export default function ProposalForm() {
             getClientContactData(client.id);
             getClientFeeData(client.id)
         }
-    }, [])
+    }, [client])
 
     useEffect(() => {
-        if (clientContactData && clientContactData.length > 1) {
+        if (clientContactData.length === 0) {
+            setSnackbarMessage("Você precisa cadastrar um contato!");
+            setIsSnackbarOpen(true);
+        } else if (clientContactData && clientContactData.length > 1) {
             setIsContactSelectOpen(true);
         } else {
             setIsContactSelectOpen(false);
         }
     }, [clientContactData, client]);
 
-    if (!clientData || !clientContactData || !clientFeeData) {
-        return <div>Carregando...</div>
+    if (!clientData || !clientContactData || !clientFeeData || clientContactData.length > 0) {
+        return (
+            <>
+                <div>Carregando...</div>
+                <Snackbar
+                    message={snackbarMessage}
+                    isOpen={isSnackbarOpen}
+                    onClose={() => setIsSnackbarOpen(false)}
+                />
+            </>
+        );
     } else {
         return (
             <>
@@ -161,7 +166,6 @@ export default function ProposalForm() {
                     </div>
                 )
                 }
-
                 <Snackbar
                     message={snackbarMessage}
                     isOpen={isSnackbarOpen}
