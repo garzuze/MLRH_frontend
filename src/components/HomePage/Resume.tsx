@@ -9,7 +9,7 @@ import { mlrhUser } from "../../types/TokenResponse";
 
 export default function Resume() {
 
-    const { login, register } = useAuth();
+    const { login, register, logout } = useAuth();
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [cpf, setCpf] = useState<string>("");
@@ -39,6 +39,7 @@ export default function Resume() {
             await login(email, password);
             window.location.href = "/curriculo/";
         } else if (action === "register" && email && password) {
+            logout(); // edge case: usuário já tinha um currículo no localStorage e decide criar um novo
             const isEmailSent = await register(email, password);
             if (isEmailSent) {
                 setMessage("Cadastro recebido com sucesso! Se os dados fornecidos forem válidos, você receberá um e-mail com instruções para ativar sua conta.");
