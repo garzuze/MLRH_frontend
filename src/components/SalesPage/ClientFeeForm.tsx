@@ -7,7 +7,7 @@ import { useServices } from "../../services/useServices";
 import { useClient } from "../../contexts/ClientContext";
 import { ClientFeeType } from "../../types/ClientFeeType";
 import { axiosClient, axiosConfig } from "../../utils/constants";
-import ClientSelector from "../form/ClientAutoCompletInput";
+import ClientSelector from "../form/ClientAutocompletInput";
 
 export default function ClientFeeForm() {
     const { client, setClient, setProposalComponent } = useClient();
