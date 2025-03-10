@@ -7,6 +7,7 @@ import DashboardPanel from "./components/DashboardPanel/DashboardPanel";
 import SalesPage from "./pages/SalesPage";
 import ResumePage from "./pages/ResumePage"
 import VerifyEmailPage from "./pages/VerifyEmailPage";
+import SelectionPage from "./pages/SelectionPage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route index element={<Navigate to="/admin/dashboard/" />} />
             <Route path="dashboard" element={<DashboardPanel />}></Route>
             <Route path="vendas" element={<SalesPage />}></Route>
+            <Route path="selecao" element={<SelectionPage />}></Route>
           </Route>
         </Route>
       </Routes>

@@ -1,7 +1,6 @@
-import axios, { AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from "axios";
+import { AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from "axios";
 import { useClient } from "../../contexts/ClientContext"
-import { useAuth } from "../../contexts/AuthContext";
-import { ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Snackbar from "../ui/Snackbar";
 import { ClientType } from "../../types/ClientType";
 import { ClientContactType } from "../../types/ClientContactType";
@@ -17,7 +16,6 @@ import { fetchClientFees } from "../../services/useClientFees";
 
 export default function ProposalForm() {
     const { client } = useClient();
-    const { token } = useAuth();
     const currentDate = getDate();
 
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
