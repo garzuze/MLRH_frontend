@@ -118,7 +118,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
         localStorage.removeItem("user");
-        window.location.href = "/login";
     };
 
     const isTokenValid = async () => {
