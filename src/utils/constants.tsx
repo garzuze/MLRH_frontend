@@ -63,6 +63,8 @@ export const states = {
 export const status = {
     A: "Ativo",
     I: "Inativo",
+    C: "Cancelado",
+    S: "Suspenso",
 } as const;
 
 export const axiosClient = axios.create({
