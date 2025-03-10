@@ -13,6 +13,8 @@ import { usePositions } from "../../services/usePositions";
 import { ClientFeeType } from "../../types/ClientFeeType";
 import { fetchClientFees } from "../../services/useClientFees";
 import { useServices } from "../../services/useServices";
+import ClientSelector from "../form/ClientAutocompletInput";
+import { ClientType } from "../../types/ClientType";
 
 export default function ClientForm() {
 
@@ -83,7 +85,7 @@ export default function ClientForm() {
             <form onSubmit={handleSubmit} method="post" id="ProfileForm">
                 <div className="w-full flex gap-x-4">
                 </div>
-                <AutocompleteInput />
+                <ClientSelector selectedClient={client} setSelectedClient={setClient}/>
                 <select
                     name="clientContact"
                     className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700"
