@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 
-import axios, { AxiosResponse, AxiosError } from "axios";
+import { AxiosResponse, AxiosError } from "axios";
 import Button from "../ui/Button";
-import AutocompleteInput from "../form/AutocompleteInput";
 import Snackbar from "../ui/Snackbar";
 import { useServices } from "../../services/useServices";
 import { useClient } from "../../contexts/ClientContext";
 import { ClientFeeType } from "../../types/ClientFeeType";
 import { axiosClient, axiosConfig } from "../../utils/constants";
+import ClientSelector from "../form/ClientAutoCompletInput";
 
 export default function ClientFeeForm() {
-    const { client, proposalComponent, setProposalComponent } = useClient();
+    const { client, setClient, setProposalComponent } = useClient();
     const initialFees: ClientFeeType[] = [
         { client: 0, service: 1, percentual: 50 },
         { client: 0, service: 2, percentual: 70 },
@@ -89,7 +89,8 @@ export default function ClientFeeForm() {
     return (
         <>
             <form method="post" onSubmit={handleSubmit}>
-                <AutocompleteInput />
+                <ClientSelector selectedClient={client} setSelectedClient={setClient} />
+
                 <div className="services">
                     <div className="w-full">
                         <p className="text-sm w-full mt-4">

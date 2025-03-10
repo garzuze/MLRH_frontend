@@ -1,13 +1,9 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
-
-interface Client {
-    id: number;
-    corporateName: string;
-}
+import { ClientType } from "../types/ClientType";
 
 interface ClientContextType {
-    client: Client | null;
-    setClient: (client: Client | null) => void;
+    client: ClientType | null;
+    setClient: (client: ClientType | null) => void;
     proposalComponent: boolean;
     setProposalComponent: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -15,7 +11,7 @@ interface ClientContextType {
 const ClientContext = createContext<ClientContextType | null>(null);
 
 export function ClientProvider({ children }: { children: ReactNode }) {
-    const [client, setClient] = useState<Client | null>(null);
+    const [client, setClient] = useState<ClientType | null>(null);
     const [proposalComponent, setProposalComponent] = useState<boolean>(false);
 
     return (

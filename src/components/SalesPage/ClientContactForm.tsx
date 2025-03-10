@@ -4,11 +4,14 @@ import Button from "../ui/Button";
 import AutocompleteInput from "../form/AutocompleteInput";
 import Snackbar from "../ui/Snackbar";
 import { axiosClient, axiosConfig } from "../../utils/constants";
+import ClientSelector from "../form/ClientAutoCompletInput";
+import { useClient } from "../../contexts/ClientContext";
 
 export default function ClientContactForm() {
 
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
+    const { client, setClient } = useClient();
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -36,7 +39,8 @@ export default function ClientContactForm() {
     return (
         <>
             <form method="post" onSubmit={handleSubmit}>
-                <AutocompleteInput />
+                <ClientSelector selectedClient={client} setSelectedClient={setClient} />
+
                 <input
                     type="text"
                     placeholder="Nome"

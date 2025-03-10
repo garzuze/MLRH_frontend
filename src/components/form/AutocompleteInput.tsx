@@ -1,46 +1,67 @@
-// TODO: make this component reusable
 import { useState, useEffect } from "react";
-import { useClient } from "../../contexts/ClientContext";
-import { axiosClient, axiosConfig } from "../../utils/constants";
 
-interface Client {
-    id: number;
-    corporateName: string;
+interface AutocompleteInputProps<T> {
+    value: string;
+    onSelect: (item: T) => void;
+    fetchResults: (query: string) => Promise<T[]>;
+    getOptionLabel: (item: T) => string;
+    inputValue: string | number;
+    inputName: string;
+    placeholder?: string;
+    className?: string;
 }
 
-const AutocompleteInput = () => {
-    const [query, setQuery] = useState("");
-    const { client, setClient } = useClient();
-    const [results, setResults] = useState<Client[]>([]);
+const AutocompleteInput = <T extends { id: number }>({
+    value,
+    onSelect,
+    fetchResults,
+    getOptionLabel,
+    inputValue,
+    inputName,
+    placeholder = "",
+    className = "",
+}: AutocompleteInputProps<T>) => {
+    const [query, setQuery] = useState(value);
+    const [results, setResults] = useState<T[]>([]);
     const [selectedIndex, setSelectedIndex] = useState(-1);
+    const [isItemSelected, setIsItemSelected] = useState(false);
+
 
     useEffect(() => {
-        if (query.length < 2) {
-            setResults([])
+        if (!query || query.length < 2 || isItemSelected) {
+            setResults([]);
             return;
         }
 
-        const fetchClients = async () => {
-            if (!query || client) return;
+        const fetchData = async () => {
             try {
-                const response = await axiosClient.get(`clients/search_clients?q=${query}`, axiosConfig)
-                setResults(response.data);
+                const data = await fetchResults(query);
+                setResults(data);
             } catch (error) {
-                console.error("Deu ruim: ", error)
+                console.error("Erro buscando dados:", error);
             }
-
         };
 
-        // Só fazer a requisição após 300ms depois que o usuário digitou
-        const timeoutId = setTimeout(fetchClients, 300)
-        return () => clearTimeout(timeoutId)
-    }, [query])
+        const timeoutId = setTimeout(fetchData, 300);
+        return () => clearTimeout(timeoutId);
+    }, [query, fetchResults, isItemSelected]);
 
-    const handleSelect = (client: Client) => {
-        setClient(client);
-        setQuery(client.corporateName);
+    const handleSelect = (item: T) => {
+        onSelect(item);
+        setQuery(getOptionLabel(item));
         setResults([]);
-    }
+        setIsItemSelected(true);
+    };
+
+    useEffect(() => {
+        setQuery(value);
+        if (value) {
+            setIsItemSelected(true);
+        } else {
+            setIsItemSelected(false);
+        }
+    }, [value]);
+
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "ArrowDown") {
@@ -57,33 +78,35 @@ const AutocompleteInput = () => {
 
     return (
         <div className="relative">
-            <input type="hidden" name="client" id="clientId" value={client?.id ?? ""}></input>
+            <input
+                type="hidden"
+                name={inputName}
+                value={inputValue}
+            ></input>
             <input
                 type="text"
-                value={client?.corporateName}
-                onChange={(e) => { setQuery(e.target.value);  setClient(null)}}
+                value={query}
+                onChange={(e) => { setQuery(e.target.value); setIsItemSelected(false); }}
                 onKeyDown={handleKeyDown}
-                placeholder="Cliente"
-                className="placeholder:text-sm text-sm border-b border-stone-300 w-full focus:outline-none focus:border-stone-700"
+                placeholder={placeholder}
+                className={`border-b border-gray-300 w-full focus:outline-none focus:border-gray-700 ${className}`}
                 required
             />
             {results.length > 0 && (
-                <ul className="absolute w-full border border-stone-300 bg-white rounded text-xs mt-1 max-h-40 overflow-y-auto">
-                    {results.map((client, index) => (
+                <ul className="absolute w-full border border-gray-300 bg-white rounded text-sm mt-1 max-h-40 overflow-y-auto">
+                    {results.map((item, index) => (
                         <li
-                            key={client.id}
-                            className={`p-2 cursor-pointer ${index === selectedIndex ? "bg-stone-200" : ""}`}
-                            onClick={() => {
-                                setQuery(client.corporateName); setResults([]); handleSelect(client)
-                            }}
+                            key={item.id}
+                            className={`p-2 cursor-pointer ${index === selectedIndex ? "bg-gray-200" : ""}`}
+                            onClick={() => handleSelect(item)}
                         >
-                            {client.corporateName}
+                            {getOptionLabel(item)}
                         </li>
                     ))}
                 </ul>
             )}
         </div>
-    )
-}
+    );
+};
 
 export default AutocompleteInput;
