@@ -74,3 +74,10 @@ export const axiosConfig: AxiosRequestConfig = {
         'Authorization': `Bearer ${token}`,
     } as RawAxiosRequestHeaders,
 };
+
+export type StateAbbreviation = keyof typeof states;
+export type EducationLevelAbbreviation = keyof typeof educationLevels;
+export type GenderAbbreviation = keyof typeof genders;
+export type languageLevelAbbreviation = keyof typeof languageLevels;
+export type statusAbbreviation = keyof typeof status;
+export type maritalStatusAbbreviation = keyof typeof maritalStatus;

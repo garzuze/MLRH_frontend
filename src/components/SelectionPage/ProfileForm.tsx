@@ -124,14 +124,14 @@ export default function ClientForm() {
                     ) : <option value="" disabled>Você precisa cadastrar um honorário ou cliente.</option>}
                 </select>
                 
-                <select name="maritalStatus" defaultValue="">
+                <select name="maritalStatus" defaultValue="" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700">
                     <option value="" disabled>Selecione o estado civil</option>
                     {Object.entries(maritalStatus).map(([key, value]) => (
                         <option key={key} value={key}>{value}</option>
                     ))}
                 </select>
 
-                <select name="educationLevel" defaultValue="">
+                <select name="educationLevel" defaultValue="" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700">
                 <option value="" disabled>Selecione o nível educacional</option>
                     {Object.entries(educationLevels).map(([key, value]) => (
                         <option key={key} value={key}>{value}</option>
@@ -152,7 +152,8 @@ export default function ClientForm() {
                 <input type="date" name="estimatedDelivery" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700" placeholder="Previsão de Entrega" />
 
                 <label className="flex items-center mt-4">
-                    <input type="checkbox" name="confidential" className="mr-2" /> Vaga Sigilosa
+                    Vaga Sigilosa
+                    <input type="checkbox" name="confidential" className="mr-2 text-sm" />
                 </label>
 
                 <input type="number" name="quantity" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700" placeholder="Quantidade de Posições" />

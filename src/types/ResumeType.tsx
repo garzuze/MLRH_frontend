@@ -1,11 +1,4 @@
-import { educationLevels, genders, languageLevels, maritalStatus, states, status } from "../utils/constants";
-
-type StateAbbreviation = keyof typeof states;
-type EducationLevelAbbreviation = keyof typeof educationLevels;
-type GenderAbbreviation = keyof typeof genders;
-type languageLevelAbbreviation = keyof typeof languageLevels;
-type statusAbbreviation = keyof typeof status;
-type maritalStatusAbbreviation = keyof typeof maritalStatus;
+import { GenderAbbreviation, maritalStatusAbbreviation, StateAbbreviation, EducationLevelAbbreviation, languageLevelAbbreviation, statusAbbreviation } from "../utils/constants";
 
 export interface ResumeType {
     id: number;
