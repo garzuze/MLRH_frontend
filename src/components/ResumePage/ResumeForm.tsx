@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { axiosClient, axiosConfig, educationLevels, genders, languageLevels, maritalStatus, states } from "../../utils/constants";
+import { educationLevels, genders, languageLevels, maritalStatus, states } from "../../utils/constants";
 import { BasicInfoType, ResumeFormProps } from "../../pages/ResumePage";
 import Button from "../ui/Button";
 import { AxiosResponse } from "axios";
 import Snackbar from "../ui/Snackbar";
 import { useAuth } from "../../contexts/AuthContext";
+import { useAxiosClient } from "../../hooks/useAxiosClient";
 
 
 export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => {
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
-    console.log(axiosConfig)
+    const axiosClient = useAxiosClient();
+    console.log(axiosClient);
+
     const { login } = useAuth();
 
     useEffect(() => {
@@ -33,7 +36,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => 
         const formData = new FormData(event.currentTarget);
         const createOrUpdateResume = async () => {
             try {
-                const response: AxiosResponse = await axiosClient.post("/hr/resume/", formData, axiosConfig);
+                const response: AxiosResponse = await axiosClient.post("/hr/resume/", formData);
                 if (response.status === 200 || response.status === 201) {
                     setSnackbarMessage("Currículo atualizado com sucesso!")
                     setIsSnackbarOpen(true);

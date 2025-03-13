@@ -1,9 +1,6 @@
 import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from "react";
-import { mlrhUser, tokenResponse } from "../types/TokenResponse";
-import axios, { AxiosResponse } from "axios";
-import { axiosClient, axiosConfig } from "../utils/constants";
 import { ResumeType } from "../types/ResumeType";
-import { useAuth } from "./AuthContext";
+import { useAxiosClient } from "../hooks/useAxiosClient";
 
 interface ResumeContextType {
     resume: ResumeType | null;
@@ -15,10 +12,11 @@ const ResumeContext = createContext<ResumeContextType | null>(null);
 
 export function ResumeProvider({ children }: { children: ReactNode }) {
     const [resume, setResume] = useState<ResumeType | null>(null);
+    const axiosClient = useAxiosClient();
 
     const getResume = useCallback(async () => {
         try {
-            const response = await axiosClient.get("hr/get_resume/", axiosConfig);
+            const response = await axiosClient.get("hr/get_resume/");
             return response.data[0];
         } catch (error) {
             console.error("Failed to fetch resume:", error);
@@ -32,6 +30,7 @@ export function ResumeProvider({ children }: { children: ReactNode }) {
                 if (data) setResume(data);
             });
         }
+        console.log(resume)
     }, [resume, getResume]);
 
     return (

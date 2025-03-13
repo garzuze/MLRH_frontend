@@ -10,12 +10,15 @@ import { useServices } from "../../hooks/useServices";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { ProposalPDF } from "./pdf/ProposalPDF";
 import getDate from "../DashboardPanel/getDate";
-import { axiosClient, axiosConfig } from "../../utils/constants";
 import { fetchClientContactData } from "../../services/useClientContact";
 import { fetchClientFees } from "../../services/useClientFees";
+import { useAxiosClient } from "../../hooks/useAxiosClient";
 
 export default function ProposalForm() {
     const { client } = useClient();
+    const { services, loadingServices } = useServices();
+    const axiosClient = useAxiosClient();
+    
     const currentDate = getDate();
 
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
@@ -26,12 +29,11 @@ export default function ProposalForm() {
     const [clientContactData, setClientContactData] = useState<ClientContactType[]>([]);
     const [clientFeeData, setClientFeeData] = useState<ClientFeeType[]>([]);
 
-    const { services, loadingServices } = useServices();
 
 
     const getClientData = async (clientId: number) => {
         try {
-            const response: AxiosResponse = await axiosClient.get(`/clients/clients/${clientId}`, axiosConfig);
+            const response: AxiosResponse = await axiosClient.get(`/clients/clients/${clientId}`);
             if (response.status === 200) {
                 setClientData(response.data);
             } else {

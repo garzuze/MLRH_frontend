@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
-import { useEconomicActivities } from "../../hooks/useEconomicActivities";
 import Button from "../ui/Button";
-import { useBenefits } from "../../hooks/useBenefits";
-import axios, { AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from "axios";
+import { AxiosResponse } from "axios";
 import Snackbar from "../ui/Snackbar";
 import { useClient } from "../../contexts/ClientContext";
-import { axiosClient, axiosConfig, educationLevels, maritalStatus, states } from "../../utils/constants";
-import AutocompleteInput from "../form/AutocompleteInput";
+import { educationLevels, maritalStatus } from "../../utils/constants";
 import { fetchClientContactData } from "../../services/useClientContact";
 import { ClientContactType } from "../../types/ClientContactType";
 import { usePositions } from "../../hooks/usePositions";
@@ -14,7 +11,8 @@ import { ClientFeeType } from "../../types/ClientFeeType";
 import { fetchClientFees } from "../../services/useClientFees";
 import { useServices } from "../../hooks/useServices";
 import ClientSelector from "../form/ClientAutocompletInput";
-import { ClientType } from "../../types/ClientType";
+import { useAxiosClient } from "../../hooks/useAxiosClient";
+
 
 export default function ClientForm() {
 
@@ -27,12 +25,14 @@ export default function ClientForm() {
     const { client, setClient } = useClient();
     const { positions, loadingPositions } = usePositions();
     const { services, loadingServices } = useServices();
+    const axiosClient = useAxiosClient();
 
     useEffect(() => {
         try {
             const getClientContactData = async (clientId: number) => {
-                const newContactData = await fetchClientContactData(clientId);
-                if (Array.isArray(newContactData) && newContactData.length > 0) {
+                const newContactData = await fetchClientContactData(axiosClient, clientId);
+                console.log(newContactData);
+                if (newContactData.length > 0) {
                     setClientContactData(newContactData);
                 } else {
                     setSnackbarMessage("Você precisa cadastrar um contato...")
@@ -41,8 +41,8 @@ export default function ClientForm() {
             }
 
             const getClientFeeData = async (clientId: number) => {
-                const newFeeData = await fetchClientFees(clientId);
-                if (Array.isArray(newFeeData) && newFeeData.length > 0) {
+                const newFeeData = await fetchClientFees(axiosClient, clientId);
+                if (newFeeData.length > 0) {
                     setClientFeeData(newFeeData);
                 } else {
                     setSnackbarMessage("Nenhum honorário encontrado...")
@@ -65,7 +65,7 @@ export default function ClientForm() {
 
         const createProfile = async () => {
             try {
-                const response: AxiosResponse = await axiosClient.post("/hr/profile/", formData, axiosConfig);
+                const response: AxiosResponse = await axiosClient.post("/hr/profile/", formData);
                 if (response.status === 201) {
                     setSnackbarMessage("Perfil criado com sucesso!")
                     setIsSnackbarOpen(true);
@@ -85,7 +85,7 @@ export default function ClientForm() {
             <form onSubmit={handleSubmit} method="post" id="ProfileForm">
                 <div className="w-full flex gap-x-4">
                 </div>
-                <ClientSelector selectedClient={client} setSelectedClient={setClient}/>
+                <ClientSelector selectedClient={client} setSelectedClient={setClient} />
                 <select
                     name="clientContact"
                     className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700"
@@ -125,7 +125,7 @@ export default function ClientForm() {
                         })
                     ) : <option value="" disabled>Você precisa cadastrar um honorário ou cliente.</option>}
                 </select>
-                
+
                 <select name="maritalStatus" defaultValue="" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700">
                     <option value="" disabled>Selecione o estado civil</option>
                     {Object.entries(maritalStatus).map(([key, value]) => (
@@ -134,7 +134,7 @@ export default function ClientForm() {
                 </select>
 
                 <select name="educationLevel" defaultValue="" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700">
-                <option value="" disabled>Selecione o nível educacional</option>
+                    <option value="" disabled>Selecione o nível educacional</option>
                     {Object.entries(educationLevels).map(([key, value]) => (
                         <option key={key} value={key}>{value}</option>
                     ))}

@@ -1,21 +1,22 @@
-import { AxiosResponse } from "axios";
+// services/clientService.ts
+import { AxiosInstance, AxiosResponse } from "axios";
 import { ClientContactType } from "../types/ClientContactType";
-import { axiosClient, axiosConfig } from "../utils/constants";
 
-export const fetchClientContactData = async (clientId: number) => {
+export const fetchClientContactData = async (
+    axiosClient: AxiosInstance,
+    clientId: number
+): Promise<ClientContactType[]> => {
     try {
-        const response: AxiosResponse = await axiosClient.get(`/clients/get_client_contacts/?q=${clientId}`, axiosConfig);
-        console.log(response);
-        if (response.status === 200 && response.data.length > 0) {
-            const newContactData: ClientContactType[] = response.data;
-            return newContactData;
+        const response: AxiosResponse = await axiosClient.get(
+            `/clients/get_client_contacts/?q=${clientId}`
+        );
+        if (response.status === 200 && Array.isArray(response.data)) {
+            return response.data as ClientContactType[];
         } else {
-            console.log("No contact data avaliable")
-            return false;
+            console.log("No contact data available");
+            return [];
         }
-
     } catch (error) {
-        console.log(error)
-        return false;
+        return [];
     }
-}
+};

@@ -67,16 +67,6 @@ export const status = {
     S: "Suspenso",
 } as const;
 
-export const axiosClient = axios.create({
-    baseURL: import.meta.env.VITE_API_URL,
-});
-
-export const axiosConfig: AxiosRequestConfig = {
-    headers: {
-        'Authorization': `Bearer ${token}`,
-    } as RawAxiosRequestHeaders,
-};
-
 export type StateAbbreviation = keyof typeof states;
 export type EducationLevelAbbreviation = keyof typeof educationLevels;
 export type GenderAbbreviation = keyof typeof genders;

@@ -6,8 +6,8 @@ import Snackbar from "../ui/Snackbar";
 import { useServices } from "../../hooks/useServices";
 import { useClient } from "../../contexts/ClientContext";
 import { ClientFeeType } from "../../types/ClientFeeType";
-import { axiosClient, axiosConfig } from "../../utils/constants";
 import ClientSelector from "../form/ClientAutocompletInput";
+import { useAxiosClient } from "../../hooks/useAxiosClient";
 
 export default function ClientFeeForm() {
     const { client, setClient, setProposalComponent } = useClient();
@@ -19,9 +19,11 @@ export default function ClientFeeForm() {
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const [isServiceFormOpen, setIsServiceFormOpen] = useState<boolean>(false)
-    const { services, loadingServices } = useServices();
     const [clientFees, setClientFees] = useState<ClientFeeType[]>(initialFees);
     const [isCreateProposalOpen, setIsCreateProposalOpen] = useState<boolean>(false);
+    
+    const { services, loadingServices } = useServices();
+    const axiosClient = useAxiosClient();
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -29,7 +31,7 @@ export default function ClientFeeForm() {
         const createClientFee = async () => {
             try {
                 const responses = await Promise.all(clientFees.map((fee) => {
-                    return axiosClient.post("/clients/client_fee/", fee, axiosConfig);
+                    return axiosClient.post("/clients/client_fee/", fee);
                 }))
 
                 responses.forEach(response => {
@@ -59,7 +61,7 @@ export default function ClientFeeForm() {
 
     async function getPrevFeeData(clientId: number) {
         try {
-            const response: AxiosResponse = await axiosClient.get(`/clients/get_client_fees/?q=${clientId}`, axiosConfig);
+            const response: AxiosResponse = await axiosClient.get(`/clients/get_client_fees/?q=${clientId}`);
             if (response.data.length >= 3) {
                 setIsCreateProposalOpen(true)
                 setClientFees(response.data);

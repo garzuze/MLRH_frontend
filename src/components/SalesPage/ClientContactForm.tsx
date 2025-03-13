@@ -2,15 +2,16 @@ import { useState } from "react";
 import { AxiosResponse } from "axios";
 import Button from "../ui/Button";
 import Snackbar from "../ui/Snackbar";
-import { axiosClient, axiosConfig } from "../../utils/constants";
 import { useClient } from "../../contexts/ClientContext";
 import ClientSelector from "../form/ClientAutocompletInput";
+import { useAxiosClient } from "../../hooks/useAxiosClient";
 
 export default function ClientContactForm() {
 
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const { client, setClient } = useClient();
+    const axiosClient = useAxiosClient();
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -18,7 +19,7 @@ export default function ClientContactForm() {
 
         const createClientContact = async () => {
             try {
-                const response: AxiosResponse = await axiosClient.post("/clients/client_contact/", formData, axiosConfig);
+                const response: AxiosResponse = await axiosClient.post("/clients/client_contact/", formData);
                 if (response.status === 201) {
                     setSnackbarMessage("Contato criado com sucesso!")
                     setIsSnackbarOpen(true);

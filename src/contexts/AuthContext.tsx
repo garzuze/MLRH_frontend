@@ -1,7 +1,6 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { mlrhUser, tokenResponse } from "../types/TokenResponse";
 import axios, { AxiosResponse } from "axios";
-import { axiosClient } from "../utils/constants";
 
 interface AuthContextType {
     user: mlrhUser | null;
@@ -21,6 +20,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [refreshToken, setRefreshToken] = useState<string | null>(localStorage.getItem("refresh_token"));
     const [loading, setLoading] = useState<boolean>(true);
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+    const axiosClient = axios.create({
+        baseURL: import.meta.env.VITE_API_URL,
+    });
 
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
@@ -80,7 +82,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             setToken(access);
             setRefreshToken(refresh);
             setUser(user);
-
+    
             localStorage.setItem("access_token", access);
             localStorage.setItem("refresh_token", refresh);
             localStorage.setItem("user", JSON.stringify(user));
@@ -101,7 +103,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
             if (response.status === 201) {
                 return true;
-            } 
+            }
 
             return false;
         } catch (error) {
