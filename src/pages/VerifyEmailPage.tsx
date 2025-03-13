@@ -1,11 +1,10 @@
 import { useEffect, useState, useRef, ReactNode } from "react"
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { axiosClient } from "../utils/constants";
 import Title from "../components/ui/Title";
 import Button from "../components/ui/Button";
 import { useAuth } from "../contexts/AuthContext";
-import { ResumeProvider, useResume } from "../contexts/ResumeContext";
-import { BasicInfoType } from "./ResumePage";
+import { ResumeProvider } from "../contexts/ResumeContext";
+import { useAxiosClient } from "../hooks/useAxiosClient";
 
 export default function VerifyEmailPage() {
     return (
@@ -23,6 +22,8 @@ function VerifyEmail() {
     const hasSentRequest = useRef(false);
     const { login } = useAuth();
     const navigate = useNavigate();
+    const axiosClient = useAxiosClient();
+
 
     let status: ReactNode;
 
@@ -45,15 +46,7 @@ function VerifyEmail() {
     if (verified) {
         const handleSubmit = async (e: React.FormEvent) => {
             e.preventDefault();
-            const basicInfo = JSON.parse(localStorage.getItem('basic_info') || "") as BasicInfoType;
-
-            const success = await login(basicInfo.email, basicInfo.password);
-
-            if (success) {
-                navigate('/curriculo');
-            } else {
-                console.error("deu ruim")
-            }
+            navigate('/');
         }
 
         status =
@@ -61,7 +54,7 @@ function VerifyEmail() {
                 <Title variant="h2" text="Email validado!"></Title>
                 <form onSubmit={handleSubmit}>
                     <div className="mx-auto text-center">
-                        <Button text="Criar currículo" type="submit"></Button>
+                        <Button text="Fazer login" type="submit"></Button>
                     </div>
                 </form>
             </div>

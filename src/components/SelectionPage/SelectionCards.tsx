@@ -1,4 +1,5 @@
 import { ClientProvider, useClient } from "../../contexts/ClientContext";
+import { ResumeProvider } from "../../contexts/ResumeContext";
 import { Card } from "../ui/Card";
 import ProfileForm from "./ProfileForm";
 import ReportForm from "./ReportForm";
@@ -6,7 +7,9 @@ import ReportForm from "./ReportForm";
 export default function SalesCards() {
     return <>
         <ClientProvider>
-            <Cards />
+            <ResumeProvider>
+                <Cards />
+            </ResumeProvider>
         </ClientProvider>
     </>
 }

@@ -2,14 +2,16 @@ import { useState } from "react";
 import { useEconomicActivities } from "../../hooks/useEconomicActivities";
 import Button from "../ui/Button";
 import { useBenefits } from "../../hooks/useBenefits";
-import axios, { AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from "axios";
+import { AxiosResponse } from "axios";
 import Snackbar from "../ui/Snackbar";
 import { useClient } from "../../contexts/ClientContext";
-import { axiosClient, axiosConfig, states } from "../../utils/constants";
+import { states } from "../../utils/constants";
+import { useAxiosClient } from "../../hooks/useAxiosClient";
 
 export default function ClientForm() {
     const { economicActivities, loadingEconomicActivities } = useEconomicActivities();
     const { benefits, loadingBenefits } = useBenefits();
+    const axiosClient = useAxiosClient();
 
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
@@ -23,11 +25,21 @@ export default function ClientForm() {
 
         const createClient = async () => {
             try {
-                const response: AxiosResponse = await axiosClient.post("/clients/clients/", formData, axiosConfig);
+                const response: AxiosResponse = await axiosClient.post("/clients/clients/", formData);
                 if (response.status === 201) {
                     setSnackbarMessage("Cliente criado com sucesso!")
                     setIsSnackbarOpen(true);
-                    setClient({ id: response.data.id, corporateName: response.data.corporateName });
+                    setClient({
+                        id: response.data.id, corporateName: response.data.corporateName,
+                        city: "",
+                        state: "",
+                        address: "",
+                        cnpj: "",
+                        neighborhood: "",
+                        tradeName: "",
+                        economicActivity: 0,
+                        benefits: []
+                    });
                     (document.getElementById('ClientForm') as HTMLFormElement).reset();
                 } else {
                     setSnackbarMessage("Ops... Alguma coisa deu errado.")
@@ -73,7 +85,7 @@ export default function ClientForm() {
                 </div>
                 <div className="w-full flex gap-x-4">
                     <input
-                        type="int"
+                        type="number"
                         placeholder="Número de empregados"
                         className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
                         name="numberOfEmployees"

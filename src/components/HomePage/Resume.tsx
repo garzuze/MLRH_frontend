@@ -3,9 +3,9 @@ import Button from "../ui/Button"
 import Title from "../ui/Title"
 import { AxiosError, AxiosResponse } from "axios";
 import { useAuth } from "../../contexts/AuthContext";
-import { axiosClient, axiosConfig } from "../../utils/constants";
 import { BasicInfoType } from "../../pages/ResumePage";
-import { mlrhUser } from "../../types/TokenResponse";
+import { useNavigate } from "react-router-dom";
+import { useAxiosClient } from "../../hooks/useAxiosClient";
 
 export default function Resume() {
 
@@ -15,6 +15,9 @@ export default function Resume() {
     const [cpf, setCpf] = useState<string>("");
     const [action, setAction] = useState<"cpf" | "login" | "register">("cpf");
     const [message, setMessage] = useState<string>();
+    const navigate = useNavigate();
+    const axiosClient = useAxiosClient();
+
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -37,15 +40,28 @@ export default function Resume() {
 
         if (action === "login" && email && password) {
             await login(email, password);
-            window.location.href = "/curriculo/";
+            navigate('/curriculo');
         } else if (action === "register" && email && password) {
+            const basicInfo: BasicInfoType = { email: email, cpf: cpf, password: password };
+            localStorage.setItem("basic_info", JSON.stringify(basicInfo));
             logout(); // edge case: usuário já tinha um currículo no localStorage e decide criar um novo
-            const isEmailSent = await register(email, password);
-            if (isEmailSent) {
-                setMessage("Cadastro recebido com sucesso! Se os dados fornecidos forem válidos, você receberá um e-mail com instruções para ativar sua conta.");
-                const basicInfo: BasicInfoType = { email: email, cpf: cpf, password: password };
-                localStorage.setItem("basic_info", JSON.stringify(basicInfo));
+            // New workflow:
+            // Check if user already exists ? set basic info and redirect to resumepage
+            // : send verification email
+            try {
+                const isLogged = await login(email, password);
+                if (isLogged) {
+                    navigate('/curriculo');
+                } else {
+                    const isEmailSent = await register(email, password);
+                    if (isEmailSent) {
+                        setMessage("Cadastro recebido com sucesso! Se os dados fornecidos forem válidos, você receberá um e-mail com instruções para ativar sua conta.");
+                    }
+                }
+            } catch (error) {
+                console.error(error)
             }
+
         }
     }
 
