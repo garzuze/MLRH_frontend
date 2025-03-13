@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { AxiosResponse, AxiosError } from "axios";
 import Button from "../ui/Button";
 import Snackbar from "../ui/Snackbar";
-import { useServices } from "../../services/useServices";
+import { useServices } from "../../hooks/useServices";
 import { useClient } from "../../contexts/ClientContext";
 import { ClientFeeType } from "../../types/ClientFeeType";
 import { axiosClient, axiosConfig } from "../../utils/constants";

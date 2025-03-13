@@ -2,7 +2,7 @@ import { Document, Page, Text, View, StyleSheet, Image, Font } from "@react-pdf/
 import { ClientType } from "../../../types/ClientType";
 import { ClientContactType } from "../../../types/ClientContactType";
 import { ClientFeeType } from "../../../types/ClientFeeType";
-import { serviceType } from "../../../services/useServices";
+import { serviceType } from "../../../hooks/useServices";
 import getDate from "../../DashboardPanel/getDate";
 
 const styles = StyleSheet.create({

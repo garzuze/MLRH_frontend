@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useEconomicActivities } from "../../services/useEconomicActivities";
+import { useEconomicActivities } from "../../hooks/useEconomicActivities";
 import Button from "../ui/Button";
-import { useBenefits } from "../../services/useBenefits";
+import { useBenefits } from "../../hooks/useBenefits";
 import axios, { AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from "axios";
 import Snackbar from "../ui/Snackbar";
 import { useClient } from "../../contexts/ClientContext";

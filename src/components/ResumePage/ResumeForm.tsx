@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { axiosClient, axiosConfig, educationLevels, genders, languageLevels, maritalStatus, states } from "../../utils/constants";
-import { ResumeFormProps } from "../../pages/ResumePage";
+import { BasicInfoType, ResumeFormProps } from "../../pages/ResumePage";
 import Button from "../ui/Button";
 import { AxiosResponse } from "axios";
 import Snackbar from "../ui/Snackbar";
@@ -10,7 +10,23 @@ import { useAuth } from "../../contexts/AuthContext";
 export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => {
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
-    console.log(axiosConfig);
+    console.log(axiosConfig)
+    const { login } = useAuth();
+
+    useEffect(() => {
+        async function loginNewUser() {
+            const basicInfo = JSON.parse(localStorage.getItem('basic_info') || '') as BasicInfoType;
+            const success = await login(basicInfo.email, basicInfo.password);
+            if (success) {
+                setSnackbarMessage(`Usuário logado como: ${basicInfo.email}`)
+                setIsSnackbarOpen(true);
+            } else {
+                console.error("bishshshshshs")
+            }
+        }
+        loginNewUser();
+    }, [])
+
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();

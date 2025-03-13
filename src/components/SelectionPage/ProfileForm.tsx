@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useEconomicActivities } from "../../services/useEconomicActivities";
+import { useEconomicActivities } from "../../hooks/useEconomicActivities";
 import Button from "../ui/Button";
-import { useBenefits } from "../../services/useBenefits";
+import { useBenefits } from "../../hooks/useBenefits";
 import axios, { AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from "axios";
 import Snackbar from "../ui/Snackbar";
 import { useClient } from "../../contexts/ClientContext";
@@ -9,10 +9,10 @@ import { axiosClient, axiosConfig, educationLevels, maritalStatus, states } from
 import AutocompleteInput from "../form/AutocompleteInput";
 import { fetchClientContactData } from "../../services/useClientContact";
 import { ClientContactType } from "../../types/ClientContactType";
-import { usePositions } from "../../services/usePositions";
+import { usePositions } from "../../hooks/usePositions";
 import { ClientFeeType } from "../../types/ClientFeeType";
 import { fetchClientFees } from "../../services/useClientFees";
-import { useServices } from "../../services/useServices";
+import { useServices } from "../../hooks/useServices";
 import ClientSelector from "../form/ClientAutocompletInput";
 import { ClientType } from "../../types/ClientType";
 

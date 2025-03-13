@@ -5,7 +5,7 @@ import Snackbar from "../ui/Snackbar";
 import { ClientType } from "../../types/ClientType";
 import { ClientContactType } from "../../types/ClientContactType";
 import { ClientFeeType } from "../../types/ClientFeeType";
-import { useServices } from "../../services/useServices";
+import { useServices } from "../../hooks/useServices";
 
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { ProposalPDF } from "./pdf/ProposalPDF";
