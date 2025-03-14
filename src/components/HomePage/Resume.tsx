@@ -3,7 +3,7 @@ import Button from "../ui/Button"
 import Title from "../ui/Title"
 import { AxiosError, AxiosResponse } from "axios";
 import { useAuth } from "../../contexts/AuthContext";
-import { BasicInfoType } from "../../pages/ResumePage";
+import { BasicInfoType } from "../../types/BasicInfoType";
 import { useNavigate } from "react-router-dom";
 import { useAxiosClient } from "../../hooks/useAxiosClient";
 

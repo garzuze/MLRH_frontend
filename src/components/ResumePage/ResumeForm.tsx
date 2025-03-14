@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { educationLevels, genders, languageLevels, maritalStatus, states } from "../../utils/constants";
-import { BasicInfoType, ResumeFormProps } from "../../pages/ResumePage";
+import { BasicInfoType } from "../../types/BasicInfoType";
 import Button from "../ui/Button";
 import { AxiosResponse } from "axios";
 import Snackbar from "../ui/Snackbar";
 import { useAuth } from "../../contexts/AuthContext";
 import { useAxiosClient } from "../../hooks/useAxiosClient";
 import { usePositions } from "../../hooks/usePositions";
+import { ResumeFormProps } from "../../types/ResumeFormProps";
 
 
 export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => {
@@ -43,6 +44,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => 
                 if (response.status === 200 || response.status === 201) {
                     setSnackbarMessage("Currículo atualizado com sucesso!")
                     setIsSnackbarOpen(true);
+                    location.reload();
                 } else {
                     setSnackbarMessage("Ops... Alguma coisa deu errado.")
                     setIsSnackbarOpen(true);

@@ -1,16 +1,8 @@
-import { useEffect } from "react";
 import { ResumeProvider, useResume } from "../contexts/ResumeContext";
 import Title from "../components/ui/Title";
-export interface BasicInfoType {
-    email: string;
-    cpf: string;
-    password: string;
-}
-
-import { ResumeType } from "../types/ResumeType";
 import { ResumeForm } from "../components/ResumePage/ResumeForm";
-import { mlrhUser } from "../types/TokenResponse";
 import WorkExperienceForm from "../components/ResumePage/WorkExperienceForm";
+import { BasicInfoType } from "../types/BasicInfoType";
 
 export default function ResumePage() {
     return (
@@ -20,11 +12,6 @@ export default function ResumePage() {
     )
 }
 
-
-export interface ResumeFormProps {
-    resume?: ResumeType;
-    basicInfo?: BasicInfoType;
-}
 
 function Resume() {
     const { resume } = useResume();
