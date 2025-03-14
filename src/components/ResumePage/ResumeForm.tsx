@@ -58,7 +58,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => 
 
     return (
         <>
-            <form className="space-y-6" onSubmit={handleSubmit}>
+            <form className="space-y-6" onSubmit={handleSubmit} id="resumeForm">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     {/* Nome */}
                     <div className="flex flex-col items-start">

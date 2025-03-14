@@ -10,6 +10,7 @@ export interface BasicInfoType {
 import { ResumeType } from "../types/ResumeType";
 import { ResumeForm } from "../components/ResumePage/ResumeForm";
 import { mlrhUser } from "../types/TokenResponse";
+import WorkExperienceForm from "../components/ResumePage/WorkExperienceForm";
 
 export default function ResumePage() {
     return (
@@ -37,6 +38,10 @@ function Resume() {
                     <p className="mb-3 font-normal text-zinc-300 line-clamp-3 text-center">Estas são as informações do seu currículo:</p>
                     <div className="w-full bg-neutral-950 border border-neutral-800 rounded-lg shadow md:mt-0 md text-zinc-50 p-4 xl:max-w-screen-xl mx-auto">
                         <ResumeForm resume={resume} />
+                    </div>
+                    <Title variant="h3" text={`Experiências`} className="text-center pb-2 my-6" />
+                    <div className="w-full bg-neutral-950 border border-neutral-800 rounded-lg shadow md:mt-0 md text-zinc-50 p-4 xl:max-w-screen-xl mx-auto">
+                        <WorkExperienceForm />
                     </div>
                 </div>
             </main>
