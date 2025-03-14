@@ -27,7 +27,7 @@ export interface ResumeFormProps {
 
 function Resume() {
     const { resume } = useResume();
-    const basicInfo = JSON.parse(localStorage.getItem('basic_info') || "") as BasicInfoType;
+    const basicInfo = JSON.parse(localStorage.getItem('basic_info') ?? "null") as BasicInfoType | null;
 
     if (resume) {
         return (

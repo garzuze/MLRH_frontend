@@ -6,25 +6,28 @@ import { AxiosResponse } from "axios";
 import Snackbar from "../ui/Snackbar";
 import { useAuth } from "../../contexts/AuthContext";
 import { useAxiosClient } from "../../hooks/useAxiosClient";
+import { usePositions } from "../../hooks/usePositions";
 
 
 export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => {
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const axiosClient = useAxiosClient();
-    console.log(axiosClient);
 
     const { login } = useAuth();
+    const { positions, loadingPositions } = usePositions();
 
     useEffect(() => {
         async function loginNewUser() {
-            const basicInfo = JSON.parse(localStorage.getItem('basic_info') || '') as BasicInfoType;
-            const success = await login(basicInfo.email, basicInfo.password);
-            if (success) {
-                setSnackbarMessage(`Usuário logado como: ${basicInfo.email}`)
-                setIsSnackbarOpen(true);
-            } else {
-                console.error("bishshshshshs")
+            const basicInfo = JSON.parse(localStorage.getItem('basic_info') ?? "null") as BasicInfoType | null;
+            if (basicInfo) {
+                const success = await login(basicInfo.email, basicInfo.password);
+                if (success) {
+                    setSnackbarMessage(`Usuário logado como: ${basicInfo.email}`)
+                    setIsSnackbarOpen(true);
+                } else {
+                    console.error("bishshshshshs")
+                }
             }
         }
         loginNewUser();
@@ -485,6 +488,21 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => 
                             id="contactPhone"
                             defaultValue={resume?.contactPhone}
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
+                    </div>
+
+
+                    <div className="flex flex-col items-start">
+                        <label htmlFor="desiredPositions" className="mb-2 text-sm font-medium text-zinc-300">
+                            Cargos desejados
+                        </label>
+                        <select multiple={true} defaultValue={[""]} name="desiredPositions" className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5">
+                            {loadingPositions ? (<option disabled>Carregando...</option>)
+                                : (
+                                    positions.map((position) => (
+                                        <option key={position.id} value={position.id}>{position.title}</option>
+                                    ))
+                                )}
+                        </select>
                     </div>
 
                     {/* Horário comercial? */}

@@ -42,6 +42,7 @@ export default function Resume() {
             await login(email, password);
             navigate('/curriculo');
         } else if (action === "register" && email && password) {
+            // Maybe it's better to move this to context 🤔
             const basicInfo: BasicInfoType = { email: email, cpf: cpf, password: password };
             localStorage.setItem("basic_info", JSON.stringify(basicInfo));
             logout(); // edge case: usuário já tinha um currículo no localStorage e decide criar um novo
