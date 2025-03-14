@@ -50,7 +50,7 @@ export default function ProposalForm() {
 
 
     const getClientContactData = async (clientId: number) => {
-        const newContactData = await fetchClientContactData(clientId);
+        const newContactData = await fetchClientContactData(axiosClient, clientId);
         if (Array.isArray(newContactData) && newContactData.length > 0) {
             setClientContactData(newContactData);
         } else {
@@ -60,7 +60,7 @@ export default function ProposalForm() {
     }
 
     const getClientFeeData = async (clientId: number) => {
-        const newClientFeeData = await fetchClientFees(clientId);
+        const newClientFeeData = await fetchClientFees(axiosClient, clientId);
         if (Array.isArray(newClientFeeData) && newClientFeeData.length > 0) {
             setClientFeeData(newClientFeeData);
         } else {
