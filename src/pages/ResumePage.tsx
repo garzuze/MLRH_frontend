@@ -1,8 +1,9 @@
 import { ResumeProvider, useResume } from "../contexts/ResumeContext";
 import Title from "../components/ui/Title";
 import { ResumeForm } from "../components/ResumePage/ResumeForm";
-import WorkExperienceForm from "../components/ResumePage/WorkExperienceForm";
+import { WorkExperienceForm } from "../components/ResumePage/WorkExperienceForm";
 import { BasicInfoType } from "../types/BasicInfoType";
+import { useWorkExperiences } from "../hooks/useWorkExperiences";
 
 export default function ResumePage() {
     return (
@@ -15,6 +16,7 @@ export default function ResumePage() {
 
 function Resume() {
     const { resume } = useResume();
+    const { WorkExperiences, loadingWorkExperiences } = useWorkExperiences();
     const basicInfo = JSON.parse(localStorage.getItem('basic_info') ?? "null") as BasicInfoType | null;
 
     if (resume) {
@@ -27,9 +29,12 @@ function Resume() {
                         <ResumeForm resume={resume} />
                     </div>
                     <Title variant="h3" text={`Experiências`} className="text-center pb-2 my-6" />
-                    <div className="w-full bg-neutral-950 border border-neutral-800 rounded-lg shadow md:mt-0 md text-zinc-50 p-4 xl:max-w-screen-xl mx-auto">
-                        <WorkExperienceForm />
-                    </div>
+                    <WorkExperienceForm />
+                    {(!loadingWorkExperiences && WorkExperiences) && (
+                        WorkExperiences.map((experience) => (
+                            <WorkExperienceForm experience={experience} />
+                        ))
+                    )}
                 </div>
             </main>
         );
