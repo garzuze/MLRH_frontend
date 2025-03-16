@@ -2,11 +2,7 @@ import { AxiosResponse } from "axios";
 import { useAuth } from "../contexts/AuthContext";
 import { useEffect, useState } from "react";
 import { useAxiosClient } from "./useAxiosClient";
-
-export interface benefitType{
-    id: number;
-    benefit: string;
-}
+import { benefitType } from "../types/benefitType";
 
 export const useBenefits = () => {
     const { token } = useAuth();
