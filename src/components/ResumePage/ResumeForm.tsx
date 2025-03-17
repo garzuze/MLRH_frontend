@@ -16,7 +16,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => 
     const axiosClient = useAxiosClient();
 
     const { login } = useAuth();
-    const { positions, loadingPositions } = usePositions();
+    const { positions, loadingPositions, positionsError } = usePositions();
 
     useEffect(() => {
         async function loginNewUser() {
@@ -498,12 +498,14 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => 
                             Cargos desejados
                         </label>
                         <select multiple={true} defaultValue={[""]} name="desiredPositions" className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5">
-                            {loadingPositions ? (<option disabled>Carregando...</option>)
-                                : (
-                                    positions.map((position) => (
-                                        <option key={position.id} value={position.id}>{position.title}</option>
-                                    ))
-                                )}
+                            {positionsError ? <option disabled>Houve um error</option> :
+                                loadingPositions ? (<option disabled>Carregando...</option>)
+                                    : (
+                                        positions.map((position) => (
+                                            <option key={position.id} value={position.id}>{position.title}</option>
+                                        ))
+                                    )
+                            }
                         </select>
                     </div>
 

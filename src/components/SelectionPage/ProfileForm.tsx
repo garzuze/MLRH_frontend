@@ -23,8 +23,8 @@ export default function ClientForm() {
     const [clientFeeData, setClientFeeData] = useState<ClientFeeType[]>([]);
 
     const { client, setClient } = useClient();
-    const { positions, loadingPositions } = usePositions();
-    const { services, loadingServices } = useServices();
+    const { positions, loadingPositions, positionsError } = usePositions();
+    const { services } = useServices();
     const axiosClient = useAxiosClient();
 
     useEffect(() => {
@@ -101,12 +101,14 @@ export default function ClientForm() {
 
                 <select name="position" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700" required defaultValue="">
                     <option value="" disabled>Cargo</option>
-                    {loadingPositions ? (<option disabled>Carregando...</option>)
-                        : (
-                            positions.map((position) => (
-                                <option key={position.id} value={position.id}>{position.title}</option>
-                            ))
-                        )}
+                    {positionsError ? <option disabled>Houve um error</option> :
+                        loadingPositions ? (<option disabled>Carregando...</option>)
+                            : (
+                                positions.map((position) => (
+                                    <option key={position.id} value={position.id}>{position.title}</option>
+                                ))
+                            )
+                    }
                 </select>
 
                 <select

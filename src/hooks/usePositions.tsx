@@ -1,32 +1,19 @@
-import axios, { AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from "axios";
 import { useAuth } from "../contexts/AuthContext";
-import { useEffect, useState } from "react";
+import { positionType } from "../types/positionType";
 import { useAxiosClient } from "./useAxiosClient";
-
-export interface positionType{
-    id: number;
-    title: string;
-}
+import { useQuery } from "@tanstack/react-query";
 
 export const usePositions = () => {
     const { token } = useAuth();
     const axiosClient = useAxiosClient();
-    const [positions, setPositions] = useState<positionType[]>([]);
-    const [loadingPositions, setLoading] = useState<boolean>(true);
-
-    useEffect(() => {
-        const fetchPositions = async () => {
-            try {
-                const response: AxiosResponse = await axiosClient.get("/hr/positions/");
-                setPositions(response.data);
-            } catch (error) {
-                console.log(error)
-            } finally {
-                setLoading(false);
-            }
-        }
-        fetchPositions();
-    }, [token])
-
-    return { positions, loadingPositions };
+    
+    const { data: positions = [], isLoading: loadingPositions, error: positionsError } = useQuery<positionType[]>({
+        queryKey: ['positions', token],
+        queryFn: async () => {
+            const response = await axiosClient.get("/hr/positions/");
+            return response.data;
+        },
+        staleTime: 30000,
+    })
+    return { positions, loadingPositions, positionsError };
 }
