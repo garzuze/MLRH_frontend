@@ -1,28 +1,21 @@
-import { AxiosResponse } from "axios";
+import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "../contexts/AuthContext";
-import { useEffect, useState } from "react";
 import { useAxiosClient } from "./useAxiosClient";
 import { benefitType } from "../types/benefitType";
 
 export const useBenefits = () => {
     const { token } = useAuth();
     const axiosClient = useAxiosClient();
-    const [benefits, setBenefits] = useState<benefitType[]>([]);
-    const [loadingBenefits, setLoading] = useState<boolean>(true);
 
-    useEffect(() => {
-        const fetchBenefits = async () => {
-            try {
-                const response: AxiosResponse = await axiosClient.get("/clients/benefits/");
-                setBenefits(response.data);
-            } catch (error) {
-                console.log(error)
-            } finally {
-                setLoading(false);
-            }
-        }
-        fetchBenefits();
-    }, [token])
+    const { data: benefits = [], isLoading: loadingBenefits, error: benefitsError } = useQuery<benefitType[]>({
+        queryKey: ['benefits', token],
+        queryFn: async () => {
+            const response = await axiosClient.get('/clients/benefits/');
+            return response.data;
+        },
+        enabled: !!token,
+        staleTime: 300000, 
+    });
 
-    return { benefits, loadingBenefits };
-}
+    return { benefits, loadingBenefits, benefitsError };
+};

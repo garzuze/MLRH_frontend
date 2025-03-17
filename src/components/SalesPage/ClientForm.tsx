@@ -10,14 +10,14 @@ import { useAxiosClient } from "../../hooks/useAxiosClient";
 
 export default function ClientForm() {
     const { economicActivities, loadingEconomicActivities } = useEconomicActivities();
-    const { benefits, loadingBenefits } = useBenefits();
+    const { benefits, loadingBenefits, benefitsError } = useBenefits();
     const axiosClient = useAxiosClient();
 
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
 
     const { setClient } = useClient();
-    
+
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -139,7 +139,9 @@ export default function ClientForm() {
                         )}
                 </select>
                 <select multiple={true} defaultValue={[""]} name="benefits" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full">
-                    <option value="" disabled >Benefícios</option>
+                    {benefitsError ? <option value="" disabled>Houve um error</option> :
+                        <option value="" disabled >Benefícios</option>
+                    }
                     {loadingBenefits ? (<option disabled>Carregando...</option>)
                         : (
                             benefits.map((benefit) => (
