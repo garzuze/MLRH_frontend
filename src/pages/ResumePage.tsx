@@ -16,7 +16,7 @@ export default function ResumePage() {
 
 function Resume() {
     const { resume } = useResume();
-    const { WorkExperiences, loadingWorkExperiences } = useWorkExperiences();
+    const { data: WorkExperiences, isLoading } = useWorkExperiences();
     const basicInfo = JSON.parse(localStorage.getItem('basic_info') ?? "null") as BasicInfoType | null;
 
     if (resume) {
@@ -30,11 +30,11 @@ function Resume() {
                     </div>
                     <Title variant="h3" text={`Experiências`} className="text-center pb-2 my-6" />
                     <WorkExperienceForm />
-                    {(!loadingWorkExperiences && WorkExperiences) && (
+                    {!isLoading && WorkExperiences &&
                         WorkExperiences.map((experience) => (
-                            <WorkExperienceForm experience={experience} />
+                            <WorkExperienceForm key={experience.id} experience={experience} />
                         ))
-                    )}
+                    }
                 </div>
             </main>
         );

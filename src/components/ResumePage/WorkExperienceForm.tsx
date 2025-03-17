@@ -4,6 +4,7 @@ import Button from "../ui/Button";
 import { useAxiosClient } from "../../hooks/useAxiosClient";
 import Snackbar from "../ui/Snackbar";
 import { WorkExperienceType } from "../../types/WorkExperienceType";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface WorkExperienceFormProps {
     experience?: WorkExperienceType;
@@ -13,6 +14,7 @@ export const WorkExperienceForm: React.FC<WorkExperienceFormProps> = ({ experien
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const axiosClient = useAxiosClient();
+    const queryClient = useQueryClient();
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -21,6 +23,7 @@ export const WorkExperienceForm: React.FC<WorkExperienceFormProps> = ({ experien
             try {
                 const response: AxiosResponse = await axiosClient.post("/hr/work_experience/", formData);
                 if (response.status === 200 || response.status === 201) {
+                    queryClient.invalidateQueries({queryKey: ['workExperiences']})
                     setSnackbarMessage("Experiência atualizada com sucesso!")
                     setIsSnackbarOpen(true);
                 } else {
