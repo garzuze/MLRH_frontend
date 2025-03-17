@@ -9,7 +9,7 @@ import { states } from "../../utils/constants";
 import { useAxiosClient } from "../../hooks/useAxiosClient";
 
 export default function ClientForm() {
-    const { economicActivities, loadingEconomicActivities } = useEconomicActivities();
+    const { economicActivities, loadingEconomicActivities, economicActivitiesError } = useEconomicActivities();
     const { benefits, loadingBenefits, benefitsError } = useBenefits();
     const axiosClient = useAxiosClient();
 
@@ -130,7 +130,9 @@ export default function ClientForm() {
                 </div>
 
                 <select name="economicActivity" defaultValue={""} className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" required>
-                    <option value="" disabled>Atividade econômica</option>
+                    {economicActivitiesError ? <option defaultValue="" disabled>Houve algum error</option> :
+                        <option value="" disabled>Atividade econômica</option>
+                    }
                     {loadingEconomicActivities ? (<option disabled>Carregando...</option>)
                         : (
                             economicActivities.map((activity) => (

@@ -1,32 +1,21 @@
-import { AxiosResponse } from "axios";
+import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "../contexts/AuthContext";
-import { useEffect, useState } from "react";
 import { useAxiosClient } from "./useAxiosClient";
-
-export interface economicActivityType{
-    id: number;
-    title: string;
-}
+import { economicActivityType } from "../types/economicActivityType";
 
 export const useEconomicActivities = () => {
     const { token } = useAuth();
-    const [economicActivities, setEconomicActivities] = useState<economicActivityType[]>([]);
-    const [loadingEconomicActivities, setLoading] = useState<boolean>(true);
     const axiosClient = useAxiosClient();
 
-    useEffect(() => {
-        const fetchEconomicActivities = async () => {
-            try {
-                const response: AxiosResponse = await axiosClient.get("/clients/economic_activity/");
-                setEconomicActivities(response.data);
-            } catch (error) {
-                console.log(error)
-            } finally {
-                setLoading(false);
-            }
-        }
-        fetchEconomicActivities();
-    }, [token])
+    const { data: economicActivities = [], isLoading: loadingEconomicActivities, error: economicActivitiesError } = useQuery<economicActivityType[]>({
+        queryKey: ['economicActivities', token],
+        queryFn: async () => {
+            const response = await axiosClient.get("clients/economic_activity/");
+            return response.data;
+        },
+        enabled: !!token,
+        staleTime: 300000,
+    });
 
-    return { economicActivities, loadingEconomicActivities };
-}
+    return { economicActivities, loadingEconomicActivities, economicActivitiesError };
+}   
