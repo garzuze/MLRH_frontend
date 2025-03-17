@@ -2,32 +2,21 @@ import axios, { AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from
 import { useAuth } from "../contexts/AuthContext";
 import { useEffect, useState } from "react";
 import { useAxiosClient } from "./useAxiosClient";
-
-export interface serviceType{
-    id: number;
-    service: string;
-}
+import { serviceType } from "../types/serviceType";
+import { useQuery } from "@tanstack/react-query";
 
 export const useServices = () => {
     const { token } = useAuth();
     const axiosClient = useAxiosClient();
-    
-    const [services, setServices] = useState<serviceType[]>([]);
-    const [loadingServices, setLoading] = useState<boolean>(true);
 
-    useEffect(() => {
-        const fetchServices = async () => {
-            try {
-                const response: AxiosResponse = await axiosClient.get("/clients/services/");
-                setServices(response.data);
-            } catch (error) {
-                console.log(error)
-            } finally {
-                setLoading(false);
-            }
-        }
-        fetchServices();
-    }, [token])
+    const { data: services = [], isLoading: loadingServices, error: servicesError } = useQuery<serviceType[]>({
+        queryKey: ['services', token],
+        queryFn: async () => {
+            const response = await axiosClient.get("/clients/services/");
+            return response.data;
+        },
+        staleTime: 300000,
+    });
 
-    return { services, loadingServices };
+    return { services, loadingServices, servicesError };
 }

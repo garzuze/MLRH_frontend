@@ -21,8 +21,8 @@ export default function ClientFeeForm() {
     const [isServiceFormOpen, setIsServiceFormOpen] = useState<boolean>(false)
     const [clientFees, setClientFees] = useState<ClientFeeType[]>(initialFees);
     const [isCreateProposalOpen, setIsCreateProposalOpen] = useState<boolean>(false);
-    
-    const { services, loadingServices } = useServices();
+
+    const { services, loadingServices, servicesError } = useServices();
     const axiosClient = useAxiosClient();
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -134,8 +134,10 @@ export default function ClientFeeForm() {
                             Novo serviço
                         </p>
                         <div>
-                            <select name="service" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" defaultValue={"servico"} onChange={(event) => setClientFees((prevFees) => prevFees.map((fee) => (fee.service === prevFees[prevFees.length - 1].service ? { ...fee, service: Number(event.target.value) } : fee)))}>
-                                <option value={'servico'} key={"servico"} disabled>Serviço</option>
+                            <select name="service" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" defaultValue="" onChange={(event) => setClientFees((prevFees) => prevFees.map((fee) => (fee.service === prevFees[prevFees.length - 1].service ? { ...fee, service: Number(event.target.value) } : fee)))}>
+                                {servicesError ? <option value="" disabled>House um erro</option> :
+                                    <option value={'servico'} key={"servico"} disabled>Serviço</option>
+                                }
                                 {loadingServices ? (
                                     <option>Carregando....</option>
                                 ) : (
