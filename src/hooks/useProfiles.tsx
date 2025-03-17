@@ -1,28 +1,19 @@
-import { AxiosResponse } from "axios";
 import { useAuth } from "../contexts/AuthContext";
-import { useEffect, useState } from "react";
 import { ProfileType } from "../types/ProfileType";
 import { useAxiosClient } from "./useAxiosClient";
+import { useQuery } from "@tanstack/react-query";
 
 export const useProfiles = () => {
-    const { token } = useAuth();
+    const { token } = useAuth();    
     const axiosClient = useAxiosClient();
-    const [profiles, setProfiles] = useState<ProfileType[]>([]);
-    const [loadingProfiles, setLoading] = useState<boolean>(true);
+    const { data: profiles = [], isLoading: loadingProfiles, error: profilesError } = useQuery<ProfileType[]>({
+        queryKey: ['profiles', token],
+        queryFn: async () => {
+            const response = await axiosClient.get("hr/profile/");
+            return response.data;
+        },
+        staleTime: 300000,
+    })
 
-    useEffect(() => {
-        const fetchProfiles = async () => {
-            try {
-                const response: AxiosResponse = await axiosClient.get("/hr/profile/");
-                setProfiles(response.data);
-            } catch (error) {
-                console.log(error)
-            } finally {
-                setLoading(false);
-            }
-        }
-        fetchProfiles();
-    }, [token])
-
-    return { profiles, loadingProfiles };
+    return { profiles, loadingProfiles, profilesError };
 }

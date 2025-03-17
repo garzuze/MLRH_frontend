@@ -15,7 +15,7 @@ export default function ClientForm() {
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
 
-    const { profiles, loadingProfiles } = useProfiles();
+    const { profiles, loadingProfiles, profilesError } = useProfiles();
     const axiosClient = useAxiosClient();
     const { client, setClient } = useClient();
     const { resume, setResume } = useResume();
@@ -74,10 +74,11 @@ export default function ClientForm() {
             <form onSubmit={handleSubmit} method="post" id="ProfileForm">
                 <select name="profile" defaultValue="">
                     <option value="" disabled>Selecione a vaga</option>
-                    {loadingProfiles ? (<option>Carregando...</option>) :
-                        (profiles.map((profile) => (
-                            <option key={profile.id} value={profile.id}>{profile.strRepresentation}</option>
-                        )))
+                    {profilesError ? <option disabled>Houve um erro</option> :
+                        loadingProfiles ? (<option>Carregando...</option>) :
+                            (profiles.map((profile) => (
+                                <option key={profile.id} value={profile.id}>{profile.strRepresentation}</option>
+                            )))
                     }
                 </select>
                 <ResumeSelector selectedResume={resume} setSelectedResume={setResume} />
