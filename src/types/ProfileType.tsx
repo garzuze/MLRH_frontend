@@ -2,32 +2,32 @@ import { EducationLevelAbbreviation, GenderAbbreviation, maritalStatusAbbreviati
 
 export interface ProfileType {
     id: number;
-    client: number;
-    clientContact: number;
-    position: number;
-    fee: number;
-    strRepresentation: string;
-    maritalStatus: maritalStatusAbbreviation;
-    educationLevel: EducationLevelAbbreviation;
-    date: string;
-    status: statusAbbreviation;
-    deadline: number;
-    estimatedDelivery: number;
-    confidential: boolean;
-    quantity: number;
-    remuneration: number;
-    serviceFee: number;
-    workSchedule: string;
-    age: number;
-    gender: GenderAbbreviation;
-    jobResponsibilities: string;
-    professionalExperience: string;
-    titleGenerated: boolean;
-    computerSkills: string;
-    languages: string;
-    behavioralProfile: string;
-    workEnvironment: string;
-    additionalNotes: string;
-    restrictions: string;
-    cancellationReason: string;
+    client: number; // cliente
+    clientContact: number; // clienteContato
+    position: number; // posição
+    fee: number; // taxa
+    strRepresentation: string; // strRepresentação
+    maritalStatus: maritalStatusAbbreviation; // estado civil
+    educationLevel: EducationLevelAbbreviation; // educaçãoNível
+    date: string; // data
+    status: statusAbbreviation; // status
+    deadline: number; // prazo
+    estimatedDelivery: number; // estimadoEntrega
+    confidential: boolean; // confidencial
+    quantity: number; // quantidade
+    remuneration: number; // remuneração
+    serviceFee: number; // serviçoTaxa
+    workSchedule: string; // trabalhoHorário
+    age: number; // idade
+    gender: GenderAbbreviation; // gênero
+    jobResponsibilities: string; // empregoResponsabilidades
+    professionalExperience: string; // profissionalExperiência
+    titleGenerated: boolean; // títuloGerado
+    computerSkills: string; // computadorHabilidades
+    languages: string; // idiomas
+    behavioralProfile: string; // comportamentalPerfil
+    workEnvironment: string; // trabalhoAmbiente
+    additionalNotes: string; // adicionalNotas
+    restrictions: string; // restrições
+    cancellationReason: string; // cancelamentoMotivo
 }

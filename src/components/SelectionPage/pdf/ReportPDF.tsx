@@ -5,15 +5,12 @@ import {
     View,
     StyleSheet,
 } from "@react-pdf/renderer";
-import { ClientContactType } from "../../../types/ClientContactType";
-import { ClientFeeType } from "../../../types/ClientFeeType";
-import { ClientType } from "../../../types/ClientType";
-import { serviceType } from "../../../types/serviceType";
 import { ProfileType } from "../../../types/ProfileType";
 import { ReportType } from "../../../types/ReportType";
 import { ResumeType } from "../../../types/ResumeType";
 import { WorkExperienceType } from "../../../types/WorkExperienceType";
 import { useProfiles } from "../../../hooks/useProfiles";
+import { maritalStatus } from "../../../utils/constants";
 
 const styles = StyleSheet.create({
     page: {
@@ -46,6 +43,9 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         marginBottom: 6,
     },
+    bold: {
+        fontFamily: "Helvetica-Bold",
+    }
 });
 
 interface ReportPDFProps {
@@ -71,7 +71,7 @@ const ReportPDF = ({ report, profile, resume, experieces }: ReportPDFProps) => (
             {/* Disponibilidade de Horários */}
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>
-                Disponibilidade de Horários
+                    Disponibilidade de Horários
                 </Text>
                 <View style={styles.row}>
                     <Text>{resume.availability}</Text>
@@ -82,20 +82,33 @@ const ReportPDF = ({ report, profile, resume, experieces }: ReportPDFProps) => (
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Dados do Candidato</Text>
                 <View style={styles.row}>
-                <Text>Nome: {resume.name}</Text>
+                    <Text><Text style={styles.bold}>Nome:</Text> {resume.name}
+                        <Text style={styles.bold}> Idade:</Text> {resume.birthDate}</Text>
+                    <Text><Text style={styles.bold}> Natural de:</Text> {resume.birthPlace}</Text>
                 </View>
                 <View style={styles.row}>
-
+                    <Text><Text style={styles.bold}>Estado Civil:</Text> {resume.maritalStatus}
+                        <Text style={styles.bold}> Filhos:</Text> {resume.hasChildren}</Text>
+                        <Text style={styles.bold}> Filhos Idade:</Text> {resume.string}</Text>
+                    <Text><Text style={styles.bold}> Data Nasc:</Text> {resume.birthDate}</Text>
                 </View>
                 <View style={styles.row}>
-
+                <Text><Text style={styles.bold}>Rua:</Text> {resume.address}
+                        <Text style={styles.bold}>  Bairro:</Text> {resume.neighborhood}</Text>
+                    <Text><Text style={styles.bold}>  Cidade:</Text> {resume.city}</Text>
+                </View>
+                <View style={styles.row}>
+                <Text><Text style={styles.bold}>Celular:</Text> {resume.phone}
+                        <Text style={styles.bold}>  E-mail:</Text> {resume.email}</Text>
+                        <Text style={styles.bold}>  CNH:</Text> {resume.email}</Text>
+                    <Text><Text style={styles.bold}>  CPF:</Text> {resume.string}</Text>
                 </View>
             </View>
 
             {/* Contexto Familiar */}
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Contexto Familiar</Text>
-
+                <Text>{report.personalFamilyContext}</Text>
             </View>
 
             {/* Histórico educacional */}

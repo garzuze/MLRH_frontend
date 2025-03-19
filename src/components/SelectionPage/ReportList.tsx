@@ -38,7 +38,8 @@ function Report({ report }: ReportProps) {
     const resumeData = Array.isArray(resume) ? resume[0] : resume
     return (
         <div>
-            <div>{profileData.strRepresentation} {resumeData.name} {resumeData.availability}</div>
+        <div>{profileData.strRepresentation} {resumeData.name}</div>
+        <button className="p-2 bg-black font-semibold rounded text-stone-100">
           <PDFDownloadLink 
             document={
               <ReportPDF 
@@ -52,6 +53,7 @@ function Report({ report }: ReportProps) {
           >
             {({ loading }) => (loading ? 'Gerando PDF...' : 'Baixar PDF')}
           </PDFDownloadLink>
+        </button>
         </div>
       );
     

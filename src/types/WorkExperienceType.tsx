@@ -1,10 +1,10 @@
 export interface WorkExperienceType {
     id: number;
-    companyName: string;
-    positionTitle: string;
-    startDate: string;
-    endDate?: string;
-    salary?: string;
-    responsibilities: string;
-    reasonForLeaving: string;
+    companyName: string; // Nome da empresa
+    positionTitle: string; // Cargo
+    startDate: string; // Data de início
+    endDate?: string; // Data de término
+    salary?: string; // Salário
+    responsibilities: string; // Responsabilidades
+    reasonForLeaving: string; // Motivo da saída
 }

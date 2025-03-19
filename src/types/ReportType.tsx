@@ -1,15 +1,15 @@
 export interface ReportType {
     id: number;
-    profile: number;
-    resume: number;
-    strRepresentation: string;
-    testResult: string;
-    personalFamilyContext: string;
-    educationalBackground: string;
-    professionalSummary: string;
-    candidateProfile: string;
-    careerObjectives: string;
-    finalConsiderations: string;
-    agreedSalary: number;
-    candidateStartDate: string;
+    profile: number; //perfil
+    resume: number; //currículo
+    strRepresentation: string; //strRepresentação
+    testResult: string; //testeResultado
+    personalFamilyContext: string; //pessoalFamíliaContexto
+    educationalBackground: string; //educacionalHistórico
+    professionalSummary: string; //profissionalResumo
+    candidateProfile: string; //candidatoPerfil
+    careerObjectives: string; //carreiraObjetivos
+    finalConsiderations: string; //finalConsiderações
+    agreedSalary: number; //acordadoSalário
+    candidateStartDate: string; //candidatoDataInício
 }
