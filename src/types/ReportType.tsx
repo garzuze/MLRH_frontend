@@ -2,6 +2,7 @@ export interface ReportType {
     id: number;
     profile: number;
     resume: number;
+    strRepresentation: string;
     testResult: string;
     personalFamilyContext: string;
     educationalBackground: string;
