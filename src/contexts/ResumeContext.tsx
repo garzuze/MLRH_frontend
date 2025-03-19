@@ -16,7 +16,7 @@ export function ResumeProvider({ children }: { children: ReactNode }) {
 
     const getResume = useCallback(async () => {
         try {
-            const response = await axiosClient.get("hr/get_resume/");
+            const response = await axiosClient.get("hr/resume/");
             return response.data[0];
         } catch (error) {
             console.error("Failed to fetch resume:", error);

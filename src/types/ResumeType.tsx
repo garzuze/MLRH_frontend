@@ -9,6 +9,7 @@ export interface ResumeType {
     birthDate: string;
     birthPlace: string;
     maritalStatus: maritalStatusAbbreviation;
+    avaliability: string;
     spouseName?: string;
     spouseProfession?: string;
     hasChildren?: boolean;
