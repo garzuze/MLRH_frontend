@@ -3,18 +3,9 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import Title from "../components/ui/Title";
 import Button from "../components/ui/Button";
 import { useAuth } from "../contexts/AuthContext";
-import { ResumeProvider } from "../contexts/ResumeContext";
 import { useAxiosClient } from "../hooks/useAxiosClient";
 
 export default function VerifyEmailPage() {
-    return (
-        <ResumeProvider>
-            <VerifyEmail></VerifyEmail>
-        </ResumeProvider>
-    )
-}
-
-function VerifyEmail() {
     const [verified, setVerified] = useState<boolean>();
     const [searchParams] = useSearchParams();
     const uid = searchParams.get("uid");

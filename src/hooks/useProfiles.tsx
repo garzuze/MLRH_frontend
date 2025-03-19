@@ -9,7 +9,7 @@ export const useProfiles = (id?:  number) => {
     const queryKey = id ? ['profiles', token, id] : ['profiles', token];
 
     const { data: profiles = [], isLoading: loadingProfiles, error: profilesError } = useQuery<ProfileType[]>({
-        queryKey: queryKey,
+        queryKey,
         queryFn: async () => {
             const url = id ? `hr/profile/${id}` : "hr/profile/"
             const response = await axiosClient.get(url);

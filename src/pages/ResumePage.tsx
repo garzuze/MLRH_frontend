@@ -1,21 +1,12 @@
-import { ResumeProvider, useResume } from "../contexts/ResumeContext";
 import Title from "../components/ui/Title";
 import { ResumeForm } from "../components/ResumePage/ResumeForm";
 import { WorkExperienceForm } from "../components/ResumePage/WorkExperienceForm";
 import { BasicInfoType } from "../types/BasicInfoType";
 import { useWorkExperiences } from "../hooks/useWorkExperiences";
+import { useResume } from "../hooks/useResume";
 
 export default function ResumePage() {
-    return (
-        <ResumeProvider>
-            <Resume></Resume>
-        </ResumeProvider>
-    )
-}
-
-
-function Resume() {
-    const { resume } = useResume();
+    const { data: resume } = useResume();
     const { data: WorkExperiences, isLoading } = useWorkExperiences();
     const basicInfo = JSON.parse(localStorage.getItem('basic_info') ?? "null") as BasicInfoType | null;
 

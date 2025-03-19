@@ -5,7 +5,6 @@ import Header from "../components/HomePage/Header";
 import Hero from "../components/HomePage/Hero";
 import Services from "../components/HomePage/Services";
 import Vacancies from "../components/HomePage/Vacancies";
-import { ResumeProvider } from "../contexts/ResumeContext";
 
 export default function HomePage() {
 

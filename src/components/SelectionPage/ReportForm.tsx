@@ -7,8 +7,8 @@ import { fetchClientContactData } from "../../services/useClientContact";
 import { fetchClientFees } from "../../services/useClientFees";
 import { useProfiles } from "../../hooks/useProfiles";
 import ResumeSelector from "../form/ResumeAutocompleteInput";
-import { useResume } from "../../contexts/ResumeContext";
 import { useAxiosClient } from "../../hooks/useAxiosClient";
+import { ResumeType } from "../../types/ResumeType";
 
 export default function ClientForm() {
 
@@ -18,7 +18,7 @@ export default function ClientForm() {
     const { profiles, loadingProfiles, profilesError } = useProfiles();
     const axiosClient = useAxiosClient();
     const { client, setClient } = useClient();
-    const { resume, setResume } = useResume();
+    const [resume, setResume] = useState<ResumeType | null>(null);
     useEffect(() => {
         try {
             const getClientContactData = async (clientId: number) => {
@@ -102,7 +102,6 @@ export default function ClientForm() {
                 <label>Data de inicio do candidato</label>
                 <input type="date" name="candidateStartDate"></input>
                 <Button text={"Cadastrar Parecer"} variant="dark" className="w-full mx-0 p-2 text-sm mt-4"></Button>
-
             </form>
             <Snackbar
                 message={snackbarMessage}
