@@ -1,19 +1,21 @@
-import { AxiosResponse } from "axios";
-import { useAuth } from "../contexts/AuthContext";
-import { useEffect, useState } from "react";
 import { useAxiosClient } from "./useAxiosClient";
 import { WorkExperienceType } from "../types/WorkExperienceType";
 import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "../contexts/AuthContext";
 
-export const useWorkExperiences = () => {
+export const useWorkExperiences = (id?: number) => {
     const axiosClient = useAxiosClient();
-    
-    return useQuery<WorkExperienceType[]>({
-        queryKey: ['workExperiences'],
+    const { token } = useAuth();
+    const queryKey = id ? ['workExperiences', token, id] : ['workExperiences', token];
+
+    const { data: experieces = [], isLoading: laodingExperiences, error: experiecesError } = useQuery<WorkExperienceType[]>({
+        queryKey: queryKey,
         queryFn: async () => {
-            const response = await axiosClient.get("/hr/work_experience/");
+            const url = id ? `hr/work_experience/?resume=${id}` : "hr/resume/"
+            const response = await axiosClient.get(url);
             return response.data;
         },
         staleTime: 300000,
     })
-}
+    return { experieces, laodingExperiences, experiecesError }
+};
