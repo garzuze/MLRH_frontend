@@ -26,6 +26,7 @@ export const WorkExperienceForm: React.FC<WorkExperienceFormProps> = ({ experien
                     queryClient.invalidateQueries({queryKey: ['workExperiences']})
                     setSnackbarMessage("Experiência atualizada com sucesso!")
                     setIsSnackbarOpen(true);
+                    (document.getElementById('WorkExperienceForm') as HTMLFormElement).reset();
                 } else {
                     setSnackbarMessage("Ops... Alguma coisa deu errado.")
                     setIsSnackbarOpen(true);
