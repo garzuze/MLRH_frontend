@@ -31,7 +31,6 @@ export default function ClientForm() {
         try {
             const getClientContactData = async (clientId: number) => {
                 const newContactData = await fetchClientContactData(axiosClient, clientId);
-                console.log(newContactData);
                 if (newContactData.length > 0) {
                     setClientContactData(newContactData);
                 } else {

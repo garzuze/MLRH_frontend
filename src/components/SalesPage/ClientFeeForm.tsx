@@ -75,7 +75,6 @@ export default function ClientFeeForm() {
     const handleChange = (serviceId: number, name: string, value: number) => {
         const fees = clientFees.map(fee => fee.service === serviceId ? { ...fee, [name]: value } : fee);
         setClientFees(fees);
-        console.log(clientFees)
     };
 
     useEffect(() => {
@@ -84,7 +83,6 @@ export default function ClientFeeForm() {
             setClientFees((prevFees) =>
                 prevFees.map((fee) => ({ ...fee, client: client?.id || 0 }))
             );
-            console.log(clientFees);
         }
     }, [client]);
 

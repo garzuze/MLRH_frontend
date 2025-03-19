@@ -12,7 +12,6 @@ export const useResume = (id?:  number) => {
         queryKey,
         queryFn: async () => {
             const url = id ? `hr/resume/${id}` : "hr/resume/"
-            console.log(url)
             const response = await axiosClient.get(url);
             return response.data;
         },
