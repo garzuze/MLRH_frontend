@@ -1,0 +1,58 @@
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import { useProfiles } from "../../hooks/useProfiles";
+import { useReports } from "../../hooks/useReports"
+import ReportPDF from "./pdf/ReportPDF";
+import { ReportType } from "../../types/ReportType";
+import { useResume } from "../../hooks/useResume";
+import { useWorkExperiences } from "../../hooks/useWorkExperiences";
+
+export default function ReportList() {
+    const { reports, loadingReports, reportsError } = useReports();
+
+    return (
+        <ul>
+            {reports.map((report, key) => (
+                <Report report={report} key={key} />
+            ))}
+        </ul>
+    )
+}
+
+interface ReportProps {
+    report: ReportType;
+}
+
+function Report({ report }: ReportProps) {
+    const { profiles, loadingProfiles, profilesError } = useProfiles(report.profile);
+    const { resume, loadingResume, resumeError } = useResume(report.resume);
+    const { experieces, laodingExperiences, experiecesError } = useWorkExperiences(report.resume);
+
+    if (loadingProfiles || loadingResume || laodingExperiences) {
+        return <div>Carregando...</div>;
+    }
+    if (profilesError || resumeError || experiecesError) {
+        return <div>Erro ao carregar.</div>;
+    }
+
+    const profileData = Array.isArray(profiles) ? profiles[0] : profiles
+    const resumeData = Array.isArray(resume) ? resume[0] : resume
+    return (
+        <div>
+            <div>{profileData.strRepresentation} {resumeData.name} {resumeData.availability}</div>
+          <PDFDownloadLink 
+            document={
+              <ReportPDF 
+                report={report} 
+                profile={profileData} 
+                resume={resumeData} 
+                experieces={experieces}
+              />
+            }
+            fileName={`report-${report.id}.pdf`}
+          >
+            {({ loading }) => (loading ? 'Gerando PDF...' : 'Baixar PDF')}
+          </PDFDownloadLink>
+        </div>
+      );
+    
+}
