@@ -3,7 +3,7 @@ import { ClientType } from "../../../types/ClientType";
 import { ClientContactType } from "../../../types/ClientContactType";
 import { ClientFeeType } from "../../../types/ClientFeeType";
 import { serviceType } from "../../../types/serviceType";
-import getDate from "../../DashboardPanel/getDate";
+import getDate from "../../../utils/getDate";
 
 const styles = StyleSheet.create({
     body: {

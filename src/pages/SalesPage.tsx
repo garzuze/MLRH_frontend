@@ -1,4 +1,4 @@
-import getDate from "../components/DashboardPanel/getDate";
+import getDate from "../utils/getDate";
 import TopBar from "../components/DashboardPanel/TopBar";
 import SalesCards from "../components/SalesPage/SalesCards";
 import Grid from "../components/ui/Grid";

@@ -7,6 +7,7 @@ export interface ResumeType {
     cpf: string; //cpf
     gender: GenderAbbreviation; //sexo
     birthDate: string; //datanascimento
+    age: string; // idade
     birthPlace: string; //localnascimento
     maritalStatus: maritalStatusAbbreviation; //estado civil
     availability: string; //disponibilidade

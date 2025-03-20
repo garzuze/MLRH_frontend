@@ -11,6 +11,7 @@ import { ResumeType } from "../../../types/ResumeType";
 import { WorkExperienceType } from "../../../types/WorkExperienceType";
 import { useProfiles } from "../../../hooks/useProfiles";
 import { maritalStatus } from "../../../utils/constants";
+import getDate from "../../../utils/getDate";
 
 const styles = StyleSheet.create({
     page: {
@@ -55,6 +56,8 @@ interface ReportPDFProps {
     experieces: WorkExperienceType[];
 }
 
+const currentDate = getDate();
+
 const ReportPDF = ({ report, profile, resume, experieces }: ReportPDFProps) => (
     <Document>
         <Page size="A4" style={styles.page}>
@@ -65,6 +68,9 @@ const ReportPDF = ({ report, profile, resume, experieces }: ReportPDFProps) => (
                 <Text style={styles.sectionTitle}>Informações da vaga</Text>
                 <View style={styles.row}>
                     <Text>{profile.strRepresentation}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text>{currentDate}</Text>
                 </View>
             </View>
 
@@ -83,25 +89,24 @@ const ReportPDF = ({ report, profile, resume, experieces }: ReportPDFProps) => (
                 <Text style={styles.sectionTitle}>Dados do Candidato</Text>
                 <View style={styles.row}>
                     <Text><Text style={styles.bold}>Nome:</Text> {resume.name}
-                        <Text style={styles.bold}> Idade:</Text> {resume.birthDate}</Text>
-                    <Text><Text style={styles.bold}> Natural de:</Text> {resume.birthPlace}</Text>
+                        <Text style={styles.bold}> Idade:</Text> {resume.age} anos
+                        <Text style={styles.bold}> Natural de:</Text> {resume.birthPlace}</Text>
                 </View>
                 <View style={styles.row}>
-                    <Text><Text style={styles.bold}>Estado Civil:</Text> {resume.maritalStatus}
-                        <Text style={styles.bold}> Filhos:</Text> {resume.hasChildren}</Text>
-                        <Text style={styles.bold}> Filhos Idade:</Text> {resume.string}</Text>
-                    <Text><Text style={styles.bold}> Data Nasc:</Text> {resume.birthDate}</Text>
+                    <Text><Text style={styles.bold}>Estado Civil:</Text> {maritalStatus[resume.maritalStatus]}
+                        <Text style={styles.bold}> Tem filhos:</Text> {resume.hasChildren ? "Sim" : "Não"}
+                        {resume.hasChildren && <Text><Text style={styles.bold}> Idade dos filhos:</Text> {resume.childrenAges}</Text>}
+                        <Text style={styles.bold}> Data Nasc:</Text> {resume.birthDate}</Text>
                 </View>
                 <View style={styles.row}>
-                <Text><Text style={styles.bold}>Rua:</Text> {resume.address}
+                    <Text><Text style={styles.bold}>Rua:</Text> {resume.address}
                         <Text style={styles.bold}>  Bairro:</Text> {resume.neighborhood}</Text>
                     <Text><Text style={styles.bold}>  Cidade:</Text> {resume.city}</Text>
                 </View>
                 <View style={styles.row}>
-                <Text><Text style={styles.bold}>Celular:</Text> {resume.phone}
+                    <Text><Text style={styles.bold}>Celular:</Text> {resume.phone}
                         <Text style={styles.bold}>  E-mail:</Text> {resume.email}</Text>
-                        <Text style={styles.bold}>  CNH:</Text> {resume.email}</Text>
-                    <Text><Text style={styles.bold}>  CPF:</Text> {resume.string}</Text>
+                    {/* <Text><Text style={styles.bold}>  CPF:</Text> {resume}</Text> */}
                 </View>
             </View>
 

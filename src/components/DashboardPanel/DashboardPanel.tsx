@@ -1,6 +1,6 @@
 import TopBar from "./TopBar";
 import { useAuth } from "../../contexts/AuthContext";
-import getDate from "./getDate";
+import getDate from "../../utils/getDate";
 import StatCards from "./StatCards";
 import Grid from "../ui/Grid";
 

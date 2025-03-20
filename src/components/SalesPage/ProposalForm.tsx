@@ -9,7 +9,7 @@ import { useServices } from "../../hooks/useServices";
 
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { ProposalPDF } from "./pdf/ProposalPDF";
-import getDate from "../DashboardPanel/getDate";
+import getDate from "../../utils/getDate";
 import { fetchClientContactData } from "../../services/useClientContact";
 import { fetchClientFees } from "../../services/useClientFees";
 import { useAxiosClient } from "../../hooks/useAxiosClient";

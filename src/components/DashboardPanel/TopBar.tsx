@@ -1,5 +1,5 @@
 import { useAuth } from "../../contexts/AuthContext"
-import getDate from "./getDate";
+import getDate from "../../utils/getDate";
 
 export default function TopBar({ title, subtitle }: { title: string, subtitle: string}) {
 
