@@ -10,7 +10,7 @@ import { ReportType } from "../../../types/ReportType";
 import { ResumeType } from "../../../types/ResumeType";
 import { WorkExperienceType } from "../../../types/WorkExperienceType";
 import { useProfiles } from "../../../hooks/useProfiles";
-import { maritalStatus } from "../../../utils/constants";
+import { maritalStatus, states } from "../../../utils/constants";
 import getDate from "../../../utils/getDate";
 
 const styles = StyleSheet.create({
@@ -62,15 +62,14 @@ const ReportPDF = ({ report, profile, resume, experieces }: ReportPDFProps) => (
     <Document>
         <Page size="A4" style={styles.page}>
             <Text style={styles.header}>Parecer da Entrevista</Text>
-
+            <View style={styles.row}>
+                <Text style={styles.bold}>{currentDate}</Text>
+            </View>
             {/* Empresa e Vaga */}
             <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Informações da vaga</Text>
+                <Text style={styles.sectionTitle}>Informações da Vaga e Cliente</Text>
                 <View style={styles.row}>
                     <Text>{profile.strRepresentation}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text>{currentDate}</Text>
                 </View>
             </View>
 
@@ -101,12 +100,12 @@ const ReportPDF = ({ report, profile, resume, experieces }: ReportPDFProps) => (
                 <View style={styles.row}>
                     <Text><Text style={styles.bold}>Rua:</Text> {resume.address}
                         <Text style={styles.bold}>  Bairro:</Text> {resume.neighborhood}</Text>
-                    <Text><Text style={styles.bold}>  Cidade:</Text> {resume.city}</Text>
+                    <Text><Text style={styles.bold}>  Cidade:</Text> {resume.city}/{states[resume.state]}</Text>
                 </View>
                 <View style={styles.row}>
                     <Text><Text style={styles.bold}>Celular:</Text> {resume.phone}
                         <Text style={styles.bold}>  E-mail:</Text> {resume.email}</Text>
-                    {/* <Text><Text style={styles.bold}>  CPF:</Text> {resume}</Text> */}
+                    <Text><Text style={styles.bold}>  CPF:</Text> {resume.cpf}</Text>
                 </View>
             </View>
 
@@ -118,27 +117,60 @@ const ReportPDF = ({ report, profile, resume, experieces }: ReportPDFProps) => (
 
             {/* Histórico educacional */}
             <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Histórico educacional</Text>
+                <Text style={styles.sectionTitle}>Histórico Educacional</Text>
                 <View style={styles.row}>
 
                 </View>
                 <View style={styles.row}>
-
+                    <Text>{resume.educationDetails}</Text>
                 </View>
-                <View style={styles.row}>
-
-                </View>
-            </View>
-
-            {/* Resumo profissional */}
-            <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Resumo profissional</Text>
                 <View style={styles.row}>
 
                 </View>
             </View>
         </Page>
-    </Document>
+        <Page size="A4" style={styles.page}>
+            {/* Resumo profissional */}
+            <View style={styles.section}>
+                <Text style={styles.sectionTitle}>Resumo Profissional</Text>
+                {experieces.map((experience, key) => (
+                    <View key={key}>
+                        <View style={styles.row}>
+                            <Text><Text style={styles.bold}>Empresa: </Text>{experience.companyName}</Text>
+                        </View>
+                        <View style={styles.row}>
+                            <Text><Text style={styles.bold}>Data de Admissão: </Text>{experience.startDate}</Text>
+                            {experience.endDate ? (
+                                <Text>
+                                    <Text style={styles.bold}> Data de Demissão: </Text>{experience.endDate}
+                                </Text>
+                            ) : (<Text> - Atual</Text>)}
+                        </View>
+                        <View style={styles.row}>
+                            <Text>
+                                <Text style={styles.bold}>Cargo: </Text>{experience.positionTitle}
+                            </Text>
+                        </View>
+                        <View style={styles.row}>
+                                <Text>
+                                    <Text style={styles.bold}>Último Salário: </Text>{experience.salary}
+                                </Text>
+                            </View>
+                        <View style={styles.row}>
+                            <Text>
+                                <Text style={styles.bold}>Atividades Realizadas: </Text>{experience.responsibilities}
+                            </Text>
+                        </View>
+                        <View style={styles.row}>
+                                <Text>
+                                    <Text style={styles.bold}>Motivo da Saída: </Text>{experience.reasonForLeaving}
+                                </Text>
+                            </View>
+                    </View>
+                ))}
+        </View>
+    </Page>
+    </Document >
 );
 
 export default ReportPDF;
