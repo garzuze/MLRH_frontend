@@ -11,8 +11,9 @@ export const useWorkExperiences = (id?: number) => {
     const { data: experieces = [], isLoading: laodingExperiences, error: experiecesError } = useQuery<WorkExperienceType[]>({
         queryKey: queryKey,
         queryFn: async () => {
-            const url = id ? `hr/work_experience/?resume=${id}` : "hr/resume/"
+            const url = id ? `hr/work_experience/?resume=${id}` : "hr/work_experience/"
             const response = await axiosClient.get(url);
+            console.log(response.data)
             return response.data;
         },
         staleTime: 300000,

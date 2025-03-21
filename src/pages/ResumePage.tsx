@@ -7,11 +7,11 @@ import { useResume } from "../hooks/useResume";
 
 export default function ResumePage() {
     const { resume } = useResume();
-    const resumeData = Array.isArray(resume) ? resume[0] : resume
+    const resumeData = Array.isArray(resume) ? resume[0] : resume;
     const { experieces, laodingExperiences } = useWorkExperiences();
     const basicInfo = JSON.parse(localStorage.getItem('basic_info') ?? "null") as BasicInfoType | null;
 
-    if (resume) {
+    if (resumeData && resumeData !== undefined) {
         return (
             <main className="w-full mx-auto">
                 <div className="px-6 py-8 font-roboto bg-gradient-to-br from-neutral-950 via-neutral-900 to-indigo-900">
