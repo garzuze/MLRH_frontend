@@ -76,7 +76,7 @@ const ReportPDF = ({ report, profile, resume, experieces }: ReportPDFProps) => (
             {/* Disponibilidade de Horários */}
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>
-                    Disponibilidade de Horários
+                    Disponibilidade de Horários do Candidato
                 </Text>
                 <View style={styles.row}>
                     <Text>{resume.availability}</Text>
@@ -152,24 +152,43 @@ const ReportPDF = ({ report, profile, resume, experieces }: ReportPDFProps) => (
                             </Text>
                         </View>
                         <View style={styles.row}>
-                                <Text>
-                                    <Text style={styles.bold}>Último Salário: </Text>{experience.salary}
-                                </Text>
-                            </View>
+                            <Text>
+                                <Text style={styles.bold}>Último Salário: </Text>{experience.salary}
+                            </Text>
+                        </View>
                         <View style={styles.row}>
                             <Text>
                                 <Text style={styles.bold}>Atividades Realizadas: </Text>{experience.responsibilities}
                             </Text>
                         </View>
                         <View style={styles.row}>
-                                <Text>
-                                    <Text style={styles.bold}>Motivo da Saída: </Text>{experience.reasonForLeaving}
-                                </Text>
-                            </View>
+                            <Text>
+                                <Text style={styles.bold}>Motivo da Saída: </Text>{experience.reasonForLeaving}
+                            </Text>
+                        </View>
                     </View>
                 ))}
-        </View>
-    </Page>
+
+            </View>
+            {/* Pretensão Salarial */}
+            <View style={styles.section}>
+                <Text style={styles.sectionTitle}>
+                    Objetivos e Pretensões
+                </Text>
+                <View style={styles.row}>
+                    <Text> <Text style={styles.bold}>Pretenção Salarial: </Text> R$ {resume.expectedSalary}</Text>
+                </View>
+            </View>
+            {/*Perfil do Candidato (a) */}
+            <View style={styles.section}>
+                <Text style={styles.sectionTitle}>
+                    Perfil do Candidato (a)
+                </Text>
+                <View style={styles.row}>
+                    <Text>{report.candidateProfile}</Text>
+                </View>
+            </View>
+        </Page>
     </Document >
 );
 
