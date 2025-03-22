@@ -83,6 +83,10 @@ interface ReportPDFProps {
 }
 
 const currentDate = getDate();
+const formatDate = (dateString: string) => {
+    const [year, month, day] = dateString.split("-");
+    return `${day}/${month}/${year}`;
+};
 
 const ReportPDF = ({ report, profile, resume, experieces, user }: ReportPDFProps) => (
     <Document>
@@ -122,7 +126,7 @@ const ReportPDF = ({ report, profile, resume, experieces, user }: ReportPDFProps
                     <Text><Text style={styles.bold}>Estado Civil:</Text> {maritalStatus[resume.maritalStatus]}
                         <Text style={styles.bold}> Tem filhos:</Text> {resume.hasChildren ? "Sim" : "Não"}
                         {resume.hasChildren && <Text><Text style={styles.bold}> Idade dos filhos:</Text> {resume.childrenAges}</Text>}
-                        <Text style={styles.bold}> Data Nasc:</Text> {resume.birthDate}</Text>
+                        <Text style={styles.bold}> Data Nasc:</Text> {formatDate(resume.birthDate)}</Text>
                 </View>
                 <View style={styles.row}>
                     <Text><Text style={styles.bold}>Rua:</Text> {resume.address}
