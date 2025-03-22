@@ -4,14 +4,15 @@ import {
     Text,
     View,
     StyleSheet,
+    Image
 } from "@react-pdf/renderer";
 import { ProfileType } from "../../../types/ProfileType";
 import { ReportType } from "../../../types/ReportType";
 import { ResumeType } from "../../../types/ResumeType";
 import { WorkExperienceType } from "../../../types/WorkExperienceType";
-import { useProfiles } from "../../../hooks/useProfiles";
 import { maritalStatus, states } from "../../../utils/constants";
 import getDate from "../../../utils/getDate";
+import { mlrhUser } from "../../../types/TokenResponse";
 
 const styles = StyleSheet.create({
     page: {
@@ -24,7 +25,10 @@ const styles = StyleSheet.create({
         textAlign: "center",
         fontSize: 16,
         fontFamily: "Helvetica-Bold",
-        marginBottom: 20,
+        marginBottom: 8,
+        borderBottom: "1 solid #CCCCCC",
+        paddingBottom: 4,
+        textTransform: "uppercase"
     },
     section: {
         marginBottom: 15,
@@ -46,6 +50,27 @@ const styles = StyleSheet.create({
     },
     bold: {
         fontFamily: "Helvetica-Bold",
+    },
+    logo: {
+        width: 40,
+    },
+    footer: {
+        position: 'absolute',
+        fontSize: 8,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        paddingHorizontal: 18,
+        paddingVertical: 4,
+        borderTop: "0.5 solid #CCCCCC"
+    },
+    author: {
+        fontSize: 8,
+        position: 'absolute',
+        bottom: 20,
+        left: 0,
+        right: 0,
+        paddingHorizontal: 18,
     }
 });
 
@@ -54,16 +79,18 @@ interface ReportPDFProps {
     profile: ProfileType;
     resume: ResumeType;
     experieces: WorkExperienceType[];
+    user: mlrhUser;
 }
 
 const currentDate = getDate();
 
-const ReportPDF = ({ report, profile, resume, experieces }: ReportPDFProps) => (
+const ReportPDF = ({ report, profile, resume, experieces, user }: ReportPDFProps) => (
     <Document>
         <Page size="A4" style={styles.page}>
+            <Image src="../../src/assets/logo_mlrh.png" style={styles.logo}></Image>
             <Text style={styles.header}>Parecer da Entrevista</Text>
             <View style={styles.row}>
-                <Text style={styles.bold}>{currentDate}</Text>
+                <Text style={styles.bold}>Data: {currentDate}</Text>
             </View>
             {/* Empresa e Vaga */}
             <View style={styles.section}>
@@ -128,8 +155,11 @@ const ReportPDF = ({ report, profile, resume, experieces }: ReportPDFProps) => (
 
                 </View>
             </View>
+            <Text style={styles.footer}>As informações constantes neste documento são confidenciais, sendo proibida a divulgação das mesmas, sob pena da Lei.</Text>
         </Page>
         <Page size="A4" style={styles.page}>
+            <Image src="../../src/assets/logo_mlrh.png" style={styles.logo}></Image>
+            <Text style={styles.header}>Parecer da Entrevista</Text>
             {/* Resumo profissional */}
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Resumo Profissional</Text>
@@ -166,6 +196,11 @@ const ReportPDF = ({ report, profile, resume, experieces }: ReportPDFProps) => (
                                 <Text style={styles.bold}>Motivo da Saída: </Text>{experience.reasonForLeaving}
                             </Text>
                         </View>
+                        <View style={styles.row}>
+                            <Text>
+                                <Text></Text>
+                            </Text>
+                        </View>
                     </View>
                 ))}
 
@@ -188,6 +223,8 @@ const ReportPDF = ({ report, profile, resume, experieces }: ReportPDFProps) => (
                     <Text>{report.candidateProfile}</Text>
                 </View>
             </View>
+            <Text style={styles.author}>Elaborado por: <Text style={styles.bold}>{user.firstName} {user.lastName}</Text></Text>
+            <Text style={styles.footer}>As informações constantes neste documento são confidenciais, sendo proibida a divulgação das mesmas, sob pena da Lei.</Text>
         </Page>
     </Document >
 );
