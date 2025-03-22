@@ -49,7 +49,7 @@ function Report({ report }: ReportProps) {
                 experieces={experieces}
               />
             }
-            fileName={`report-${report.id}.pdf`}
+            fileName={`${resumeData.name} - ${profileData.strRepresentation}.pdf`}
           >
             {({ loading }) => (loading ? 'Gerando PDF...' : 'Baixar PDF')}
           </PDFDownloadLink>
