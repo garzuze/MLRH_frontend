@@ -98,37 +98,37 @@ export default function ClientFeeForm() {
                         </p>
                         <div className="service flex gap-x-4 w-full">
                             <input hidden readOnly name="service" value={1} required></input>
-                            <input type="number" name="percentual" placeholder="Percentual" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" required onChange={(e) => handleChange(1, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 1)?.percentual || ""} />
-                            <input type="number" name="value" placeholder="Valor" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(1, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 1)?.value || ""} />
-                            <input type="number" name="deadline" placeholder="Prazo" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(1, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 1)?.deadline || ""} />
+                            <input type="number" name="percentual" placeholder="Percentual" className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" required onChange={(e) => handleChange(1, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 1)?.percentual || ""} />
+                            <input type="number" name="value" placeholder="Valor" className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(1, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 1)?.value || ""} />
+                            <input type="number" name="deadline" placeholder="Prazo" className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(1, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 1)?.deadline || ""} />
                         </div>
                     </div>
                     <div className="w-full">
-                        <p className="placeholder:text-sm text-sm w-full mt-4">
+                        <p className="placeholder:text-sm placeholder:text-stone-400 text-sm w-full mt-4">
                             Técnicos e Especializados
                         </p>
                         <div className="service flex gap-x-4 w-full">
                             <input hidden readOnly name="service" value={2} required></input>
-                            <input type="number" name="percentual" placeholder="Percentual" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" required onChange={(e) => handleChange(2, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 2)?.percentual || ""} />
-                            <input type="number" name="value" placeholder="Valor" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(2, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 2)?.value || ""} />
-                            <input type="number" name="deadline" placeholder="Prazo" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(2, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 2)?.deadline || ""} />
+                            <input type="number" name="percentual" placeholder="Percentual" className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" required onChange={(e) => handleChange(2, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 2)?.percentual || ""} />
+                            <input type="number" name="value" placeholder="Valor" className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(2, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 2)?.value || ""} />
+                            <input type="number" name="deadline" placeholder="Prazo" className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(2, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 2)?.deadline || ""} />
                         </div>
                     </div>
                     <div className="w-full">
-                        <p className="placeholder:text-sm text-sm w-full mt-4">
+                        <p className="placeholder:text-sm placeholder:text-stone-400 text-sm w-full mt-4">
                             Liderança, Coordenação, Supervisão e Gerência
                         </p>
                         <div className="service flex gap-x-4 w-full">
                             <input hidden readOnly name="service" value={3} required></input>
-                            <input type="number" name="percentual" placeholder="Percentual" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" required onChange={(e) => handleChange(3, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 3)?.percentual || ""} />
-                            <input type="number" name="value" placeholder="Valor" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(3, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 3)?.value || ""} />
-                            <input type="number" name="deadline" placeholder="Prazo" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(3, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 3)?.deadline || ""} />
+                            <input type="number" name="percentual" placeholder="Percentual" className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" required onChange={(e) => handleChange(3, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 3)?.percentual || ""} />
+                            <input type="number" name="value" placeholder="Valor" className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(3, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 3)?.value || ""} />
+                            <input type="number" name="deadline" placeholder="Prazo" className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(3, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 3)?.deadline || ""} />
                         </div>
                     </div>
                 </div>
                 {isServiceFormOpen ? (
                     <>
-                        <p className="placeholder:text-sm text-sm w-full mt-4">
+                        <p className="placeholder:text-sm placeholder:text-stone-400 text-sm w-full mt-4">
                             Novo serviço
                         </p>
                         <div>
@@ -145,11 +145,11 @@ export default function ClientFeeForm() {
                                 )}
                             </select>
                             <div className="w-full flex gap-x-4">
-                                <input type="number" name="percentual" placeholder="Percentual" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" required
+                                <input type="number" name="percentual" placeholder="Percentual" className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" required
                                     onChange={(event) => handleChange(clientFees[clientFees.length - 1].service, event.target.name, Number(event.target.value))}
                                 />
-                                <input type="number" name="value" placeholder="Valor" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(event) => handleChange(clientFees[clientFees.length - 1].service, event.target.name, Number(event.target.value))} />
-                                <input type="number" name="deadline" placeholder="Prazo" className="placeholder:text-sm text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(event) => handleChange(clientFees[clientFees.length - 1].service, event.target.name, Number(event.target.value))} />
+                                <input type="number" name="value" placeholder="Valor" className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(event) => handleChange(clientFees[clientFees.length - 1].service, event.target.name, Number(event.target.value))} />
+                                <input type="number" name="deadline" placeholder="Prazo" className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(event) => handleChange(clientFees[clientFees.length - 1].service, event.target.name, Number(event.target.value))} />
                             </div>
                         </div>
                     </>

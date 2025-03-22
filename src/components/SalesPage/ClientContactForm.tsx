@@ -44,21 +44,21 @@ export default function ClientContactForm() {
                 <input
                     type="text"
                     placeholder="Nome"
-                    className=" placeholder:text-sm text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700"
+                    className=" placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700"
                     name="name"
                     required
                 />
                 <input
                     type="text"
                     placeholder="Departamento"
-                    className=" placeholder:text-sm text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700"
+                    className=" placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700"
                     name="department"
                     required
                 />
                 <input
                     type="email"
                     placeholder="Email"
-                    className=" placeholder:text-sm text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700"
+                    className=" placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700"
                     name="email"
                     required
                 />
@@ -66,7 +66,7 @@ export default function ClientContactForm() {
                     <input
                         type="text"
                         placeholder="Telefone"
-                        className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-3/4"
+                        className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-3/4"
                         name="phone"
                     />
                     <select name="status" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/4">

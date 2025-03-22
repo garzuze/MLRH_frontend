@@ -57,14 +57,14 @@ export default function ClientForm() {
                 <input
                     type="text"
                     placeholder="Razão Social"
-                    className="placeholder:text-sm text-sm border-b border-stone-300 w-full focus:outline-none focus:border-stone-700"
+                    className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 w-full focus:outline-none focus:border-stone-700"
                     name="corporateName"
                     required
                 />
                 <input
                     type="text"
                     placeholder="Nome fantasia"
-                    className=" placeholder:text-sm text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700"
+                    className=" placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700"
                     name="tradeName"
                     required
                 />
@@ -72,14 +72,14 @@ export default function ClientForm() {
                     <input
                         type="text"
                         placeholder="CNPJ"
-                        className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
+                        className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
                         name="cnpj"
                         required
                     />
                     <input
                         type="text"
                         placeholder="Inscrição Estadual"
-                        className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
+                        className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
                         name="stateRegistration"
                     />
                 </div>
@@ -87,13 +87,13 @@ export default function ClientForm() {
                     <input
                         type="number"
                         placeholder="Número de empregados"
-                        className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
+                        className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
                         name="numberOfEmployees"
                     />
                     <input
                         type="text"
                         placeholder="CEP"
-                        className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
+                        className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
                         name="cep"
                     />
                 </div>
@@ -101,14 +101,14 @@ export default function ClientForm() {
                     <input
                         type="text"
                         placeholder="Endereço"
-                        className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
+                        className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
                         name="address"
                         required
                     />
                     <input
                         type="text"
                         placeholder="Cidade"
-                        className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
+                        className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
                         name="city"
                         required
                     />
@@ -117,7 +117,7 @@ export default function ClientForm() {
                     <input
                         type="text"
                         placeholder="Bairro"
-                        className="placeholder:text-sm text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
+                        className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-1/2"
                         name="neighborhood"
                         required
                     />
