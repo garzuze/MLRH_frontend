@@ -29,6 +29,12 @@ export default function getDate() {
     const dayWeek = today.getDay();
     const year = today.getFullYear();
     const month = today.getMonth();
+    let monthStr: string;
+    if (month < 10) {
+        monthStr = `0${month + 1}`
+    } else {
+        monthStr = String(month + 1);
+    }
 
-    return `${daysWeek[dayWeek]}, ${dayMonth} de ${months[month]} de ${year}`
+    return `${dayMonth}/${monthStr}/${year}`
 }
