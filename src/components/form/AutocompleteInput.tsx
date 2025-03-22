@@ -89,7 +89,7 @@ const AutocompleteInput = <T extends { id: number }>({
                 onChange={(e) => { setQuery(e.target.value); setIsItemSelected(false); }}
                 onKeyDown={handleKeyDown}
                 placeholder={placeholder}
-                className={`border-b border-gray-300 w-full focus:outline-none focus:border-gray-700 ${className}`}
+                className={`border-b border-gray-300 text-sm w-full focus:outline-none placeholder:text-stone-400 focus:border-gray-700 ${className}`}
                 required
             />
             {results.length > 0 && (

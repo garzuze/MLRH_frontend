@@ -82,12 +82,10 @@ export default function ClientForm() {
     return (
         <>
             <form onSubmit={handleSubmit} method="post" id="ProfileForm">
-                <div className="w-full flex gap-x-4">
-                </div>
                 <ClientSelector selectedClient={client} setSelectedClient={setClient} />
                 <select
                     name="clientContact"
-                    className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700"
+                    className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full"
                     defaultValue=""
                 >
                     <option value="" disabled>Selecione o contato do cliente</option>
@@ -98,7 +96,7 @@ export default function ClientForm() {
                     ) : <option value="" disabled>Você precisa cadastrar um contato.</option>}
                 </select>
 
-                <select name="position" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700" required defaultValue="">
+                <select name="position" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" required defaultValue="">
                     <option value="" disabled>Cargo</option>
                     {positionsError ? <option disabled>Houve um error</option> :
                         loadingPositions ? (<option disabled>Carregando...</option>)
@@ -112,7 +110,7 @@ export default function ClientForm() {
 
                 <select
                     name="fee"
-                    className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700"
+                    className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full"
                     defaultValue=""
                 >
                     <option value="" disabled>Selecione o honorário</option>
@@ -127,51 +125,51 @@ export default function ClientForm() {
                     ) : <option value="" disabled>Você precisa cadastrar um honorário ou cliente.</option>}
                 </select>
 
-                <select name="maritalStatus" defaultValue="" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700">
+                <select name="maritalStatus" defaultValue="" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full">
                     <option value="" disabled>Selecione o estado civil</option>
                     {Object.entries(maritalStatus).map(([key, value]) => (
                         <option key={key} value={key}>{value}</option>
                     ))}
                 </select>
 
-                <select name="educationLevel" defaultValue="" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700">
+                <select name="educationLevel" defaultValue="" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full">
                     <option value="" disabled>Selecione o nível educacional</option>
                     {Object.entries(educationLevels).map(([key, value]) => (
                         <option key={key} value={key}>{value}</option>
                     ))}
                 </select>
 
-                <input type="date" name="date" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700" placeholder="Data de Criação" />
+                <input type="date" name="date" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" placeholder="Data de Criação" />
 
-                <select name="status" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700" required>
+                <select name="status" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" required>
                     <option value="A">Ativo</option>
                     <option value="I">Inativo</option>
                     <option value="C">Cancelado</option>
                     <option value="S">Suspenso</option>
                 </select>
 
-                <input type="number" name="deadline" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700" placeholder="Prazo (dias)" />
+                <input type="number" name="deadline" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" placeholder="Prazo (dias)" />
 
-                <input type="date" name="estimatedDelivery" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700" placeholder="Previsão de Entrega" />
+                <input type="date" name="estimatedDelivery" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" placeholder="Previsão de Entrega" />
 
-                <label className="flex items-center mt-4">
+                <label className="flex items-center mt-4 text-sm text-stone-400">
                     Vaga Sigilosa
-                    <input type="checkbox" name="confidential" className="mr-2 text-sm" />
+                    <input type="checkbox" name="confidential" className="mx-2 text-sm" />
                 </label>
 
-                <input type="number" name="quantity" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700" placeholder="Quantidade de Posições" />
+                <input type="number" name="quantity" className="text-sm placeholder:text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" placeholder="Quantidade de Posições" />
 
-                <input type="number" step="0.01" name="remuneration" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700" placeholder="Remuneração" />
+                <input type="number" step="0.01" name="remuneration" className="text-sm placeholder:text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" placeholder="Remuneração" />
 
-                <input type="number" step="0.01" name="serviceFee" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700" placeholder="Valor do Serviço" />
+                <input type="number" step="0.01" name="serviceFee" className="text-sm placeholder:text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" placeholder="Valor do Serviço" />
 
-                <input type="text" name="workSchedule" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700" placeholder="Horário de Trabalho" />
+                <input type="text" name="workSchedule" className="text-sm placeholder:text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" placeholder="Horário de Trabalho" />
 
-                <input type="number" name="age" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700" placeholder="Idade Mínima" />
+                <input type="number" name="age" className="text-sm placeholder:text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" placeholder="Idade Mínima" />
 
-                <textarea name="jobResponsibilities" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700" placeholder="Responsabilidades da Posição"></textarea>
+                <textarea name="jobResponsibilities" className="text-sm placeholder:text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" placeholder="Responsabilidades da Posição"></textarea>
 
-                <textarea name="professionalExperience" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700" placeholder="Experiência Profissional"></textarea>
+                <textarea name="professionalExperience" className="text-sm placeholder:text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" placeholder="Experiência Profissional"></textarea>
 
 
                 <Button text={"Cadastrar Perfil"} variant="dark" className="w-full mx-0 p-2 text-sm mt-4"></Button>

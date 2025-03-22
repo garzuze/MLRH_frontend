@@ -72,7 +72,7 @@ export default function ClientForm() {
     return (
         <>
             <form onSubmit={handleSubmit} method="post" id="ProfileForm">
-                <select name="profile" defaultValue="">
+                <select name="profile" defaultValue="" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full">
                     <option value="" disabled>Selecione a vaga</option>
                     {profilesError ? <option disabled>Houve um erro</option> :
                         loadingProfiles ? (<option>Carregando...</option>) :
@@ -83,24 +83,25 @@ export default function ClientForm() {
                 </select>
                 <ResumeSelector selectedResume={resume} setSelectedResume={setResume} />
 
-                <textarea name="testResult" id="testResult" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700" placeholder="Resultado do teste"></textarea>
+                <textarea name="testResult" id="testResult" className="text-sm border-b placeholder:text-stone-400 border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700" placeholder="Resultado do teste"></textarea>
 
-                <textarea name="personalFamilyContext" id="personalFamilyContext" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700" placeholder="Contexto familiar pessoal" defaultValue={resume?.maritalStatus || ""}></textarea>
+                <textarea name="personalFamilyContext" id="personalFamilyContext" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700 placeholder:text-stone-400" placeholder="Contexto familiar pessoal" defaultValue={resume?.maritalStatus || ""}></textarea>
 
-                <textarea name="educationalBackground" id="educationalBackground" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700" placeholder="Educação" defaultValue={resume?.educationDetails || ""}></textarea>
+                <textarea name="educationalBackground" id="educationalBackground" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700 placeholder:text-stone-400" placeholder="Educação" defaultValue={resume?.educationDetails || ""}></textarea>
 
-                <textarea name="professionalSummary" id="professionalSummary" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700" placeholder="Resumo profissional"></textarea>
+                <textarea name="professionalSummary" id="professionalSummary" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700 placeholder:text-stone-400" placeholder="Resumo profissional"></textarea>
 
-                <textarea name="candidateProfile" id="candidateProfile" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700" placeholder="Perfil do candidato"></textarea>
+                <textarea name="candidateProfile" id="candidateProfile" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700 placeholder:text-stone-400" placeholder="Perfil do candidato"></textarea>
 
-                <textarea name="careerObjectives" id="careerObjectives" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700" placeholder="Objetivos de carreira"></textarea>
+                <textarea name="careerObjectives" id="careerObjectives" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700 placeholder:text-stone-400" placeholder="Objetivos de carreira"></textarea>
 
-                <textarea name="finalConsiderations" id="finalConsiderations" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700" placeholder="Considerações finais"></textarea>
+                <textarea name="finalConsiderations" id="finalConsiderations" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700 placeholder:text-stone-400" placeholder="Considerações finais"></textarea>
 
-                <input name="agreedSalary" type="number" placeholder="Salário " />
-
-                <label>Data de inicio do candidato</label>
-                <input type="date" name="candidateStartDate"></input>
+                <input name="agreedSalary" type="number" placeholder="Salário " className="text-sm placeholder:text-stone-400" />
+                <br />
+                <label className="text-sm text-stone-400">Data de inicio do candidato</label>
+                <br />
+                <input type="date" name="candidateStartDate" className="text-sm text-stone-400"></input>
                 <Button text={"Cadastrar Parecer"} variant="dark" className="w-full mx-0 p-2 text-sm mt-4"></Button>
             </form>
             <Snackbar
