@@ -9,14 +9,16 @@ import { useProfiles } from "../../hooks/useProfiles";
 import ResumeSelector from "../form/ResumeAutocompleteInput";
 import { useAxiosClient } from "../../hooks/useAxiosClient";
 import { ResumeType } from "../../types/ResumeType";
+import { useQueryClient } from "@tanstack/react-query";
 
-export default function ClientForm() {
+export default function ReportForm() {
 
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
 
     const { profiles, loadingProfiles, profilesError } = useProfiles();
     const axiosClient = useAxiosClient();
+    const queryClient = useQueryClient();
     const { client, setClient } = useClient();
     const [resume, setResume] = useState<ResumeType | null>(null);
     useEffect(() => {
@@ -58,7 +60,8 @@ export default function ClientForm() {
                 if (response.status === 201) {
                     setSnackbarMessage("Parecer criado com sucesso!")
                     setIsSnackbarOpen(true);
-                    (document.getElementById('ProfileForm') as HTMLFormElement).reset();
+                    queryClient.invalidateQueries({ queryKey: ['reports'] });
+                    (document.getElementById('ReportForm') as HTMLFormElement).reset();
                 } else {
                     setSnackbarMessage("Ops... Alguma coisa deu errado.")
                     setIsSnackbarOpen(true);
@@ -71,7 +74,7 @@ export default function ClientForm() {
     }
     return (
         <>
-            <form onSubmit={handleSubmit} method="post" id="ProfileForm">
+            <form onSubmit={handleSubmit} method="post" id="ReportForm">
                 <select name="profile" defaultValue="" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full">
                     <option value="" disabled>Selecione a vaga</option>
                     {profilesError ? <option disabled>Houve um erro</option> :

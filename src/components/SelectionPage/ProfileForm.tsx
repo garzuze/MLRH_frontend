@@ -12,6 +12,7 @@ import { fetchClientFees } from "../../services/useClientFees";
 import { useServices } from "../../hooks/useServices";
 import ClientSelector from "../form/ClientAutocompletInput";
 import { useAxiosClient } from "../../hooks/useAxiosClient";
+import { useQueryClient } from "@tanstack/react-query";
 
 
 export default function ClientForm() {
@@ -26,6 +27,7 @@ export default function ClientForm() {
     const { positions, loadingPositions, positionsError } = usePositions();
     const { services } = useServices();
     const axiosClient = useAxiosClient();
+    const queryClient = useQueryClient();
 
     useEffect(() => {
         try {
@@ -68,6 +70,7 @@ export default function ClientForm() {
                 if (response.status === 201) {
                     setSnackbarMessage("Perfil criado com sucesso!")
                     setIsSnackbarOpen(true);
+                    queryClient.invalidateQueries({ queryKey: ['profiles'] });
                     (document.getElementById('ProfileForm') as HTMLFormElement).reset();
                 } else {
                     setSnackbarMessage("Ops... Alguma coisa deu errado.")
@@ -138,8 +141,12 @@ export default function ClientForm() {
                         <option key={key} value={key}>{value}</option>
                     ))}
                 </select>
-
-                <input type="date" name="date" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" placeholder="Data de Criação" />
+                
+                <label className="text-sm text-stone-400">
+                    Data de criação
+                </label>
+                <br/>
+                <input type="date" name="date" className="text-sm text-stone-400" placeholder="Data de Criação" />
 
                 <select name="status" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" required>
                     <option value="A">Ativo</option>
@@ -149,8 +156,12 @@ export default function ClientForm() {
                 </select>
 
                 <input type="number" name="deadline" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" placeholder="Prazo (dias)" />
-
-                <input type="date" name="estimatedDelivery" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" placeholder="Previsão de Entrega" />
+                
+                <label className="text-sm text-stone-400">
+                    Previsão de entrega
+                </label>
+                <br/>
+                <input type="date" name="estimatedDelivery" className="text-sm text-stone-400" placeholder="Previsão de Entrega" />
 
                 <label className="flex items-center mt-4 text-sm text-stone-400">
                     Vaga Sigilosa
