@@ -85,7 +85,7 @@ function Report({ report }: ReportProps) {
                 user={user}
               />
             }
-            fileName={`${profileData.strRepresentation}.pdf`}
+            fileName={`${report.strRepresentation}.pdf`}
           >
             {({ loading }) => (loading ? 'Gerando PDF...' : 'Baixar PDF')}
           </PDFDownloadLink>

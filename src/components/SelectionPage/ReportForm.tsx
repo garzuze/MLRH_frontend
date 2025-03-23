@@ -10,6 +10,7 @@ import ResumeSelector from "../form/ResumeAutocompleteInput";
 import { useAxiosClient } from "../../hooks/useAxiosClient";
 import { ResumeType } from "../../types/ResumeType";
 import { useQueryClient } from "@tanstack/react-query";
+import { languageLevels, maritalStatus } from "../../utils/constants";
 
 export default function ReportForm() {
 
@@ -90,15 +91,16 @@ export default function ReportForm() {
 
                 <textarea name="testResult" id="testResult" className="text-sm border-b placeholder:text-stone-400 border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700" placeholder="Resultado do teste"></textarea>
 
-                <textarea name="personalFamilyContext" id="personalFamilyContext" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700 placeholder:text-stone-400" placeholder="Contexto familiar pessoal" defaultValue={resume?.maritalStatus || ""}></textarea>
+                <textarea name="personalFamilyContext" id="personalFamilyContext" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700 placeholder:text-stone-400" placeholder="Contexto familiar pessoal" defaultValue={resume ? `${maritalStatus[resume.maritalStatus]} - ${resume.hasChildren ? `tem filhos de ${resume.childrenAges}` : "Não tem filhos"}` : ""}></textarea>
 
-                <textarea name="educationalBackground" id="educationalBackground" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700 placeholder:text-stone-400" placeholder="Educação" defaultValue={resume?.educationDetails || ""}></textarea>
-
+                <textarea name="educationalBackground" id="educationalBackground" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700 placeholder:text-stone-400" placeholder="Educação" defaultValue={resume ? `${resume.educationDetails ? `Formação:\n${resume.educationDetails}\n` : ""}${resume.additionalCourses ? `Outros cursos:\n${resume.additionalCourses}\n` : ""}${resume.computerSkills ? `Informática:\n${resume.computerSkills}\n` : ""}${resume.englishLevel > 1 ? `Nível Inglês:\n${languageLevels[resume.englishLevel]}\n`: ""}${resume.spanishLevel > 1 ? `Nível Espanhol:\n${languageLevels[resume.spanishLevel]}\n`: ""}${resume.otherLanguages ? `Outras linguas:\n${resume.otherLanguages}` : ""}` : ""}></textarea>
+                
+                {/* TODO: permitir alterar experiências profissionais diretamente */}
                 <textarea name="professionalSummary" id="professionalSummary" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700 placeholder:text-stone-400" placeholder="Resumo profissional"></textarea>
 
                 <textarea name="candidateProfile" id="candidateProfile" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700 placeholder:text-stone-400" placeholder="Perfil do candidato"></textarea>
 
-                <textarea name="careerObjectives" id="careerObjectives" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700 placeholder:text-stone-400" placeholder="Objetivos de carreira"></textarea>
+                <textarea name="careerObjectives" id="careerObjectives" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700 placeholder:text-stone-400" placeholder="Objetivos de carreira" defaultValue={resume ? `Pretensão salarial: ${resume.expectedSalary}` : ""}></textarea>
 
                 <textarea name="finalConsiderations" id="finalConsiderations" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700 placeholder:text-stone-400" placeholder="Considerações finais"></textarea>
 

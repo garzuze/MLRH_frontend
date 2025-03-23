@@ -31,8 +31,8 @@ const styles = StyleSheet.create({
         textTransform: "uppercase",
         position: 'absolute',
         top: 0,
-        paddingHorizontal: 162,
         paddingVertical: 22,
+        paddingHorizontal: 162,
     },
     section: {
         marginBottom: 15,
