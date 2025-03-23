@@ -16,19 +16,23 @@ import { mlrhUser } from "../../../types/TokenResponse";
 
 const styles = StyleSheet.create({
     page: {
-        padding: 30,
+        paddingHorizontal: 30,
+        paddingVertical: 15,
         fontSize: 11,
         fontFamily: "Helvetica",
         lineHeight: 1.4,
     },
     header: {
-        textAlign: "center",
         fontSize: 16,
         fontFamily: "Helvetica-Bold",
         marginBottom: 8,
         borderBottom: "1 solid #CCCCCC",
         paddingBottom: 4,
-        textTransform: "uppercase"
+        textTransform: "uppercase",
+        position: 'absolute',
+        top: 0,
+        paddingHorizontal: 162,
+        paddingVertical: 22,
     },
     section: {
         marginBottom: 15,
@@ -52,7 +56,7 @@ const styles = StyleSheet.create({
         fontFamily: "Helvetica-Bold",
     },
     logo: {
-        width: 40,
+        width: 30,
     },
     footer: {
         position: 'absolute',
@@ -94,7 +98,7 @@ const ReportPDF = ({ report, profile, resume, experieces, user }: ReportPDFProps
             <Image src="../../src/assets/logo_mlrh.png" style={styles.logo}></Image>
             <Text style={styles.header}>Parecer da Entrevista</Text>
             <View style={styles.row}>
-                <Text style={styles.bold}>Data: {currentDate}</Text>
+                <Text style={[styles.bold, { textAlign: "right", width: "100%"}]}>Data: {currentDate}</Text>
             </View>
             {/* Empresa e Vaga */}
             <View style={styles.section}>
@@ -173,10 +177,10 @@ const ReportPDF = ({ report, profile, resume, experieces, user }: ReportPDFProps
                             <Text><Text style={styles.bold}>Empresa: </Text>{experience.companyName}</Text>
                         </View>
                         <View style={styles.row}>
-                            <Text><Text style={styles.bold}>Data de Admissão: </Text>{experience.startDate}</Text>
+                            <Text><Text style={styles.bold}>Data de Admissão: </Text>{formatDate(experience.startDate)}</Text>
                             {experience.endDate ? (
                                 <Text>
-                                    <Text style={styles.bold}> Data de Demissão: </Text>{experience.endDate}
+                                    <Text style={styles.bold}> Data de Demissão: </Text>{formatDate(experience.endDate)}
                                 </Text>
                             ) : (<Text> - Atual</Text>)}
                         </View>
