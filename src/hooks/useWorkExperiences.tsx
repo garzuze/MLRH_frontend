@@ -3,12 +3,12 @@ import { WorkExperienceType } from "../types/WorkExperienceType";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "../contexts/AuthContext";
 
-export const useWorkExperiences = (id?: number) => {
+export const useWorkExperiences = (id?: number, options = { enabled: false }) => {
     const axiosClient = useAxiosClient();
     const { token } = useAuth();
     const queryKey = id ? ['workExperiences', token, id] : ['workExperiences', token];
 
-    const { data: experieces = [], isLoading: laodingExperiences, error: experiecesError } = useQuery<WorkExperienceType[]>({
+    return useQuery<WorkExperienceType[]>({
         queryKey: queryKey,
         queryFn: async () => {
             const url = id ? `hr/work_experience/?resume=${id}` : "hr/work_experience/"
@@ -16,6 +16,6 @@ export const useWorkExperiences = (id?: number) => {
             return response.data;
         },
         staleTime: 300000,
+        ...options,
     })
-    return { experieces, laodingExperiences, experiecesError }
 };

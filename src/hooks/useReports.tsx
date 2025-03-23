@@ -1,5 +1,4 @@
 import { useAuth } from "../contexts/AuthContext";
-import { ProfileType } from "../types/ProfileType";
 import { ReportType } from "../types/ReportType";
 import { useAxiosClient } from "./useAxiosClient";
 import { useQuery } from "@tanstack/react-query";

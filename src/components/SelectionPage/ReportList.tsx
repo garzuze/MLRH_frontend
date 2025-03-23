@@ -1,6 +1,7 @@
+import React, { useState } from "react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { useProfiles } from "../../hooks/useProfiles";
-import { useReports } from "../../hooks/useReports"
+import { useReports } from "../../hooks/useReports";
 import ReportPDF from "./pdf/ReportPDF";
 import { ReportType } from "../../types/ReportType";
 import { useResume } from "../../hooks/useResume";
@@ -10,13 +11,18 @@ import { useAuth } from "../../contexts/AuthContext";
 export default function ReportList() {
   const { reports, loadingReports, reportsError } = useReports();
 
+  if (loadingReports) return <div>Carregando pareceres...</div>;
+  if (reportsError) return <div>Erro ao carregar pareceres.</div>;
+
   return (
     <ul>
-      {reports.map((report, key) => (
-        <Report report={report} key={key} />
+      {reports.map((report) => (
+        <li key={report.id}>
+          <Report report={report} />
+        </li>
       ))}
     </ul>
-  )
+  );
 }
 
 interface ReportProps {
@@ -24,42 +30,68 @@ interface ReportProps {
 }
 
 function Report({ report }: ReportProps) {
-  const { profiles, loadingProfiles, profilesError } = useProfiles(report.profile);
-  const { resume, loadingResume, resumeError } = useResume(report.resume);
-  const { experieces, laodingExperiences, experiecesError } = useWorkExperiences(report.resume);
+  const [showPDF, setShowPDF] = useState(false);
+
+  const { data: profiles, refetch: refetchProfiles, isFetching: fetchingProfiles } =
+    useProfiles(report.profile, { enabled: false });
+  const { data: resume, refetch: refetchResume, isFetching: fetchingResume } =
+    useResume(report.resume, { enabled: false });
+  const { data: experiences, refetch: refetchExperiences, isFetching: fetchingExperiences } =
+    useWorkExperiences(report.resume, { enabled: false });
   const { user } = useAuth();
 
-  if (loadingProfiles || loadingResume || laodingExperiences) {
-    return <div>Carregando...</div>;
-  }
-  if (profilesError || resumeError || experiecesError) {
-    return <div>Erro ao carregar.</div>;
+  const handleCreatePDF = async () => {
+    await Promise.all([
+      refetchProfiles(),
+      refetchResume(),
+      refetchExperiences(),
+    ]);
+    setShowPDF(true);
+  };
+
+  if (!showPDF) {
+    return (
+      <div>
+        <div>{report.strRepresentation}</div>
+        <button
+          className="p-2 bg-black font-semibold rounded text-stone-100"
+          onClick={handleCreatePDF}
+        >
+          Criar PDF
+        </button>
+      </div>
+    );
   }
 
-  const profileData = Array.isArray(profiles) ? profiles[0] : profiles
-  const resumeData = Array.isArray(resume) ? resume[0] : resume
-  if (user) {
+  if (fetchingProfiles || fetchingResume || fetchingExperiences) {
+    return <div>Carrendo dados do PDF...</div>;
+  }
+
+  const profileData = Array.isArray(profiles) ? profiles[0] : profiles;
+  const resumeData = Array.isArray(resume) ? resume[0] : resume;
+
+  if (profileData && resumeData && experiences) {
     return (
       <div>
         <div>{profileData.strRepresentation} {resumeData.name}</div>
-        <button className="p-2 bg-black font-semibold rounded text-stone-100">
+        {user && (
           <PDFDownloadLink
             document={
               <ReportPDF
                 report={report}
                 profile={profileData}
                 resume={resumeData}
-                experieces={experieces}
+                experieces={experiences}
                 user={user}
               />
             }
-            fileName={`${resumeData.name} - ${profileData.strRepresentation}.pdf`}
+            fileName={`${profileData.strRepresentation}.pdf`}
           >
             {({ loading }) => (loading ? 'Gerando PDF...' : 'Baixar PDF')}
           </PDFDownloadLink>
-        </button>
+        )}
       </div>
     );
-
   }
+
 }

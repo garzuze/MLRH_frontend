@@ -3,12 +3,12 @@ import { useAxiosClient } from "../hooks/useAxiosClient";
 import { ResumeType } from "../types/ResumeType";
 import { useAuth } from "../contexts/AuthContext";
 
-export const useResume = (id?:  number) => {
+export const useResume = (id?:  number, options = { enabled: false }) => {
     const axiosClient = useAxiosClient();
     const { token } = useAuth();
     const queryKey = id ? ['resume', token, id] : ['resume', token];
 
-    const { data: resume = [], isLoading: loadingResume, error: resumeError } =  useQuery<ResumeType[]>({
+    return useQuery<ResumeType[]>({
         queryKey,
         queryFn: async () => {
             const url = id ? `hr/resume/${id}` : "hr/resume/"
@@ -16,6 +16,6 @@ export const useResume = (id?:  number) => {
             return response.data;
         },
         staleTime: 300000,
+        ...options,
     });
-    return { resume, loadingResume, resumeError };
 };

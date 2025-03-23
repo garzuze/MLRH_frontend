@@ -16,7 +16,9 @@ export default function ReportForm() {
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
 
-    const { profiles, loadingProfiles, profilesError } = useProfiles();
+    const { data: profiles, isLoading: loadingProfiles, error: profilesError } = useProfiles(undefined, { enabled: true });
+
+
     const axiosClient = useAxiosClient();
     const queryClient = useQueryClient();
     const { client, setClient } = useClient();
@@ -79,7 +81,7 @@ export default function ReportForm() {
                     <option value="" disabled>Selecione a vaga</option>
                     {profilesError ? <option disabled>Houve um erro</option> :
                         loadingProfiles ? (<option>Carregando...</option>) :
-                            (profiles.map((profile) => (
+                            (profiles?.map((profile) => (
                                 <option key={profile.id} value={profile.id}>{profile.strRepresentation}</option>
                             )))
                     }
