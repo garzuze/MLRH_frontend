@@ -8,6 +8,9 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useAxiosClient } from "../../hooks/useAxiosClient";
 import { usePositions } from "../../hooks/usePositions";
 import { ResumeFormProps } from "../../types/ResumeFormProps";
+import PositionSelector from "../form/PositionAutocompleteInput";
+import { positionType } from "../../types/positionType";
+import Title from "../ui/Title";
 
 
 export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => {
@@ -16,7 +19,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => 
     const axiosClient = useAxiosClient();
 
     const { login } = useAuth();
-    const { positions, loadingPositions, positionsError } = usePositions();
+    const [selectedPositions, setSelectedPositions] = useState<positionType[]>([]);
 
     useEffect(() => {
         async function loginNewUser() {
@@ -31,13 +34,33 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => 
                 }
             }
         }
+        async function getPositionData() {
+            if (resume && resume.desiredPositions?.length) {
+                try {
+                    const positionPromises = resume.desiredPositions.map((positionId: number) =>
+                        axiosClient.get(`hr/positions/${positionId}`)
+                    );
+                    const responses = await Promise.all(positionPromises);
+                    const positions = responses.map((response) => response.data);
+                    setSelectedPositions(positions);
+                } catch (error) {
+                    console.error("Erro ao buscar cargos:", error);
+                }
+            }
+        }
+    
+        getPositionData();
         loginNewUser();
-    }, [])
+    }, [resume])
 
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
+        selectedPositions.forEach((position) => {
+            formData.append("desired_positions", position.id.toString());
+        });
+
         const createOrUpdateResume = async () => {
             try {
                 const response: AxiosResponse = await axiosClient.post("/hr/resume/", formData);
@@ -497,7 +520,8 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => 
                         <label htmlFor="desiredPositions" className="mb-2 text-sm font-medium text-zinc-300">
                             Cargos desejados
                         </label>
-                        <select multiple={true} defaultValue={[""]} name="desiredPositions" className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5">
+                        <PositionSelector selectedPositions={selectedPositions} setSelectedPositions={setSelectedPositions} />
+                        {/* <select multiple={true} defaultValue={resume ? resume.desiredPositions : ""} name="desiredPositions" className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5">
                             {positionsError ? <option disabled>Houve um error</option> :
                                 loadingPositions ? (<option disabled>Carregando...</option>)
                                     : (
@@ -506,7 +530,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => 
                                         ))
                                     )
                             }
-                        </select>
+                        </select> */}
                     </div>
 
                     {/* Horário comercial? */}
