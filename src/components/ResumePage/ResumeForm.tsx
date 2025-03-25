@@ -6,17 +6,17 @@ import { AxiosResponse } from "axios";
 import Snackbar from "../ui/Snackbar";
 import { useAuth } from "../../contexts/AuthContext";
 import { useAxiosClient } from "../../hooks/useAxiosClient";
-import { usePositions } from "../../hooks/usePositions";
 import { ResumeFormProps } from "../../types/ResumeFormProps";
 import PositionSelector from "../form/PositionAutocompleteInput";
 import { positionType } from "../../types/positionType";
-import Title from "../ui/Title";
+import { useQueryClient } from "@tanstack/react-query";
 
 
 export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => {
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const axiosClient = useAxiosClient();
+    const queryClient = useQueryClient();
 
     const { login } = useAuth();
     const [selectedPositions, setSelectedPositions] = useState<positionType[]>([]);
@@ -30,7 +30,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => 
                     setSnackbarMessage(`Usuário logado como: ${basicInfo.email}`)
                     setIsSnackbarOpen(true);
                 } else {
-                    console.error("bishshshshshs")
+                    console.error("erro")
                 }
             }
         }
@@ -51,7 +51,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => 
     
         getPositionData();
         loginNewUser();
-    }, [resume])
+    }, [])
 
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -67,7 +67,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => 
                 if (response.status === 200 || response.status === 201) {
                     setSnackbarMessage("Currículo atualizado com sucesso!")
                     setIsSnackbarOpen(true);
-                    location.reload();
+                    queryClient.invalidateQueries({queryKey: ["resume"]})
                 } else {
                     setSnackbarMessage("Ops... Alguma coisa deu errado.")
                     setIsSnackbarOpen(true);

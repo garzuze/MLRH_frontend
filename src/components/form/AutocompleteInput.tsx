@@ -92,7 +92,7 @@ const AutocompleteInput = <T extends { id: number }>({
                 className={`border-b border-gray-300 text-sm w-full focus:outline-none placeholder:text-stone-400 focus:border-gray-700 ${className}`}
             />
             {results.length > 0 && (
-                <ul className="absolute w-full bg-neutral-900 selected:bg-red-500 border border-neutral-800 text-zinc-300 rounded-lg text-sm mt-1 max-h-40 overflow-y-auto">
+                <ul className="absolute w-full bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg text-sm mt-1 max-h-40 overflow-y-auto">
                     {results.map((item, index) => (
                         <li
                             key={item.id}

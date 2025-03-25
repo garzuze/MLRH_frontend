@@ -6,7 +6,6 @@ export default function Header() {
     return (
         <>
             <header className="sticky top-0 z-50 flex justify-between items-center py-6 px-8 md:px-32 bg-transparent backdrop-blur-md font-roboto">
-                {/* Replace with real logo after rebrand */}
                 <a className="text-white font-bold hover:scale-105 transition-all">
                     <img src={logo} className="md:h-12 h-8"/>
                 </a>
