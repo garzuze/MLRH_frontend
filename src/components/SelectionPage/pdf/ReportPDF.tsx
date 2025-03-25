@@ -168,7 +168,7 @@ const ReportPDF = ({ report, profile, resume, experieces, user }: ReportPDFProps
             <Text style={styles.footer}>As informações constantes neste documento são confidenciais, sendo proibida a divulgação das mesmas, sob pena da Lei.</Text>
         </Page>
         <Page size="A4" style={styles.page}>
-            <Image src="../../src/assets/logo_mlrh.png" style={styles.logo}></Image>
+            <Image src="https://github.com/garzuze/MLRH_frontend/blob/main/src/assets/logo_mlrh.png?raw=true" style={styles.logo}></Image>
             <Text style={styles.header}>Parecer da Entrevista</Text>
             {/* Resumo profissional */}
             <View style={styles.section}>
