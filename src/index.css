@@ -14,3 +14,5 @@
     @apply rounded-lg bg-indigo-950 /*color trackbar*/
     }
 }    
+
+html { scroll-behavior: smooth; }

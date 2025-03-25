@@ -2,7 +2,7 @@ import Title from "../ui/Title";
 
 export default function Services() {
     return (
-        <div className="w-full border-y-2 border-neutral-700 pb-8">
+        <div className="w-full border-y-2 border-neutral-700 pb-8" id="services">
             <div className="w-full font-roboto max-w-screen-lg mx-auto">
                 <div className="w-full lg:max-w-screen-lg mx-auto">
                     <Title variant={"h2"} text={"Nossos serviços"} className={"text-center py-8"} />

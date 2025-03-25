@@ -11,12 +11,12 @@ export default function Header() {
                 </a>
 
                 <ul className="hidden xl:flex items-center gap-12 text-base text-gray-200 font-roboto">
-                    <li className="p-3 cursor-pointer hover:font-bold">Home</li>
-                    <li className="p-3 cursor-pointer hover:font-bold">Currículo</li>
-                    <li className="p-3 cursor-pointer hover:font-bold">Vagas</li>
-                    <li className="p-3 cursor-pointer hover:font-bold">Serviços</li>
-                    <li className="p-3 cursor-pointer hover:font-bold">Sobre nós</li>
-                    <li className="p-3 cursor-pointer hover:font-bold">Contato</li>
+                    <li className="p-3 cursor-pointer hover:font-bold"><a href="#hero">Home</a></li>
+                    <li className="p-3 cursor-pointer hover:font-bold"><a href="#resume">Currículo</a></li>
+                    <li className="p-3 cursor-pointer hover:font-bold"><a href="#vacancies">Vagas</a></li>
+                    <li className="p-3 cursor-pointer hover:font-bold"><a href="#services">Serviços</a></li>
+                    <li className="p-3 cursor-pointer hover:font-bold"><a href="#about-us">Sobre nós</a></li>
+                    <li className="p-3 cursor-pointer hover:font-bold"><a href="#contact">Contato</a></li>
                 </ul>
 
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white" className="size-6 xl:hidden block cursor-pointer" onClick={() => setIsMenuOpen(!isMenuOpen)}>

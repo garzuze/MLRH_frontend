@@ -2,7 +2,7 @@ import Title from "../ui/Title";
 
 export default function Contact() {
     return (
-        <div className="border-t-2 border-neutral-700 bg-black p-12">
+        <div className="border-t-2 border-neutral-700 bg-black p-12" id="contact">
             <div className="max-w-screen-lg mx-auto grid grid-cols-3">
                 <div className="col-span-3 md:col-span-1">
                     <Title variant={"h3"} text={"ML Gestão de Pessoas"} />

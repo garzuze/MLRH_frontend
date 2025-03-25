@@ -14,6 +14,7 @@ import { WorkExperienceType } from "../../../types/WorkExperienceType";
 import { maritalStatus, states } from "../../../utils/constants";
 import getDate from "../../../utils/getDate";
 import { mlrhUser } from "../../../types/TokenResponse";
+import logo from "../../../assets/logo_mlrh.png"
 
 const styles = StyleSheet.create({
     page: {
@@ -96,7 +97,7 @@ const formatDate = (dateString: string) => {
 const ReportPDF = ({ report, profile, resume, experieces, user }: ReportPDFProps) => (
     <Document>
         <Page size="A4" style={styles.page}>
-            <Image src="../../src/assets/logo_mlrh.png" style={styles.logo}></Image>
+            <Image src={logo} style={styles.logo}></Image>
             <Text style={styles.header}>Parecer da Entrevista</Text>
             <View style={styles.row}>
                 <Text style={[styles.bold, { textAlign: "right", width: "100%" }]}>Data: {currentDate}</Text>
