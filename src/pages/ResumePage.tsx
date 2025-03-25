@@ -30,7 +30,7 @@ export default function ResumePage() {
                 </div>
             </main>
         );
-    } else if (basicInfo && !resume) {
+    } else if (basicInfo && !resumeData) {
         return (
             <main className="w-full mx-auto">
                 <div className="px-6 py-8 font-roboto bg-gradient-to-br from-neutral-950 via-neutral-900 to-indigo-900">
