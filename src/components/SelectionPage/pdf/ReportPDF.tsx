@@ -4,7 +4,8 @@ import {
     Text,
     View,
     StyleSheet,
-    Image
+    Image,
+    Link
 } from "@react-pdf/renderer";
 import { ProfileType } from "../../../types/ProfileType";
 import { ReportType } from "../../../types/ReportType";
@@ -98,13 +99,13 @@ const ReportPDF = ({ report, profile, resume, experieces, user }: ReportPDFProps
             <Image src="../../src/assets/logo_mlrh.png" style={styles.logo}></Image>
             <Text style={styles.header}>Parecer da Entrevista</Text>
             <View style={styles.row}>
-                <Text style={[styles.bold, { textAlign: "right", width: "100%"}]}>Data: {currentDate}</Text>
+                <Text style={[styles.bold, { textAlign: "right", width: "100%" }]}>Data: {currentDate}</Text>
             </View>
             {/* Empresa e Vaga */}
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Informações da Vaga e Cliente</Text>
                 <View style={styles.row}>
-                    <Text>{profile.strRepresentation}</Text>
+                    <Text>{profile.strRepresentation} - {profile.clientName}</Text>
                 </View>
             </View>
 
@@ -123,8 +124,12 @@ const ReportPDF = ({ report, profile, resume, experieces, user }: ReportPDFProps
                 <Text style={styles.sectionTitle}>Dados do Candidato</Text>
                 <View style={styles.row}>
                     <Text><Text style={styles.bold}>Nome:</Text> {resume.name}
+                        {resume.linkedin && <Text> -
+                            <Link src={resume.linkedin} style={styles.bold}>LinkedIn</Link>
+                        </Text>}
                         <Text style={styles.bold}> Idade:</Text> {resume.age} anos
-                        <Text style={styles.bold}> Natural de:</Text> {resume.birthPlace}</Text>
+                        <Text style={styles.bold}> Natural de:</Text> {resume.birthPlace}
+                    </Text>
                 </View>
                 <View style={styles.row}>
                     <Text><Text style={styles.bold}>Estado Civil:</Text> {maritalStatus[resume.maritalStatus]}
@@ -138,9 +143,12 @@ const ReportPDF = ({ report, profile, resume, experieces, user }: ReportPDFProps
                     <Text><Text style={styles.bold}>  Cidade:</Text> {resume.city}/{states[resume.state]}</Text>
                 </View>
                 <View style={styles.row}>
-                    <Text><Text style={styles.bold}>Celular:</Text> {resume.phone}
-                        <Text style={styles.bold}>  E-mail:</Text> {resume.email}</Text>
-                    <Text><Text style={styles.bold}>  CPF:</Text> {resume.cpf}</Text>
+                    <Text>
+                        <Text style={styles.bold}>Celular:</Text> {resume.phone}
+                        <Text style={styles.bold}>  E-mail:</Text> {resume.email}
+                        <Text style={styles.bold}> CNH:</Text> {resume.cnh ? resume.cnh : "Não tem"}
+                        <Text style={styles.bold}>  CPF:</Text> {resume.cpf}
+                    </Text>
                 </View>
             </View>
 
@@ -154,13 +162,7 @@ const ReportPDF = ({ report, profile, resume, experieces, user }: ReportPDFProps
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Histórico Educacional</Text>
                 <View style={styles.row}>
-
-                </View>
-                <View style={styles.row}>
-                    <Text>{resume.educationDetails}</Text>
-                </View>
-                <View style={styles.row}>
-
+                    <Text>{report.educationalBackground}</Text>
                 </View>
             </View>
             <Text style={styles.footer}>As informações constantes neste documento são confidenciais, sendo proibida a divulgação das mesmas, sob pena da Lei.</Text>
@@ -216,10 +218,10 @@ const ReportPDF = ({ report, profile, resume, experieces, user }: ReportPDFProps
             {/* Pretensão Salarial */}
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>
-                    Objetivos e Pretensões
+                    Pretensão salarial
                 </Text>
                 <View style={styles.row}>
-                    <Text> <Text style={styles.bold}>Pretenção Salarial: </Text> R$ {resume.expectedSalary}</Text>
+                    <Text>{report.careerObjectives}</Text>
                 </View>
             </View>
             {/*Perfil do Candidato (a) */}
@@ -231,6 +233,17 @@ const ReportPDF = ({ report, profile, resume, experieces, user }: ReportPDFProps
                     <Text>{report.candidateProfile}</Text>
                 </View>
             </View>
+            {/*Resultado do teste*/}
+            {report.testResult &&
+                <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>
+                        Resultado do teste
+                    </Text>
+                    <View style={styles.row}>
+                        <Text>{report.testResult}</Text>
+                    </View>
+                </View>
+            }
             <Text style={styles.author}>Elaborado por: <Text style={styles.bold}>{user.firstName} {user.lastName}</Text></Text>
             <Text style={styles.footer}>As informações constantes neste documento são confidenciais, sendo proibida a divulgação das mesmas, sob pena da Lei.</Text>
         </Page>

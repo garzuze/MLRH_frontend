@@ -6,6 +6,7 @@ export interface ResumeType {
     user: number; //usuário
     cpf: string; //cpf
     gender: GenderAbbreviation; //sexo
+    cnh: string;
     birthDate: string; //datanascimento
     age: string; // idade
     birthPlace: string; //localnascimento

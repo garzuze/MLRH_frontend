@@ -100,7 +100,7 @@ export default function ReportForm() {
 
                 <textarea name="candidateProfile" id="candidateProfile" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700 placeholder:text-stone-400" placeholder="Perfil do candidato"></textarea>
 
-                <textarea name="careerObjectives" id="careerObjectives" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700 placeholder:text-stone-400" placeholder="Objetivos de carreira" defaultValue={resume ? `Pretensão salarial: ${resume.expectedSalary}` : ""}></textarea>
+                <textarea name="careerObjectives" id="careerObjectives" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700 placeholder:text-stone-400" placeholder="Objetivos de carreira" defaultValue={resume ? `Pretensão salarial: R$${resume.expectedSalary}` : ""}></textarea>
 
                 <textarea name="finalConsiderations" id="finalConsiderations" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700 placeholder:text-stone-400" placeholder="Considerações finais"></textarea>
 

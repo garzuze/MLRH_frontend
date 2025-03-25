@@ -4,6 +4,7 @@ export interface ProfileType {
     id: number;
     client: number; // cliente
     clientContact: number; // clienteContato
+    clientName: string;
     position: number; // posição
     fee: number; // taxa
     strRepresentation: string; // strRepresentação
