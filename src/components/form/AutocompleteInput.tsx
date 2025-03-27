@@ -9,6 +9,7 @@ interface AutocompleteInputProps<T> {
     inputName: string;
     placeholder?: string;
     className?: string;
+    required?: boolean;
 }
 
 const AutocompleteInput = <T extends { id: number }>({
@@ -20,6 +21,7 @@ const AutocompleteInput = <T extends { id: number }>({
     inputName,
     placeholder = "",
     className = "",
+    required = true,
 }: AutocompleteInputProps<T>) => {
     const [query, setQuery] = useState(value);
     const [results, setResults] = useState<T[]>([]);
@@ -90,6 +92,7 @@ const AutocompleteInput = <T extends { id: number }>({
                 onKeyDown={handleKeyDown}
                 placeholder={placeholder}
                 className={`border-b border-gray-300 text-sm w-full focus:outline-none placeholder:text-stone-400 focus:border-gray-700 ${className}`}
+                required={required}
             />
             {results.length > 0 && (
                 <ul className="absolute w-full bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg text-sm mt-1 max-h-40 overflow-y-auto">
