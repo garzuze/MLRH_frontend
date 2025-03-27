@@ -8,6 +8,7 @@ import SalesPage from "./pages/SalesPage";
 import ResumePage from "./pages/ResumePage"
 import VerifyEmailPage from "./pages/VerifyEmailPage";
 import SelectionPage from "./pages/SelectionPage";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/curriculo" element={<ResumePage />} />
         <Route path="/verify-email" element={<VerifyEmailPage />} />
+        <Route path="/vaga/:id" element={<ProfilePage />}/>
         <Route element={<PrivateRoute />}>
           <Route path="/admin" element={<AdminPanel />}>
             <Route index element={<Navigate to="/admin/dashboard/" />} />

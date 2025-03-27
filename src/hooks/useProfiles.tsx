@@ -3,7 +3,7 @@ import { ProfileType } from "../types/ProfileType";
 import { useAxiosClient } from "./useAxiosClient";
 import { useQuery } from "@tanstack/react-query";
 
-export const useProfiles = (id?: number, options = { enabled: false }) => {
+export const useProfiles = (id?: number, options = { enabled: true }) => {
     const { token } = useAuth();
     const axiosClient = useAxiosClient();
     const queryKey = id ? ['profiles', token, id] : ['profiles', token];
@@ -15,6 +15,7 @@ export const useProfiles = (id?: number, options = { enabled: false }) => {
             const response = await axiosClient.get(url);
             return response.data;
         },
+        retry: false,
         staleTime: 300000,
         ...options,
     })
