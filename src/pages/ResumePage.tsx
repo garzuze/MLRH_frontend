@@ -11,7 +11,7 @@ export default function ResumePage() {
     const { data: experieces, isLoading: laodingExperiences } = useWorkExperiences(undefined, {enabled: true});
     const basicInfo = JSON.parse(localStorage.getItem('basic_info') ?? "null") as BasicInfoType | null;
 
-    if (resumeData) {
+    if (resumeData && basicInfo === null) {
         return (
             <main className="w-full mx-auto">
                 <div className="px-6 py-8 font-roboto bg-gradient-to-br from-neutral-950 via-neutral-900 to-indigo-900">

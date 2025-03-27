@@ -33,7 +33,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => 
                     console.error("erro")
                 }
             }
-        }
+        };
         async function getPositionData() {
             if (resume && resume.desiredPositions?.length) {
                 try {
@@ -42,15 +42,18 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => 
                     );
                     const responses = await Promise.all(positionPromises);
                     const positions = responses.map((response) => response.data);
+                    console.log(positions);
                     setSelectedPositions(positions);
                 } catch (error) {
                     console.error("Erro ao buscar cargos:", error);
                 }
             }
+        };
+        
+        if (!resume) {
+            loginNewUser();
         }
-    
         getPositionData();
-        loginNewUser();
     }, [])
 
 
@@ -65,6 +68,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => 
             try {
                 const response: AxiosResponse = await axiosClient.post("/hr/resume/", formData);
                 if (response.status === 200 || response.status === 201) {
+                    localStorage.removeItem("basic_info");
                     setSnackbarMessage("Currículo atualizado com sucesso!")
                     setIsSnackbarOpen(true);
                     queryClient.invalidateQueries({queryKey: ["resume"]})
