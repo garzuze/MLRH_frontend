@@ -34,7 +34,7 @@ const Route = ({ Icon, title, destination, }: RouteTypes) => {
         {({ isActive }) => (
             <>
                 <Icon className={isActive ? "text-violet-500" : ""} />
-                <span>{title}</span>
+                <p>{title}</p>
             </>
         )}
     </NavLink>

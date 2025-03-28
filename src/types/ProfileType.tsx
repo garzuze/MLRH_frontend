@@ -4,10 +4,10 @@ export interface ProfileType {
     id: number;
     client: number; // cliente
     clientContact: number; // clienteContato
-    clientName: string;
     position: number; // posição
+    positionStr: string;
     fee: number; // taxa
-    strRepresentation: string; // strRepresentação
+    location: string;
     maritalStatus: maritalStatusAbbreviation; // estado civil
     educationLevel: EducationLevelAbbreviation; // educaçãoNível
     date: string; // data
@@ -20,6 +20,7 @@ export interface ProfileType {
     serviceFee: number; // serviçoTaxa
     workSchedule: string; // trabalhoHorário
     age: number; // idade
+    benefits: string[];
     gender: GenderAbbreviation; // gênero
     jobResponsibilities: string; // empregoResponsabilidades
     professionalExperience: string; // profissionalExperiência
@@ -31,4 +32,6 @@ export interface ProfileType {
     additionalNotes: string; // adicionalNotas
     restrictions: string; // restrições
     cancellationReason: string; // cancelamentoMotivo
+    createdAt: string;
+    updateAt: string;
 }

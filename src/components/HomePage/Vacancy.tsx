@@ -5,7 +5,7 @@ export default function Vacancy({ profile }: {profile: ProfileType}) {
     return (
         <div className="max-w-sm p-6 bg-neutral-950 border border-neutral-800 rounded-lg shadow-sm hover:bg-neutral-900">
             <a href="">
-                <Title variant={"h3"} text={profile.strRepresentation} className={"mb-2"}/>
+                <Title variant={"h3"} text={profile.positionStr} className={"mb-2"}/>
             </a>
             <p className="mb-3 font-normal text-zinc-300 line-clamp-3">
                 {profile.jobResponsibilities}

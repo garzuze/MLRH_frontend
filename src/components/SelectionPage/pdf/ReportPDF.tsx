@@ -102,7 +102,7 @@ const ReportPDF = ({ report, profile, resume, experieces, user }: ReportPDFProps
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Informações da Vaga e Cliente</Text>
                 <View style={styles.row}>
-                    <Text>{profile.strRepresentation} - {profile.clientName}</Text>
+                    <Text>{report.strRepresentation}</Text>
                 </View>
             </View>
 
