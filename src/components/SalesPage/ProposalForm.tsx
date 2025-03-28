@@ -13,6 +13,7 @@ import getDate from "../../utils/getDate";
 import { fetchClientContactData } from "../../services/useClientContact";
 import { fetchClientFees } from "../../services/useClientFees";
 import { useAxiosClient } from "../../hooks/useAxiosClient";
+import { useClientMlrh } from "../../hooks/useClientMlrh";
 
 export default function ProposalForm() {
     const { client } = useClient();
@@ -25,28 +26,28 @@ export default function ProposalForm() {
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const [isContactSelectOpen, setIsContactSelectOpen] = useState<boolean>(false);
 
-    const [clientData, setClientData] = useState<ClientType>();
+    // const [clientData, setClientData] = useState<ClientType>();
     const [clientContactData, setClientContactData] = useState<ClientContactType[]>([]);
     const [clientFeeData, setClientFeeData] = useState<ClientFeeType[]>([]);
 
 
 
-    const getClientData = async (clientId: number) => {
-        try {
-            const response: AxiosResponse = await axiosClient.get(`/clients/clients/${clientId}`);
-            if (response.status === 200) {
-                setClientData(response.data);
-            } else {
-                setSnackbarMessage("Opsss, alguma coisa deu errado...")
-                setIsSnackbarOpen(false)
-            }
+    // const getClientData = async (clientId: number) => {
+    //     try {
+    //         const response: AxiosResponse = await axiosClient.get(`/clients/clients/${clientId}`);
+    //         if (response.status === 200) {
+    //             setClientData(response.data);
+    //         } else {
+    //             setSnackbarMessage("Opsss, alguma coisa deu errado...")
+    //             setIsSnackbarOpen(false)
+    //         }
 
-        } catch (error) {
-            console.log(error)
-            setSnackbarMessage("Opsss, alguma coisa deu errado...")
-            setIsSnackbarOpen(false)
-        }
-    }
+    //     } catch (error) {
+    //         console.log(error)
+    //         setSnackbarMessage("Opsss, alguma coisa deu errado...")
+    //         setIsSnackbarOpen(false)
+    //     }
+    // }
 
 
     const getClientContactData = async (clientId: number) => {
@@ -68,11 +69,12 @@ export default function ProposalForm() {
             setIsSnackbarOpen(true)
         }
     }
-
+    const { data: clientMlrh } = useClientMlrh(client?.id);
+    const clientData = Array.isArray(clientMlrh) ? clientMlrh[0] : clientMlrh;
+    
     useEffect(() => {
         if (client) {
             getClientContactData(client.id);
-            getClientData(client.id);
             getClientFeeData(client.id)
         }
     }, [client])
