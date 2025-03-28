@@ -5,7 +5,6 @@ export const educationLevels = {
     EF: "Ensino Fundamental",
     EM: "Ensino Médio",
     ET: "Ensino Médio Técnico",
-    TE: "Tecnólogo",
     GR: "Graduação",
     PG: "Pós-graduação",
     ME: "Mestrado",
