@@ -15,6 +15,7 @@ import { maritalStatus, states } from "../../../utils/constants";
 import getDate from "../../../utils/getDate";
 import { mlrhUser } from "../../../types/TokenResponse";
 import logo from "../../../assets/logo_mlrh.png"
+import { formatDate } from "../../../utils/formatDate";
 
 const styles = StyleSheet.create({
     page: {
@@ -89,11 +90,6 @@ interface ReportPDFProps {
 }
 
 const currentDate = getDate();
-const formatDate = (dateString: string) => {
-    const [year, month, day] = dateString.split("-");
-    return `${day}/${month}/${year}`;
-};
-
 const ReportPDF = ({ report, profile, resume, experieces, user }: ReportPDFProps) => (
     <Document>
         <Page size="A4" style={styles.page}>
