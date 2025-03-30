@@ -11,6 +11,8 @@ import { useAxiosClient } from "../../hooks/useAxiosClient";
 import { ResumeType } from "../../types/ResumeType";
 import { useQueryClient } from "@tanstack/react-query";
 import { languageLevels, maritalStatus } from "../../utils/constants";
+import { ClientType } from "../../types/ClientType";
+import { useClientMlrh } from "../../hooks/useClientMlrh";
 
 export default function ReportForm() {
 
@@ -18,40 +20,12 @@ export default function ReportForm() {
     const [snackbarMessage, setSnackbarMessage] = useState("");
 
     const { data: profiles, isLoading: loadingProfiles, error: profilesError } = useProfiles(undefined, { enabled: true });
-
+    const clientsIds = profiles?.map((profile) => (profile.client)) || [];
+    const { data: clients, isLoading: loadingClients } = useClientMlrh(clientsIds, { enabled: clientsIds.length > 0 });
 
     const axiosClient = useAxiosClient();
     const queryClient = useQueryClient();
-    const { client, setClient } = useClient();
     const [resume, setResume] = useState<ResumeType | null>(null);
-    useEffect(() => {
-        try {
-            const getClientContactData = async (clientId: number) => {
-                const newContactData = await fetchClientContactData(axiosClient, clientId);
-                if (Array.isArray(newContactData) && newContactData.length > 0) {
-                } else {
-                    setSnackbarMessage("Você precisa cadastrar um contato...")
-                    setIsSnackbarOpen(true)
-                }
-            }
-
-            const getClientFeeData = async (clientId: number) => {
-                const newFeeData = await fetchClientFees(axiosClient, clientId);
-                if (Array.isArray(newFeeData) && newFeeData.length > 0) {
-                } else {
-                    setSnackbarMessage("Nenhum honorário encontrado...")
-                    setIsSnackbarOpen(true)
-                }
-            }
-            if (client) {
-                getClientContactData(client.id);
-                getClientFeeData(client.id);
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }, [client])
-
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -81,10 +55,13 @@ export default function ReportForm() {
                 <select name="profile" defaultValue="" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full">
                     <option value="" disabled>Selecione a vaga</option>
                     {profilesError ? <option disabled>Houve um erro</option> :
-                        loadingProfiles ? (<option>Carregando...</option>) :
-                            (profiles?.map((profile) => (
-                                <option key={profile.id} value={profile.id}>{profile.strRepresentation}</option>
-                            )))
+                        loadingProfiles || loadingClients ? (<option>Carregando...</option>) :
+                            profiles?.map((profile) => {
+                                const client = clients?.find(client => client.id === profile.client);
+                                return (
+                                    <option key={profile.id} value={profile.id}>{profile.positionStr} - {client?.tradeName ?? "Carregando..."}</option>
+                                );
+                            })
                     }
                 </select>
                 <ResumeSelector selectedResume={resume} setSelectedResume={setResume} />
@@ -93,8 +70,8 @@ export default function ReportForm() {
 
                 <textarea name="personalFamilyContext" id="personalFamilyContext" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700 placeholder:text-stone-400" placeholder="Contexto familiar pessoal" defaultValue={resume ? `${maritalStatus[resume.maritalStatus]} - ${resume.hasChildren ? `tem filhos de ${resume.childrenAges}` : "Não tem filhos"}` : ""}></textarea>
 
-                <textarea name="educationalBackground" id="educationalBackground" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700 placeholder:text-stone-400" placeholder="Educação" defaultValue={resume ? `${resume.educationDetails ? `Formação:\n${resume.educationDetails}\n` : ""}${resume.additionalCourses ? `Outros cursos:\n${resume.additionalCourses}\n` : ""}${resume.computerSkills ? `Informática:\n${resume.computerSkills}\n` : ""}${resume.englishLevel > 1 ? `Nível Inglês:\n${languageLevels[resume.englishLevel]}\n`: ""}${resume.spanishLevel > 1 ? `Nível Espanhol:\n${languageLevels[resume.spanishLevel]}\n`: ""}${resume.otherLanguages ? `Outras linguas:\n${resume.otherLanguages}` : ""}` : ""}></textarea>
-                
+                <textarea name="educationalBackground" id="educationalBackground" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700 placeholder:text-stone-400" placeholder="Educação" defaultValue={resume ? `${resume.educationDetails ? `Formação:\n${resume.educationDetails}\n` : ""}${resume.additionalCourses ? `Outros cursos:\n${resume.additionalCourses}\n` : ""}${resume.computerSkills ? `Informática:\n${resume.computerSkills}\n` : ""}${resume.englishLevel > 1 ? `Nível Inglês:\n${languageLevels[resume.englishLevel]}\n` : ""}${resume.spanishLevel > 1 ? `Nível Espanhol:\n${languageLevels[resume.spanishLevel]}\n` : ""}${resume.otherLanguages ? `Outras linguas:\n${resume.otherLanguages}` : ""}` : ""}></textarea>
+
                 {/* TODO: permitir alterar experiências profissionais diretamente */}
                 <textarea name="professionalSummary" id="professionalSummary" className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700 placeholder:text-stone-400" placeholder="Resumo profissional"></textarea>
 
