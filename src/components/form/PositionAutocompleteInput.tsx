@@ -41,7 +41,7 @@ const PositionSelector = ({ selectedPositions, setSelectedPositions }: { selecte
             <ul className="mt-2">
                 {selectedPositions.map((position) => (
                     <li key={position.id} className="flex items-center justify-between bg-neutral-800 p-2 rounded mb-1 text-sm">
-                        <span>{position.title}</span>
+                        <p>{position.title}</p>
                         <button
                             type="button"
                             onClick={() => removePosition(position.id)}

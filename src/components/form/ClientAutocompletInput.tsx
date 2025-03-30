@@ -2,6 +2,7 @@ import AutocompleteInput from "./AutocompleteInput";
 import { ClientType } from "../../types/ClientType";
 import { useAxiosClient } from "../../hooks/useAxiosClient";
 
+// selectedClient e setSelectedClient são variáveis de estado que serão passadas como props
 const ClientSelector = ({ selectedClient, setSelectedClient }: { selectedClient: ClientType | null, setSelectedClient: (client: ClientType) => void }) => {
     const axiosClient = useAxiosClient();
 

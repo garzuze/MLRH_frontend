@@ -2,6 +2,7 @@ import AutocompleteInput from "./AutocompleteInput";
 import { ResumeType } from "../../types/ResumeType";
 import { useAxiosClient } from "../../hooks/useAxiosClient";
 
+// selectedResume e setSelectedResume são variáveis de estado que serão passadas como props
 const ResumeSelector = ({ selectedResume, setSelectedResume }: { selectedResume: ResumeType | null, setSelectedResume: (resume: ResumeType) => void }) => {
     const axiosClient = useAxiosClient();
     
