@@ -13,27 +13,20 @@ export default function ClientContactForm() {
     const { client, setClient } = useClient();
     const axiosClient = useAxiosClient();
 
+    async function createClientContact(formData: FormData) {
+        try {
+            const response: AxiosResponse = await axiosClient.post("/clients/client_contact/", formData);            
+            response.status === 201 && setSnackbarMessage("Contato criado com sucesso!")
+        } catch (error) {
+            setSnackbarMessage(`Ops... Alguma coisa deu errado.`)
+        }
+        setIsSnackbarOpen(true);
+    }
+
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
-
-        const createClientContact = async () => {
-            try {
-                const response: AxiosResponse = await axiosClient.post("/clients/client_contact/", formData);
-                if (response.status === 201) {
-                    setSnackbarMessage("Contato criado com sucesso!")
-                    setIsSnackbarOpen(true);
-                } else {
-                    setSnackbarMessage("Ops... Alguma coisa deu errado.")
-                    setIsSnackbarOpen(true);
-                }
-            } catch (error) {
-                console.log(error)
-                setSnackbarMessage("Ops... Alguma coisa deu errado.")
-                setIsSnackbarOpen(true);
-            }
-        }
-        createClientContact();
+        createClientContact(formData);
     }
 
     return (
