@@ -4,6 +4,8 @@ import { ClientContactType } from "../../../types/ClientContactType";
 import { ClientFeeType } from "../../../types/ClientFeeType";
 import { serviceType } from "../../../types/serviceType";
 import getDate from "../../../utils/getDate";
+import logo from "../../../assets/logo_mlrh.png"
+
 
 const styles = StyleSheet.create({
     body: {
@@ -44,6 +46,9 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         width: 150,
         height: 50,
+    },
+    logo: {
+        width: 30,
     }
 });
 
@@ -60,6 +65,7 @@ export function ProposalPDF({ clientData, clientContactData, clientFeeData, serv
     return (
         <Document author="MLRH Gestão de pessoas">
             <Page size="A4" style={styles.body}>
+                <Image src={logo} style={styles.logo}></Image>
                 <View style={styles.section}>
                     <Text style={styles.text}>{currentDate}</Text>
                     <Text style={styles.text}>À {clientData.corporateName}</Text>
@@ -99,7 +105,7 @@ export function ProposalPDF({ clientData, clientContactData, clientFeeData, serv
                     <Text style={styles.text}>Nossos serviços são remunerados através de um <Text style={{ fontFamily: "Helvetica-Bold" }}>percentual aplicado sobre a remuneração bruta mensal (Salários, Comissões, Gratificações, etc.) do profissional a ser contratado:</Text></Text>
                     {clientFeeData.map((fee) => (
                         <Text key={fee.id} style={styles.listItem}>
-                             • {(fee.percentual && fee.value) ? `${fee.percentual}% - R$ ${fee.value}` : (
+                            • {(fee.percentual && fee.value) ? `${fee.percentual}% - R$ ${fee.value}` : (
                                 fee.percentual ? (`${fee.percentual}%`) : (`R${fee.value}`)
                             )} - {services.find(s => s.id === fee.service)?.service}
                         </Text>
@@ -111,7 +117,7 @@ export function ProposalPDF({ clientData, clientContactData, clientFeeData, serv
                 </View>
             </Page>
             <Page size="A4" style={styles.body}>
-            <Text style={styles.title}>CANCELAMENTO</Text>
+                <Text style={styles.title}>CANCELAMENTO</Text>
                 <Text style={styles.paragraph}>No caso de cancelamento da vaga ao longo do processo seletivo por parte da <Text style={[{ fontFamily: "Helvetica-Bold" }, styles.text]}>{clientData.corporateName}</Text> será cobrado o total de 50% (cinquenta por cento) da taxa acertada, que servirá para o reembolso dos custos operacionais incorridos.  O cancelamento automático da vaga poderá acontecer por parte da <Text style={[{ fontFamily: "Helvetica-Bold" }, styles.text]}>ML GESTÃO DE PESSOAS</Text> no caso da <Text style={[{ fontFamily: "Helvetica-Bold" }, styles.text]}>{clientData.corporateName}</Text>, não se pronunciar em 10 (dez) dias após a apresentação dos candidatos, incidindo desta forma a cobrança do percentual acima informado. O vencimento da fatura ocorrerá após 05 (cinco) dias da formalização do cancelamento.</Text>
                 <Text style={styles.title}>REPOSIÇÃO DE CANDIDATOS </Text>
                 <Text style={styles.paragraph}>Caso ocorra eventual não adaptação do Profissional contratado, por questões de ordem funcional ou de desempenho que resulte no seu desligamento da empresa em um prazo de até 30 (trinta) dias para os níveis operacional (ais) e administrativo (os) e 45 (quarenta e cinco) para os demais cargos, após a respectiva data de admissão, a primeira substituição será realizada, sem custo adicional.</Text>
