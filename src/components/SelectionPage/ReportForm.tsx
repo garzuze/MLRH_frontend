@@ -27,27 +27,23 @@ export default function ReportForm() {
     const queryClient = useQueryClient();
     const [resume, setResume] = useState<ResumeType | null>(null);
 
+    async function createReport(formData: FormData) {
+        const response: AxiosResponse = await axiosClient.post("/hr/report/", formData);
+        if (response.status === 201) {
+            setSnackbarMessage("Parecer criado com sucesso!")
+            setIsSnackbarOpen(true);
+            queryClient.invalidateQueries({ queryKey: ['reports'] });
+            (document.getElementById('ReportForm') as HTMLFormElement).reset();
+        } else {
+            setSnackbarMessage("Ops... Alguma coisa deu errado.")
+            setIsSnackbarOpen(true);
+        }
+    }
+
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
-
-        const createReport = async () => {
-            try {
-                const response: AxiosResponse = await axiosClient.post("/hr/report/", formData);
-                if (response.status === 201) {
-                    setSnackbarMessage("Parecer criado com sucesso!")
-                    setIsSnackbarOpen(true);
-                    queryClient.invalidateQueries({ queryKey: ['reports'] });
-                    (document.getElementById('ReportForm') as HTMLFormElement).reset();
-                } else {
-                    setSnackbarMessage("Ops... Alguma coisa deu errado.")
-                    setIsSnackbarOpen(true);
-                }
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        createReport();
+        createReport(formData);
     }
     return (
         <>
