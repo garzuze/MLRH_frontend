@@ -13,7 +13,7 @@ export default function Services() {
                         <div className="absolute inset-0 bg-indigo-600 bg-[size:20px_20px] opacity-20 blur-[100px]"></div>
                         <Title variant={"h3"} text={"Recrutamento e Seleção"} className={"absolute p-8 bottom-0 left-0"} />
                         <p className="mb-3 font-normal text-zinc-300 line-clamp-3 bottom-0 absolute left-8 text-sm">
-                        Encontramos profissionais qualificados para ocupar um cargo em sua empresa.
+                        Encontramos profissionais qualificados.
                         </p>
                         <div className="absolute bottom-0 right-0 p-4 sm:p-8">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white" className="size-6 sm:size-10">
