@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { educationLevels, genders, languageLevels, maritalStatus, states } from "../../utils/constants";
-import { BasicInfoType } from "../../types/BasicInfoType";
 import Button from "../ui/Button";
 import { AxiosResponse } from "axios";
 import Snackbar from "../ui/Snackbar";
-import { useAuth } from "../../contexts/AuthContext";
 import { useAxiosClient } from "../../hooks/useAxiosClient";
 import { ResumeFormProps } from "../../types/ResumeFormProps";
 import PositionSelector from "../form/PositionAutocompleteInput";
@@ -18,22 +16,9 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => 
     const axiosClient = useAxiosClient();
     const queryClient = useQueryClient();
 
-    const { login } = useAuth();
     const [selectedPositions, setSelectedPositions] = useState<positionType[]>([]);
 
     useEffect(() => {
-        async function loginNewUser() {
-            const basicInfo = JSON.parse(localStorage.getItem('basic_info') ?? "null") as BasicInfoType | null;
-            if (basicInfo) {
-                const success = await login(basicInfo.email, basicInfo.password);
-                if (success) {
-                    setSnackbarMessage(`Usuário logado como: ${basicInfo.email}`)
-                    setIsSnackbarOpen(true);
-                } else {
-                    console.error("erro")
-                }
-            }
-        };
         async function getPositionData() {
             if (resume && resume.desiredPositions?.length) {
                 try {
@@ -42,17 +27,12 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => 
                     );
                     const responses = await Promise.all(positionPromises);
                     const positions = responses.map((response) => response.data);
-                    console.log(positions);
                     setSelectedPositions(positions);
                 } catch (error) {
                     console.error("Erro ao buscar cargos:", error);
                 }
             }
         };
-        
-        if (!resume) {
-            loginNewUser();
-        }
         getPositionData();
     }, [])
 
