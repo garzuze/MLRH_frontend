@@ -16,35 +16,29 @@ export const WorkExperienceForm: React.FC<WorkExperienceFormProps> = ({ experien
     const axiosClient = useAxiosClient();
     const queryClient = useQueryClient();
 
+    async function createOrUpdateWorkExperience(formData: FormData) {
+        try {
+            await axiosClient.post("/hr/work_experience/", formData);
+            queryClient.invalidateQueries({ queryKey: ['workExperiences'] });
+            setSnackbarMessage("Experiência atualizada com sucesso!");
+            (document.getElementById('WorkExperienceForm') as HTMLFormElement).reset();
+        } catch (error) {
+            setSnackbarMessage("Ops... Alguma coisa deu errado.")
+        }
+        setIsSnackbarOpen(true);
+    }
+
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
-        const createOrUpdateWorkExperience = async () => {
-            try {
-                const response: AxiosResponse = await axiosClient.post("/hr/work_experience/", formData);
-                if (response.status === 200 || response.status === 201) {
-                    queryClient.invalidateQueries({queryKey: ['workExperiences']})
-                    setSnackbarMessage("Experiência atualizada com sucesso!")
-                    setIsSnackbarOpen(true);
-                    (document.getElementById('WorkExperienceForm') as HTMLFormElement).reset();
-                } else {
-                    setSnackbarMessage("Ops... Alguma coisa deu errado.")
-                    setIsSnackbarOpen(true);
-                }
-            } catch (error) {
-                console.log(error)
-                setSnackbarMessage("Ops... Alguma coisa deu errado.")
-                setIsSnackbarOpen(true);
-            }
-        }
-        createOrUpdateWorkExperience();
+        createOrUpdateWorkExperience(formData);
     }
 
     return (
         <div className="w-full bg-neutral-950 border border-neutral-800 rounded-lg shadow md:mt-0 md text-zinc-50 p-4 xl:max-w-screen-xl mx-auto mb-6">
             <form className="space-y-6" onSubmit={handleSubmit} id="WorkExperienceForm">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    
+
                     {/* Nome da empresa */}
                     <div className="flex flex-col items-start">
                         <label htmlFor="companyName" className="mb-2 text-sm font-medium text-zinc-300">

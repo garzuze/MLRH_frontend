@@ -16,6 +16,7 @@ export const useWorkExperiences = (id?: number, options = { enabled: false }) =>
             return response.data;
         },
         staleTime: 300000,
+        retry: false,
         ...options,
     })
 };
