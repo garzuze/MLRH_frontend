@@ -13,7 +13,11 @@ const ProfilePage: React.FC = () => {
     const profileData = Array.isArray(profile) ? profile[0] : profile;
     const navigate = useNavigate();
 
-
+    if (profileData?.status != "A") {
+        return <div className='flex justify-center items-center h-screen'>
+            <Title variant='h1' text='Esta vaga não existe.'></Title>
+        </div>
+    }
     return (
         <main className="w-full mx-auto min-h-screen grid grid-cols-4">
             <div className="col-span-4">

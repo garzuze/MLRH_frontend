@@ -73,7 +73,7 @@ function Report({ report }: ReportProps) {
   if (profileData && resumeData && experiences) {
     return (
       <div>
-        <div>{profileData.strRepresentation} {resumeData.name}</div>
+        <div>{report.strRepresentation}</div>
         {user && (
           <PDFDownloadLink
             document={

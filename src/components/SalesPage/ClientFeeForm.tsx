@@ -16,6 +16,7 @@ export default function ClientFeeForm() {
         { client: 0, service: 2, percentual: 70 },
         { client: 0, service: 3, percentual: 100 },
     ]
+    
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const [isServiceFormOpen, setIsServiceFormOpen] = useState<boolean>(false)
@@ -24,38 +25,37 @@ export default function ClientFeeForm() {
 
     const { services, loadingServices, servicesError } = useServices();
     const axiosClient = useAxiosClient();
+    async function createClientFee() {
+        try {
+            const responses = await Promise.all(clientFees.map((fee) => {
+                return axiosClient.post("/clients/client_fee/", fee);
+            }))
 
+            responses.forEach(response => {
+                if (response.status === 201) {
+                    setSnackbarMessage("Valores para serviços cadastrados!");
+                    setIsSnackbarOpen(true);
+                } else if (response.status === 200) {
+                    setSnackbarMessage("Valores atualizados com sucesso!")
+                    setIsSnackbarOpen(true);
+                }
+            });
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                if (error.response?.status === 400) {
+                    setSnackbarMessage("Um honorário para esse serviço já foi cadastrado!");
+                } else {
+                    setSnackbarMessage(`Erro no servidor: ${error.response?.status || "Desconhecido"}`);
+                }
+            } else {
+                setSnackbarMessage("Ops... Alguma coisa deu errado.");
+            }
+            setIsSnackbarOpen(true);
+        }
+    }
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         setIsCreateProposalOpen(true);
-        const createClientFee = async () => {
-            try {
-                const responses = await Promise.all(clientFees.map((fee) => {
-                    return axiosClient.post("/clients/client_fee/", fee);
-                }))
-
-                responses.forEach(response => {
-                    if (response.status === 201) {
-                        setSnackbarMessage("Valores para serviços cadastrados!");
-                        setIsSnackbarOpen(true);
-                    } else if (response.status === 200) {
-                        setSnackbarMessage("Valores atualizados com sucesso!")
-                        setIsSnackbarOpen(true);
-                    }
-                });
-            } catch (error) {
-                if (error instanceof AxiosError) {
-                    if (error.response?.status === 400) {
-                        setSnackbarMessage("Um honorário para esse serviço já foi cadastrado!");
-                    } else {
-                        setSnackbarMessage(`Erro no servidor: ${error.response?.status || "Desconhecido"}`);
-                    }
-                } else {
-                    setSnackbarMessage("Ops... Alguma coisa deu errado.");
-                }
-                setIsSnackbarOpen(true);
-            }
-        }
         createClientFee();
     }
 
