@@ -4,7 +4,7 @@ import Vacancy from "./Vacancy"
 export default function Vacancies() {
     const { data: profiles, isLoading: loadingProfiles, error: profilesError } = useProfiles(undefined, { enabled: true });
     return (
-        <div className="bg-gradient-to-br from-neutral-950 via-neutral-900 to-indigo-900" id="vacancies">
+        <div className="bg-gradient-to-br from-neutral-950 via-neutral-900 to-indigo-900" id="vagas">
             <div className="w-full font-roboto 2xl:max-w-screen-xl mx-auto">
                 <div className="w-full lg:max-w-screen-lg mx-auto">
                     <Title variant={"h2"} text={"Nossas Vagas"} className={"text-center py-8"} />

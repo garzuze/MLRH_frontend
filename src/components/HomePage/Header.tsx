@@ -11,12 +11,12 @@ export default function Header() {
                 </a>
 
                 <ul className="hidden xl:flex items-center gap-12 text-base text-gray-200 font-roboto">
-                    <li className="p-3 cursor-pointer hover:font-bold"><a href="#hero">Home</a></li>
-                    <li className="p-3 cursor-pointer hover:font-bold"><a href="#resume">Currículo</a></li>
-                    <li className="p-3 cursor-pointer hover:font-bold"><a href="#vacancies">Vagas</a></li>
-                    <li className="p-3 cursor-pointer hover:font-bold"><a href="#services">Serviços</a></li>
-                    <li className="p-3 cursor-pointer hover:font-bold"><a href="#about-us">Sobre nós</a></li>
-                    <li className="p-3 cursor-pointer hover:font-bold"><a href="#contact">Contato</a></li>
+                    <li className="p-3 cursor-pointer hover:font-bold"><a href="#home">Home</a></li>
+                    <li className="p-3 cursor-pointer hover:font-bold"><a href="#curriculo">Currículo</a></li>
+                    <li className="p-3 cursor-pointer hover:font-bold"><a href="#vagas">Vagas</a></li>
+                    <li className="p-3 cursor-pointer hover:font-bold"><a href="#servicos">Serviços</a></li>
+                    <li className="p-3 cursor-pointer hover:font-bold"><a href="#sobre-nos">Sobre nós</a></li>
+                    <li className="p-3 cursor-pointer hover:font-bold"><a href="#contato">Contato</a></li>
                 </ul>
 
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white" className="size-6 xl:hidden block cursor-pointer" onClick={() => setIsMenuOpen(!isMenuOpen)}>
@@ -25,22 +25,22 @@ export default function Header() {
             </header>
             <div className={`fixed text-white xl:hidden top-[72px] left-0 w-full bg-transparent backdrop-blur-md flex flex-col items-center font-roboto transform transition-transform text-lg ${isMenuOpen ? "opacity-100" : "hidden"}`} style={{ transition: "transform 0.3s ease, opacity 0.3s ease" }}>
                 <li className="list-none w-full text-center p-4 transition-all cursor-pointer hover:font-bold">
-                    <a href="#hero">Home</a>
+                    <a href="#home">Home</a>
                 </li>
                 <li className="list-none w-full text-center p-4 transition-all cursor-pointer hover:font-bold">
-                    <a href="#resume">Currículo</a>
+                    <a href="#curriculo">Currículo</a>
                 </li>
                 <li className="list-none w-full text-center p-4 transition-all cursor-pointer hover:font-bold">
-                    <a href="#vacancies">Vagas</a>
+                    <a href="#vagas">Vagas</a>
                 </li>
                 <li className="list-none w-full text-center p-4 transition-all cursor-pointer hover:font-bold">
-                    <a href="#services">Serviços</a>
+                    <a href="#servicos">Serviços</a>
                 </li>
                 <li className="list-none w-full text-center p-4 transition-all cursor-pointer hover:font-bold">
-                    <a href="#about-us">Sobre nós</a>
+                    <a href="#sobre-nos">Sobre nós</a>
                 </li>
                 <li className="list-none w-full text-center p-4 transition-all cursor-pointer hover:font-bold">
-                    <a href="#contact">Contato</a>
+                    <a href="#contato">Contato</a>
                 </li>
             </div>
         </>
