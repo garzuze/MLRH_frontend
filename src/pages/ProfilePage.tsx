@@ -20,77 +20,82 @@ const ProfilePage: React.FC = () => {
         </div>
     }
     return (
-        <main className="w-full mx-auto min-h-screen grid grid-cols-4">
-            <div className="col-span-4">
-                <div className="flex flex-col px-4 sm:px-6 py-6 sm:py-8 mx-auto h-screen font-roboto bg-gradient-to-br from-neutral-950 via-neutral-900 to-indigo-900 lg:py-0">
-                    {isLoading && (
-                        <div className='flex justify-center items-center h-screen'>
-                            <Title variant='h1' text={"Carregando..."}></Title>
-                        </div>
-                    )}
-                    {error && (error as AxiosError).response?.status === 404 && (
-                        <Title variant='h1' text={"Vaga não encontrada."}></Title>
-                    )}
-                    {profileData && (
-                        <section className='p-6 bg-neutral-950 border border-neutral-800 rounded-lg shadow-sm my-6'>
-                            <Title variant='h2' text={profileData.positionStr} className='border-b-2 pb-2 border-neutral-800'></Title>
-                            <div className='my-4 text-zinc-300 border-b-2 pb-2 border-neutral-800'>
-                                <div>
-                                    Publicada em {new Date(profileData.createdAt).toLocaleDateString("pt-BR")}
-                                </div>
-                                <div className="flex items-center justify-start gap-2 w-full rounded">
-                                    <FiMapPin /> {profileData.location}
-                                </div>
-                                <div className="flex items-center justify-start gap-2 w-full rounded">
-                                    <FiBriefcase /> Efetivo
-                                </div>
-                                <div className="flex items-center justify-start gap-2 w-full rounded">
-                                    <FiClock /> {profileData.workSchedule}
-                                </div>
-                                {profileData.remuneration && (
-                                    <div className="flex items-center justify-start gap-2 w-full rounded">
-                                        <FiDollarSign /> R${profileData.remuneration}
-                                    </div>
-                                )}
-                            </div>
-                            <div className='my-4 text-zinc-300 border-b-2 pb-2 border-neutral-800'>
-                                <Title variant='h3' text='Responsabilidades'></Title>
-                                <p className='text-zinc-100 my-2'>
-                                    <ul className='list-disc list-inside'>
-                                        {profileData.jobResponsibilities.split("\r\n").map((responsability, key) => (
-                                            <li key={key}>{responsability}</li>
-                                        ))}
-                                    </ul>
-                                </p>
-                            </div>
-                            <div className='my-4 text-zinc-300 border-b-2 pb-2 border-neutral-800'>
-                                <Title variant='h3' text='Atribuições'></Title>
-                                <p className='text-zinc-100 my-2'>
-                                    <ul className='list-disc list-inside'>
-                                        {profileData.professionalExperience.split("\r\n").map((experience, key) => (
-                                            <li key={key}>{experience}</li>
-                                        ))}
-                                    </ul>
-                                </p>
-                            </div>
-                            <div className='my-4 text-zinc-300 border-b-2 pb-2 border-neutral-800'>
-                                <Title variant='h3' text='Benefícios'></Title>
-                                <p className='text-zinc-100 my-2'>
-                                    <ul className='list-disc list-inside'>
-                                        {profileData.benefits.map((benefit, key) => (
-                                            <li key={key}>{benefit}</li>
-                                        ))}
-                                    </ul>
-                                </p>
-                            </div>
-                            <p className='md:text-lg text-zinc-100 lg:text-xl'>Ficou interesado? Cadastre seu currículo.</p>
-                            <Button text={'Se candidatar'} onClick={() => navigate("/#resume")}>
-                            </Button>
-                        </section>
-                    )}
+        <>
+            <div className="relative">
+                <div className="absolute inset-0">
+                    <div className="absolute inset-0 -z-10 w-full bg-white [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#63e_100%)]"></div>
                 </div>
+                <main className="w-full mx-auto grid grid-cols-4">
+                    <div className="col-span-4">
+                        <div className="flex flex-col px-4 sm:px-6 py-6 sm:py-8 mx-auto font-roboto lg:py-0">
+                            {isLoading && (
+                                <Title variant='h1' text={"Carregando..."}></Title>
+                            )}
+                            {error && (error as AxiosError).response?.status === 404 && (
+                                <Title variant='h1' text={"Vaga não encontrada."}></Title>
+                            )}
+                            {profileData && (
+                                <section className='p-6 bg-neutral-100 border border-neutral-400 rounded-lg shadow-sm my-6'>
+                                    <Title variant='h2' text={profileData.positionStr} className='border-b-2 pb-2 border-neutral-400 text-neutral-950'></Title>
+                                    <div className='my-4 text-zinc-700 border-b-2 pb-2 border-neutral-400'>
+                                        <div>
+                                            Publicada em {new Date(profileData.createdAt).toLocaleDateString("pt-BR")}
+                                        </div>
+                                        <div className="flex items-center justify-start gap-2 w-full rounded">
+                                            <FiMapPin /> {profileData.location}
+                                        </div>
+                                        <div className="flex items-center justify-start gap-2 w-full rounded">
+                                            <FiBriefcase /> Efetivo
+                                        </div>
+                                        <div className="flex items-center justify-start gap-2 w-full rounded">
+                                            <FiClock /> {profileData.workSchedule}
+                                        </div>
+                                        {profileData.remuneration && (
+                                            <div className="flex items-center justify-start gap-2 w-full rounded">
+                                                <FiDollarSign /> R${profileData.remuneration}
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className='my-4 text-zinc-700 border-b-2 pb-2 border-neutral-400'>
+                                        <Title variant='h3' text='Responsabilidades' className='text-neutral-950'></Title>
+                                        <p className='text-zinc-700 my-2'>
+                                            <ul className='list-disc list-inside'>
+                                                {profileData.jobResponsibilities.split("\r\n").map((responsability, key) => (
+                                                    <li key={key}>{responsability}</li>
+                                                ))}
+                                            </ul>
+                                        </p>
+                                    </div>
+                                    <div className='my-4 text-zinc-700 border-b-2 pb-2 border-neutral-400'>
+                                        <Title variant='h3' text='Atribuições' className='text-neutral-950'></Title>
+                                        <p className='text-zinc-700 my-2'>
+                                            <ul className='list-disc list-inside'>
+                                                {profileData.professionalExperience.split("\r\n").map((experience, key) => (
+                                                    <li key={key}>{experience}</li>
+                                                ))}
+                                            </ul>
+                                        </p>
+                                    </div>
+                                    <div className='my-4 text-zinc-700 border-b-2 pb-2 border-neutral-400'>
+                                        <Title variant='h3' text='Benefícios' className='text-neutral-950'></Title>
+                                        <p className='text-zinc-700 my-2'>
+                                            <ul className='list-disc list-inside'>
+                                                {profileData.benefits.map((benefit, key) => (
+                                                    <li key={key}>{benefit}</li>
+                                                ))}
+                                            </ul>
+                                        </p>
+                                    </div>
+                                    <p className='md:text-lg text-zinc-700 lg:text-xl'>Ficou interesado? Cadastre seu currículo.</p>
+                                    <Button text={'Se candidatar'} variant='dark' onClick={() => navigate("/#resume")}>
+                                    </Button>
+                                </section>
+                            )}
+                        </div>
+                    </div>
+                </main>
             </div>
-        </main>
+        </>
     )
 }
 

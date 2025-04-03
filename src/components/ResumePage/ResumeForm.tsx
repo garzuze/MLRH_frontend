@@ -396,10 +396,10 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => 
                         </select>
                     </div>
 
-                    {/* Nível de Espnahol */}
+                    {/* Nível de Espanhol */}
                     <div className="flex flex-col items-start">
                         <label htmlFor="spanishLevel" className="mb-2 text-sm font-medium text-zinc-300">
-                            Nível de Espnahol
+                            Nível de Espanhol
                         </label>
                         <select
                             name="spanishLevel"
