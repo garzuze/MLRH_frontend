@@ -13,7 +13,8 @@ const ProfilePage: React.FC = () => {
     const profileData = Array.isArray(profile) ? profile[0] : profile;
     const navigate = useNavigate();
 
-    if (profileData?.status != "A") {
+
+    if (!isLoading && profileData?.status != "A") {
         return <div className='flex justify-center items-center h-screen'>
             <Title variant='h1' text='Esta vaga não existe.'></Title>
         </div>
@@ -23,7 +24,9 @@ const ProfilePage: React.FC = () => {
             <div className="col-span-4">
                 <div className="flex flex-col px-4 sm:px-6 py-6 sm:py-8 mx-auto h-screen font-roboto bg-gradient-to-br from-neutral-950 via-neutral-900 to-indigo-900 lg:py-0">
                     {isLoading && (
-                        <Title variant='h1' text={"Carregando..."}></Title>
+                        <div className='flex justify-center items-center h-screen'>
+                            <Title variant='h1' text={"Carregando..."}></Title>
+                        </div>
                     )}
                     {error && (error as AxiosError).response?.status === 404 && (
                         <Title variant='h1' text={"Vaga não encontrada."}></Title>

@@ -102,7 +102,8 @@ const ReportPDF = ({ report, profile, resume, experieces, user }: ReportPDFProps
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Informações da Vaga e Cliente</Text>
                 <View style={styles.row}>
-                    <Text>{report.strRepresentation}</Text>
+                    {/* Feio mas funciona 😳 */}
+                    <Text>{report.strRepresentation.split("-").slice(0, -1).join("-")}</Text>
                 </View>
             </View>
 
