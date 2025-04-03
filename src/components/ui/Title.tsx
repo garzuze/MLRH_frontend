@@ -1,12 +1,17 @@
-export default function Title({ variant, text, className = '', ...props}: {variant: "h1" | "h2" | "h3", text: string, className?: string}) {
+export default function Title({ variant, text, className = '', mode = "dark", ...props}: {variant: "h1" | "h2" | "h3", text: string, className?: string, mode?: "dark" | "light"}) {
     const variants = {
         h1: "text-5xl font-bold lg:text-7xl",
         h2: "text-3xl md:text-4xl font-semibold",
         h3: "text-2xl font-medium tracking-tight text-zinc-50"
     };
 
+    const modes = {
+        dark: "bg-gradient-to-b from-zinc-50 to-zinc-300 bg-clip-text text-transparent ",
+        light: "text-neutral-950"
+    }
+
     return (
-        <h1 className={`text-pretty bg-gradient-to-b from-zinc-50 to-zinc-300 bg-clip-text text-transparent font-roboto ${variants[variant]} ${className}`} {...props}>
+        <h1 className={`text-pretty ${modes[mode]} font-roboto ${variants[variant]} ${className}`} {...props}>
             {text}
         </h1>
     );
