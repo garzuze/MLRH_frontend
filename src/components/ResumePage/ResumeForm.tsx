@@ -36,6 +36,19 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => 
         getPositionData();
     }, [])
 
+    async function createOrUpdateResume(formData: FormData) {
+        try {
+            const response: AxiosResponse = await axiosClient.post("/hr/resume/", formData);
+            if (response.status === 200 || response.status === 201) {
+                setSnackbarMessage("Currículo atualizado com sucesso!")
+                localStorage.removeItem("basic_info");
+                queryClient.invalidateQueries({ queryKey: ["resume"] })
+            }
+        } catch (error) {
+            setSnackbarMessage("Ops... Alguma coisa deu errado.")
+        }
+        setIsSnackbarOpen(true);
+    }
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -44,25 +57,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => 
             formData.append("desired_positions", position.id.toString());
         });
 
-        const createOrUpdateResume = async () => {
-            try {
-                const response: AxiosResponse = await axiosClient.post("/hr/resume/", formData);
-                if (response.status === 200 || response.status === 201) {
-                    localStorage.removeItem("basic_info");
-                    setSnackbarMessage("Currículo atualizado com sucesso!")
-                    setIsSnackbarOpen(true);
-                    queryClient.invalidateQueries({queryKey: ["resume"]})
-                } else {
-                    setSnackbarMessage("Ops... Alguma coisa deu errado.")
-                    setIsSnackbarOpen(true);
-                }
-            } catch (error) {
-                console.log(error)
-                setSnackbarMessage("Ops... Alguma coisa deu errado.")
-                setIsSnackbarOpen(true);
-            }
-        }
-        createOrUpdateResume();
+        createOrUpdateResume(formData);
     }
 
     return (

@@ -2,7 +2,6 @@ import { useEffect, useState, useRef, ReactNode } from "react"
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Title from "../components/ui/Title";
 import Button from "../components/ui/Button";
-import { useAuth } from "../contexts/AuthContext";
 import { useAxiosClient } from "../hooks/useAxiosClient";
 
 export default function VerifyEmailPage() {
@@ -11,7 +10,6 @@ export default function VerifyEmailPage() {
     const uid = searchParams.get("uid");
     const token = searchParams.get("token");
     const hasSentRequest = useRef(false);
-    const { login } = useAuth();
     const navigate = useNavigate();
     const axiosClient = useAxiosClient();
 

@@ -1,5 +1,4 @@
-// Profile.tsx
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useProfiles } from '../hooks/useProfiles';
 import Title from '../components/ui/Title';
@@ -86,7 +85,7 @@ const ProfilePage: React.FC = () => {
                                 </p>
                             </div>
                             <p className='md:text-lg text-zinc-700 lg:text-xl'>Ficou interesado? Cadastre seu currículo.</p>
-                            <Button text={'Se candidatar'} variant='dark' onClick={() => navigate("/#resume")}>
+                            <Button text={'Cadastrar currículo'} variant='dark' onClick={() => navigate("/#curriculo")}>
                             </Button>
                         </section>
                     )}
