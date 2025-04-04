@@ -19,38 +19,36 @@ export default function ClientForm() {
     const { setClient } = useClient();
 
 
+    async function createClient(formData: FormData) {
+        try {
+            const response: AxiosResponse = await axiosClient.post("/clients/clients/", formData);
+            if (response.status === 201) {
+                setSnackbarMessage("Cliente criado com sucesso!")
+                setClient({
+                    id: response.data.id, corporateName: response.data.corporateName,
+                    city: "",
+                    state: "",
+                    address: "",
+                    cnpj: "",
+                    neighborhood: "",
+                    tradeName: "",
+                    economicActivity: 0,
+                    benefits: []
+                });
+                (document.getElementById('ClientForm') as HTMLFormElement).reset();
+            }
+        } catch (error) {
+            setSnackbarMessage("Ops... Alguma coisa deu errado.")
+        }
+        setIsSnackbarOpen(true);
+    }
+
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
-
-        const createClient = async () => {
-            try {
-                const response: AxiosResponse = await axiosClient.post("/clients/clients/", formData);
-                if (response.status === 201) {
-                    setSnackbarMessage("Cliente criado com sucesso!")
-                    setIsSnackbarOpen(true);
-                    setClient({
-                        id: response.data.id, corporateName: response.data.corporateName,
-                        city: "",
-                        state: "",
-                        address: "",
-                        cnpj: "",
-                        neighborhood: "",
-                        tradeName: "",
-                        economicActivity: 0,
-                        benefits: []
-                    });
-                    (document.getElementById('ClientForm') as HTMLFormElement).reset();
-                } else {
-                    setSnackbarMessage("Ops... Alguma coisa deu errado.")
-                    setIsSnackbarOpen(true);
-                }
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        createClient();
+        createClient(formData);
     }
+
     return (
         <>
             <form onSubmit={handleSubmit} method="post" id="ClientForm">
