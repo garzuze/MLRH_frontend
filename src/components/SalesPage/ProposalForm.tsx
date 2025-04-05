@@ -1,13 +1,11 @@
-import { AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from "axios";
 import { useClient } from "../../contexts/ClientContext"
 import { useEffect, useState } from "react";
 import Snackbar from "../ui/Snackbar";
-import { ClientType } from "../../types/ClientType";
 import { ClientContactType } from "../../types/ClientContactType";
 import { ClientFeeType } from "../../types/ClientFeeType";
 import { useServices } from "../../hooks/useServices";
 
-import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 import { ProposalPDF } from "./pdf/ProposalPDF";
 import getDate from "../../utils/getDate";
 import { fetchClientContactData } from "../../services/useClientContact";
@@ -26,29 +24,8 @@ export default function ProposalForm() {
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const [isContactSelectOpen, setIsContactSelectOpen] = useState<boolean>(false);
 
-    // const [clientData, setClientData] = useState<ClientType>();
     const [clientContactData, setClientContactData] = useState<ClientContactType[]>([]);
     const [clientFeeData, setClientFeeData] = useState<ClientFeeType[]>([]);
-
-
-
-    // const getClientData = async (clientId: number) => {
-    //     try {
-    //         const response: AxiosResponse = await axiosClient.get(`/clients/clients/${clientId}`);
-    //         if (response.status === 200) {
-    //             setClientData(response.data);
-    //         } else {
-    //             setSnackbarMessage("Opsss, alguma coisa deu errado...")
-    //             setIsSnackbarOpen(false)
-    //         }
-
-    //     } catch (error) {
-    //         console.log(error)
-    //         setSnackbarMessage("Opsss, alguma coisa deu errado...")
-    //         setIsSnackbarOpen(false)
-    //     }
-    // }
-
 
     const getClientContactData = async (clientId: number) => {
         const newContactData = await fetchClientContactData(axiosClient, clientId);

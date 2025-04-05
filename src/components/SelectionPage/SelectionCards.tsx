@@ -1,4 +1,4 @@
-import { ClientProvider, useClient } from "../../contexts/ClientContext";
+import { ClientProvider } from "../../contexts/ClientContext";
 import { Card } from "../ui/Card";
 import ProfileForm from "./ProfileForm";
 import ReportForm from "./ReportForm";

@@ -15,7 +15,7 @@ import { useAxiosClient } from "../../hooks/useAxiosClient";
 import { useQueryClient } from "@tanstack/react-query";
 
 
-export default function ClientForm() {
+export default function ProfileForm() {
 
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
@@ -60,27 +60,24 @@ export default function ClientForm() {
     }, [client])
 
 
+    async function createProfile(formData: FormData) {
+        try {
+            const response: AxiosResponse = await axiosClient.post("/hr/profile/", formData);
+            if (response.status === 201) {
+                setSnackbarMessage("Perfil criado com sucesso!")
+                queryClient.invalidateQueries({ queryKey: ['profiles'] });
+                (document.getElementById('ProfileForm') as HTMLFormElement).reset();
+            }
+        } catch (error) {
+            setSnackbarMessage("Ops... Alguma coisa deu errado.")
+        }
+        setIsSnackbarOpen(true);
+    }
+
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
-
-        const createProfile = async () => {
-            try {
-                const response: AxiosResponse = await axiosClient.post("/hr/profile/", formData);
-                if (response.status === 201) {
-                    setSnackbarMessage("Perfil criado com sucesso!")
-                    setIsSnackbarOpen(true);
-                    queryClient.invalidateQueries({ queryKey: ['profiles'] });
-                    (document.getElementById('ProfileForm') as HTMLFormElement).reset();
-                } else {
-                    setSnackbarMessage("Ops... Alguma coisa deu errado.")
-                    setIsSnackbarOpen(true);
-                }
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        createProfile();
+        createProfile(formData);
     }
     return (
         <>
@@ -128,24 +125,24 @@ export default function ClientForm() {
                     ) : <option value="" disabled>Você precisa cadastrar um honorário ou cliente.</option>}
                 </select>
 
-                <select name="maritalStatus" defaultValue="" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full">
+                <select name="maritalStatus" defaultValue="" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" required>
                     <option value="" disabled>Selecione o estado civil</option>
                     {Object.entries(maritalStatus).map(([key, value]) => (
                         <option key={key} value={key}>{value}</option>
                     ))}
                 </select>
 
-                <select name="educationLevel" defaultValue="" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full">
+                <select name="educationLevel" defaultValue="" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" required>
                     <option value="" disabled>Selecione o nível educacional</option>
                     {Object.entries(educationLevels).map(([key, value]) => (
                         <option key={key} value={key}>{value}</option>
                     ))}
                 </select>
-                
+
                 <label className="text-sm text-stone-400">
                     Data de criação
                 </label>
-                <br/>
+                <br />
                 <input type="date" name="date" className="text-sm text-stone-400" placeholder="Data de Criação" />
 
                 <select name="status" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" required>
@@ -156,11 +153,11 @@ export default function ClientForm() {
                 </select>
 
                 <input type="number" name="deadline" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" placeholder="Prazo (dias)" />
-                
+
                 <label className="text-sm text-stone-400">
                     Previsão de entrega
                 </label>
-                <br/>
+                <br />
                 <input type="date" name="estimatedDelivery" className="text-sm text-stone-400" placeholder="Previsão de Entrega" />
 
                 <label className="flex items-center mt-4 text-sm text-stone-400">
