@@ -8,23 +8,31 @@ import { useClient } from "../../contexts/ClientContext";
 import { ClientFeeType } from "../../types/ClientFeeType";
 import ClientSelector from "../form/ClientAutocompletInput";
 import { useAxiosClient } from "../../hooks/useAxiosClient";
+import ServiceInput from "./ServiceInput";
 
 export default function ClientFeeForm() {
     const { client, setClient, setProposalComponent } = useClient();
+    const axiosClient = useAxiosClient();
+
+    // Honorários que são cadastrados por padrão para todos os clientes
     const initialFees: ClientFeeType[] = [
         { client: 0, service: 1, percentual: 50 },
         { client: 0, service: 2, percentual: 70 },
         { client: 0, service: 3, percentual: 100 },
     ]
-    
+
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
+
+    // Formulário para cadastrar mais um honorário
+    // Formulário para gerar proposta
     const [isServiceFormOpen, setIsServiceFormOpen] = useState<boolean>(false)
-    const [clientFees, setClientFees] = useState<ClientFeeType[]>(initialFees);
     const [isCreateProposalOpen, setIsCreateProposalOpen] = useState<boolean>(false);
 
+    // Os honorários são armazenados em estado
+    const [clientFees, setClientFees] = useState<ClientFeeType[]>(initialFees);
     const { services, loadingServices, servicesError } = useServices();
-    const axiosClient = useAxiosClient();
+
     async function createClientFee() {
         try {
             const responses = await Promise.all(clientFees.map((fee) => {
@@ -53,6 +61,7 @@ export default function ClientFeeForm() {
             setIsSnackbarOpen(true);
         }
     }
+
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         setIsCreateProposalOpen(true);
@@ -63,6 +72,7 @@ export default function ClientFeeForm() {
         try {
             const response: AxiosResponse = await axiosClient.get(`/clients/get_client_fees/?q=${clientId}`);
             if (response.data.length >= 3) {
+                // Se ele já tiver os três honorários padrão, pode-se criar a proposta
                 setIsCreateProposalOpen(true)
                 setClientFees(response.data);
             }
@@ -73,10 +83,12 @@ export default function ClientFeeForm() {
     }
 
     const handleChange = (serviceId: number, name: string, value: number) => {
+        // Atualiza os honorários conforme o usuário digita
         const fees = clientFees.map(fee => fee.service === serviceId ? { ...fee, [name]: value } : fee);
         setClientFees(fees);
     };
 
+    // useEffect para pegar honorários anteriores, caso já existam
     useEffect(() => {
         if (client) {
             getPrevFeeData(client.id);
@@ -86,45 +98,30 @@ export default function ClientFeeForm() {
         }
     }, [client]);
 
+    const serviceDefinitions = [
+        { id: 1, label: "Operacional e Administrativo" },
+        { id: 2, label: "Técnicos e Especializados" },
+        { id: 3, label: "Liderança, Coordenação, Supervisão e Gerência" },
+    ];
+
+
     return (
         <>
             <form method="post" onSubmit={handleSubmit}>
                 <ClientSelector selectedClient={client} setSelectedClient={setClient} />
 
                 <div className="services">
-                    <div className="w-full">
-                        <p className="text-sm w-full mt-4">
-                            Operacional e Administrativo
-                        </p>
-                        <div className="service flex gap-x-4 w-full">
-                            <input hidden readOnly name="service" value={1} required></input>
-                            <input type="number" name="percentual" placeholder="Percentual" className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" required onChange={(e) => handleChange(1, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 1)?.percentual || ""} />
-                            <input type="number" name="value" placeholder="Valor" className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(1, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 1)?.value || ""} />
-                            <input type="number" name="deadline" placeholder="Prazo" className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(1, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 1)?.deadline || ""} />
-                        </div>
-                    </div>
-                    <div className="w-full">
-                        <p className="placeholder:text-sm placeholder:text-stone-400 text-sm w-full mt-4">
-                            Técnicos e Especializados
-                        </p>
-                        <div className="service flex gap-x-4 w-full">
-                            <input hidden readOnly name="service" value={2} required></input>
-                            <input type="number" name="percentual" placeholder="Percentual" className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" required onChange={(e) => handleChange(2, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 2)?.percentual || ""} />
-                            <input type="number" name="value" placeholder="Valor" className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(2, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 2)?.value || ""} />
-                            <input type="number" name="deadline" placeholder="Prazo" className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(2, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 2)?.deadline || ""} />
-                        </div>
-                    </div>
-                    <div className="w-full">
-                        <p className="placeholder:text-sm placeholder:text-stone-400 text-sm w-full mt-4">
-                            Liderança, Coordenação, Supervisão e Gerência
-                        </p>
-                        <div className="service flex gap-x-4 w-full">
-                            <input hidden readOnly name="service" value={3} required></input>
-                            <input type="number" name="percentual" placeholder="Percentual" className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" required onChange={(e) => handleChange(3, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 3)?.percentual || ""} />
-                            <input type="number" name="value" placeholder="Valor" className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(3, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 3)?.value || ""} />
-                            <input type="number" name="deadline" placeholder="Prazo" className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700" onChange={(e) => handleChange(3, e.target.name, Number(e.target.value))} value={clientFees.find(fee => fee.service === 3)?.deadline || ""} />
-                        </div>
-                    </div>
+                    {serviceDefinitions.map((service) => {
+                        return (
+                            <ServiceInput
+                                key={service.id}
+                                serviceId={service.id}
+                                label={service.label}
+                                clientFees={clientFees}
+                                onChange={handleChange}
+                            />
+                        )
+                    })}
                 </div>
                 {isServiceFormOpen ? (
                     <>
@@ -159,7 +156,7 @@ export default function ClientFeeForm() {
                     </p>
                 }
 
-                <Button text={"Cadastrar Valores dos serviços"} variant="dark" className="w-full mx-0 p-2 text-sm mt-4" onClick={() => { handleSubmit }}></Button>
+                <Button text={"Cadastrar Valores dos serviços"} variant="dark" className="w-full mx-0 p-2 text-sm mt-4"></Button>
             </form>
             {isCreateProposalOpen ? (
                 <p className="my-4 text-sm text-right underline cursor-pointer text-stone-700" onClick={() => { setProposalComponent(true); }}>
