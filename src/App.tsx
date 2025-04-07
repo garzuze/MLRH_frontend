@@ -9,6 +9,7 @@ import ResumePage from "./pages/ResumePage"
 import VerifyEmailPage from "./pages/VerifyEmailPage";
 import SelectionPage from "./pages/SelectionPage";
 import ProfilePage from "./pages/ProfilePage";
+import ResumePDFView from "./components/ResumePage/ResumePDFView";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="dashboard" element={<DashboardPanel />}></Route>
             <Route path="vendas" element={<SalesPage />}></Route>
             <Route path="selecao" element={<SelectionPage />}></Route>
+            <Route path="pdf-curriculo" element={<ResumePDFView/>} />
           </Route>
         </Route>
       </Routes>

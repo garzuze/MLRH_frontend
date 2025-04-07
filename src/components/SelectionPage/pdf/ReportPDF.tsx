@@ -17,7 +17,7 @@ import { mlrhUser } from "../../../types/TokenResponse";
 import logo from "../../../assets/logo_mlrh.png"
 import { formatDate } from "../../../utils/formatDate";
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
     page: {
         paddingHorizontal: 30,
         paddingVertical: 15,
@@ -85,12 +85,12 @@ interface ReportPDFProps {
     report: ReportType;
     profile: ProfileType;
     resume: ResumeType;
-    experieces: WorkExperienceType[];
+    experiences: WorkExperienceType[];
     user: mlrhUser;
 }
 
 const currentDate = getDate();
-const ReportPDF = ({ report, profile, resume, experieces, user }: ReportPDFProps) => (
+const ReportPDF = ({ report, profile, resume, experiences, user }: ReportPDFProps) => (
     <Document>
         <Page size="A4" style={styles.page}>
             <Image src={logo} style={styles.logo}></Image>
@@ -171,7 +171,7 @@ const ReportPDF = ({ report, profile, resume, experieces, user }: ReportPDFProps
             {/* Resumo profissional */}
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Resumo Profissional</Text>
-                {experieces.map((experience, key) => (
+                {experiences.map((experience, key) => (
                     <View key={key}>
                         <View style={styles.row}>
                             <Text><Text style={styles.bold}>Empresa: </Text>{experience.companyName}</Text>

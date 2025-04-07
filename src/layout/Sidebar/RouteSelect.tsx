@@ -1,3 +1,4 @@
+import { title } from "process";
 import { useState } from "react";
 import { IconType } from "react-icons";
 import { FiHome, FiDollarSign, FiUsers, FiBriefcase } from "react-icons/fi"
@@ -9,6 +10,7 @@ export default function RouteSelect() {
         { icon: FiBriefcase, title: "Vendas", destination: "vendas/" },
         { icon: FiUsers, title: "Seleção", destination: "selecao/" },
         { icon: FiDollarSign, title: "Financeiro", destination: "financeiro/" },
+        {icon: FiDollarSign, title: "PDF de currículo", destination: "pdf-curriculo"}
     ]
 
     return (
