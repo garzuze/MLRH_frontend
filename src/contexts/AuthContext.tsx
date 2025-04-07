@@ -6,7 +6,7 @@ interface AuthContextType {
     user: mlrhUser | null;
     token: string | null;
     login: (email: string, password: string) => Promise<boolean>;
-    register: (email: string, password: string) => Promise<boolean>;
+    register: (email: string, password: string, cpf: string) => Promise<boolean>;
     logout: () => void;
     isAuthenticated: boolean;
     loading: boolean;
@@ -94,11 +94,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     };
 
-    const register = async (email: string, password: string) => {
+    const register = async (email: string, password: string, cpf: string) => {
         try {
             const response: AxiosResponse = await axiosClient.post("/api/register/", {
                 email: email,
                 password: password,
+                cpf: cpf,
             });
 
             if (response.status === 201) {

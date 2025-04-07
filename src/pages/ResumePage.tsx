@@ -4,21 +4,21 @@ import { WorkExperienceForm } from "../components/ResumePage/WorkExperienceForm"
 import { BasicInfoType } from "../types/BasicInfoType";
 import { useWorkExperiences } from "../hooks/useWorkExperiences";
 import { useResume } from "../hooks/useResume";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function ResumePage() {
-    const { data: resume } = useResume(undefined, {enabled: true});
+    const { data: resume } = useResume(undefined, { enabled: true });
+    const { user } = useAuth();
     const resumeData = Array.isArray(resume) ? resume[0] : resume;
-    const { data: experieces, isLoading: laodingExperiences } = useWorkExperiences(undefined, {enabled: true});
-    const basicInfo = JSON.parse(localStorage.getItem('basic_info') ?? "null") as BasicInfoType | null;
-
-    if (resumeData && basicInfo === null) {
+    const { data: experieces, isLoading: laodingExperiences } = useWorkExperiences(undefined, { enabled: true });
+    if (user) {
         return (
             <main className="w-full mx-auto">
                 <div className="px-6 py-8 font-roboto bg-gradient-to-br from-neutral-950 via-neutral-900 to-indigo-900">
-                    <Title variant="h3" text={`Seja bem vindo, ${resumeData.name}!`} className="text-center pb-2" />
+                    <Title variant="h3" text={`Seja bem vindo${resumeData ? `, ${resumeData.name}` : ""}!`} className="text-center pb-2" />
                     <p className="mb-3 font-normal text-zinc-300 line-clamp-3 text-center">Estas são as informações do seu currículo:</p>
                     <div className="w-full bg-neutral-950 border border-neutral-800 rounded-lg shadow md:mt-0 md text-zinc-50 p-4 xl:max-w-screen-xl mx-auto">
-                        <ResumeForm resume={resumeData} />
+                        <ResumeForm resume={resumeData} user={user} />
                     </div>
                     <Title variant="h3" text={`Experiências`} className="text-center pb-2 my-6" />
                     <WorkExperienceForm />
@@ -30,18 +30,6 @@ export default function ResumePage() {
                 </div>
             </main>
         );
-    } else if (basicInfo && !resumeData) {
-        return (
-            <main className="w-full mx-auto">
-                <div className="px-6 py-8 font-roboto bg-gradient-to-br from-neutral-950 via-neutral-900 to-indigo-900">
-                    <Title variant="h3" text={`Seja bem vindo!`} className="text-center pb-2" />
-                    <p className="mb-3 font-normal text-zinc-300 line-clamp-3 text-center">Estas são as informações do seu currículo:</p>
-                    <div className="w-full bg-neutral-950 border border-neutral-800 rounded-lg shadow md:mt-0 md text-zinc-50 p-4 xl:max-w-screen-xl mx-auto">
-                        <ResumeForm basicInfo={basicInfo} />
-                    </div>
-                </div>
-            </main>
-        )
     }
     return (
         <main className="w-full mx-auto text-white">

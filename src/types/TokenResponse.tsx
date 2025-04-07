@@ -1,6 +1,7 @@
 export interface mlrhUser {
     id: number;
     email: string;
+    cpf: string;
     firstName: string;
     lastName: string;
     isActive: boolean;

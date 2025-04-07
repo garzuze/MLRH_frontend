@@ -42,8 +42,8 @@ export default function Resume() {
             await login(email, password);
             navigate('/curriculo');
         } else if (action === "register" && email && password) {
-            const basicInfo: BasicInfoType = { email: email, cpf: cpf };
-            localStorage.setItem("basic_info", JSON.stringify(basicInfo));
+            // const basicInfo: BasicInfoType = { email: email, cpf: cpf };
+            // localStorage.setItem("basic_info", JSON.stringify(basicInfo));
             logout(); 
             // Tentamos logar um usuário, se não der certo, fazemos seu cadastro e enviamos um email de confirmação
             try {
@@ -51,7 +51,7 @@ export default function Resume() {
                 if (isLogged) {
                     navigate('/curriculo');
                 } else {
-                    const isEmailSent = await register(email, password);
+                    const isEmailSent = await register(email.toLowerCase(), password, cpf);
                     if (isEmailSent) {
                         setMessage("Cadastro recebido com sucesso! Se os dados fornecidos forem válidos, você receberá um e-mail com instruções para ativar sua conta.");
                     }

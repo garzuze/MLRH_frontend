@@ -10,7 +10,7 @@ import { positionType } from "../../types/positionType";
 import { useQueryClient } from "@tanstack/react-query";
 
 
-export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => {
+export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const axiosClient = useAxiosClient();
@@ -34,7 +34,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => 
             }
         };
         getPositionData();
-    }, [])
+    }, [resume])
 
     async function createOrUpdateResume(formData: FormData) {
         try {
@@ -87,7 +87,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => 
                             type="text"
                             name="cpf"
                             id="cpf"
-                            defaultValue={resume ? resume.cpf : basicInfo?.cpf}
+                            defaultValue={user?.cpf}
                             required
                             readOnly
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
@@ -170,7 +170,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, basicInfo }) => 
                             type="email"
                             name="email"
                             id="email"
-                            defaultValue={resume ? resume.email : basicInfo?.email}
+                            defaultValue={user?.email}
                             required
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
                     </div>

@@ -103,7 +103,7 @@ export default function ReportForm() {
 
                 {textareas.map((input) => {
                     return (
-                        <ReportTextarea name={input.name} placeholder={input.placeholder} defaultValue={input.defaultValue}
+                        <ReportTextarea key={input.name} name={input.name} placeholder={input.placeholder} defaultValue={input.defaultValue}
                         />
                     )
                 })}
