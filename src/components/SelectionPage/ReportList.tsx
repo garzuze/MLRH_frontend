@@ -70,26 +70,24 @@ function Report({ report }: ReportProps) {
   const profileData = Array.isArray(profiles) ? profiles[0] : profiles;
   const resumeData = Array.isArray(resume) ? resume[0] : resume;
 
-  if (profileData && resumeData && experiences) {
+  if (profileData && resumeData && experiences && user) {
     return (
       <div>
         <div>{report.strRepresentation}</div>
-        {user && (
-          <PDFDownloadLink
-            document={
-              <ReportPDF
-                report={report}
-                profile={profileData}
-                resume={resumeData}
-                experieces={experiences}
-                user={user}
-              />
-            }
-            fileName={`${report.strRepresentation}.pdf`}
-          >
-            {({ loading }) => (loading ? 'Gerando PDF...' : 'Baixar PDF')}
-          </PDFDownloadLink>
-        )}
+        <PDFDownloadLink
+          document={
+            <ReportPDF
+              report={report}
+              profile={profileData}
+              resume={resumeData}
+              experiences={experiences}
+              user={user}
+            />
+          }
+          fileName={`${report.strRepresentation}.pdf`}
+        >
+          {({ loading }) => (loading ? 'Gerando PDF...' : 'Baixar PDF')}
+        </PDFDownloadLink>
       </div>
     );
   }
