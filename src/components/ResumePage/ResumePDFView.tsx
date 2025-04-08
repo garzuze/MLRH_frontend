@@ -5,8 +5,8 @@ import { mlrhUser } from "../../types/TokenResponse"
 import { useWorkExperiences } from "../../hooks/useWorkExperiences"
 
 const ResumePDFView = () => {
-    const { data: resume } = useResume(85, { enabled: true });
-    const { data: workExperiences } = useWorkExperiences(85, { enabled: true });
+    const { data: resume } = useResume(9, { enabled: true });
+    const { data: workExperiences } = useWorkExperiences(9, { enabled: true });
     const resumeData = Array.isArray(resume) ? resume[0] : resume;
 
     const user: mlrhUser = {
@@ -19,7 +19,6 @@ const ResumePDFView = () => {
         isStaff: false,
         isSuperuser: false,
     }
-
     if (resumeData && workExperiences) {
         return (
             <PDFViewer style={{ width: '100%', height: '100%' }}>

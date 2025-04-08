@@ -37,6 +37,7 @@ export interface ResumeType {
     computerSkills?: string; //competênciasemcomputador
     additionalCourses?: string; //cursosadicionais
     desiredPositions: number[]; //cargosdesejados
+    positionsStr: string;
     expectedSalary?: number; //salárioesperado
     availableFullTime?: boolean; //disponívelIntegral
     availableMorningAfternoon?: boolean; //disponívelManhãTarde
