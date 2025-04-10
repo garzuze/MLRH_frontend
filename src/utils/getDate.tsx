@@ -4,5 +4,5 @@ export default function getDate() {
     const year = today.getFullYear();
     const month = today.getMonth();
 
-    return `${dayMonth < 10 ? `0${dayMonth}` : String(dayMonth + 1)}/${month < 10 ? `0${month + 1}` : String(month + 1)}/${year}`
+    return `${dayMonth < 10 ? `0${dayMonth}` : String(dayMonth)}/${month < 10 ? `0${month + 1}` : String(month + 1)}/${year}`
 }
