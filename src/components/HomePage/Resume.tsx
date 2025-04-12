@@ -3,9 +3,10 @@ import Button from "../ui/Button"
 import Title from "../ui/Title"
 import { AxiosError, AxiosResponse } from "axios";
 import { useAuth } from "../../contexts/AuthContext";
-import { BasicInfoType } from "../../types/BasicInfoType";
 import { useNavigate } from "react-router-dom";
 import { useAxiosClient } from "../../hooks/useAxiosClient";
+import React from "react";
+import Snackbar from "../ui/Snackbar";
 
 export default function Resume() {
 
@@ -13,6 +14,8 @@ export default function Resume() {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [cpf, setCpf] = useState<string>("");
+    const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState("");
     const [action, setAction] = useState<"cpf" | "login" | "register">("cpf");
     const [message, setMessage] = useState<string>();
     const navigate = useNavigate();
@@ -39,25 +42,34 @@ export default function Resume() {
         }
 
         if (action === "login" && email && password) {
-            await login(email, password);
-            navigate('/curriculo');
+            const response = await login(email, password);
+            if (response?.status === 200) {
+                navigate('/curriculo');
+            } else if (response?.status === 400) {
+                setSnackbarMessage("Email ou senha incorretos! Tente novamente")
+            }
+            setIsSnackbarOpen(true);
         } else if (action === "register" && email && password) {
             // const basicInfo: BasicInfoType = { email: email, cpf: cpf };
             // localStorage.setItem("basic_info", JSON.stringify(basicInfo));
-            logout(); 
+            logout();
             // Tentamos logar um usuário, se não der certo, fazemos seu cadastro e enviamos um email de confirmação
             try {
-                const isLogged = await login(email, password);
-                if (isLogged) {
+                const response = await login(email, password);
+                if (response?.status === 200) {
                     navigate('/curriculo');
                 } else {
-                    const isEmailSent = await register(email.toLowerCase(), password, cpf);
-                    if (isEmailSent) {
+                    const response = await register(email.toLowerCase(), password, cpf);
+                    if (response?.status === 201) {
                         setMessage("Cadastro recebido com sucesso! Se os dados fornecidos forem válidos, você receberá um e-mail com instruções para ativar sua conta.");
+                    } else if (response?.status === 400) {
+                        setSnackbarMessage("Ops! Alguma coisa deu errado. Verifique seus dados.");
+                        setIsSnackbarOpen(true);
                     }
                 }
             } catch (error) {
-                console.error(error)
+                setSnackbarMessage("Ops! Alguma coisa deu errado. Verifique seus dados.");
+                setIsSnackbarOpen(true);
             }
 
         }
@@ -126,6 +138,11 @@ export default function Resume() {
                     <Button text={"Continuar"} variant="dark" className={"ml-0"} type="submit" />
                 </form>
             </div>
+            <Snackbar
+                message={snackbarMessage}
+                isOpen={isSnackbarOpen}
+                onClose={() => setIsSnackbarOpen(false)}
+            />
         </div>
     )
 }

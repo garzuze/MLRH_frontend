@@ -117,7 +117,7 @@ const ResumeTemplate = ({ resume, user, experiences }: ResumePDFProps) => (
                     <View style={styles.row}>
                         <Text>
                             <Text style={styles.bold}>Celular:</Text> {resume.phone}
-                            <Text style={styles.bold}>  E-mail:</Text> {resume.email}
+                            <Text style={styles.bold}>  E-mail:</Text> {user.email}
                             {resume.linkedin && <Text> -
                                 <Link src={resume.linkedin} style={styles.bold}>  LinkedIn  </Link>
                             </Text>}

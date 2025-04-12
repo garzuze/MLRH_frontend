@@ -1,12 +1,12 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { mlrhUser, tokenResponse } from "../types/TokenResponse";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 
 interface AuthContextType {
     user: mlrhUser | null;
     token: string | null;
-    login: (email: string, password: string) => Promise<boolean>;
-    register: (email: string, password: string, cpf: string) => Promise<boolean>;
+    login: (email: string, password: string) => Promise<AxiosResponse<any, any> | AxiosError<any, any> | undefined>;
+    register: (email: string, password: string, cpf: string) => Promise<AxiosResponse<any, any> | AxiosError<any, any> | undefined>;
     logout: () => void;
     isAuthenticated: boolean;
     loading: boolean;
@@ -71,26 +71,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const login = async (email: string, password: string) => {
         try {
-            const response: AxiosResponse = await axiosClient.post("/api/token/", {
+            const response = await axiosClient.post("/api/token/", {
                 email: email,
                 password: password,
             });
 
+            console.log(response)
             const tokenResponse: tokenResponse = response.data;
             const { access, refresh, user } = tokenResponse;
 
             setToken(access);
             setRefreshToken(refresh);
             setUser(user);
-    
+
             localStorage.setItem("access_token", access);
             localStorage.setItem("refresh_token", refresh);
             localStorage.setItem("user", JSON.stringify(user));
 
-            return true;
+            return response;
         } catch (error) {
-            console.error("Erro ao fazer login ;(", error);
-            return false;
+            if (error instanceof AxiosError) {
+                return error;
+            }
         }
     };
 
@@ -102,14 +104,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 cpf: cpf,
             });
 
-            if (response.status === 201) {
-                return true;
-            }
-
-            return false;
+            return response;
         } catch (error) {
-            console.error("Erro ao se cadastrar ;(", error);
-            return false;
+            if (error instanceof AxiosError) {
+                return error;
+            }
         }
     };
 
