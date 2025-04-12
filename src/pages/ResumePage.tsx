@@ -37,13 +37,16 @@ export default function ResumePage() {
                             </button>
                         )}
                     </div>
-                    <Title variant="h3" text={`Experiências`} className="text-center pb-2 my-6" />
-                    <WorkExperienceForm />
-                    {!laodingExperiences && experieces &&
-                        experieces.map((experience) => (
-                            <WorkExperienceForm key={experience.id} experience={experience} />
-                        ))
-                    }
+                    {resumeData && (
+                        <>
+                            <Title variant="h3" text={`Experiências`} className="text-center pb-2 my-6" />
+                            <WorkExperienceForm />
+                            {!laodingExperiences && experieces &&
+                                experieces.map((experience) => (
+                                    <WorkExperienceForm key={experience.id} experience={experience} />
+                                ))
+                            }</>
+                    )}
                 </div>
             </main>
         );
