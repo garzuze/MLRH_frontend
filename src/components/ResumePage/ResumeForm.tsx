@@ -129,12 +129,11 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                         <select
                             name="gender"
                             id="gender"
-                            defaultValue={resume?.gender}
                             required
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
                             {Object.entries(genders).map(([abbr, label]) => (
-                                <option key={abbr} value={abbr}>
+                                <option key={abbr} value={abbr} selected={abbr == resume?.gender ? true : false}>
                                     {label}
                                 </option>
                             ))}
@@ -149,12 +148,11 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                         <select
                             name="maritalStatus"
                             id="maritalStatus"
-                            defaultValue={resume?.maritalStatus}
                             required
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
                             {Object.entries(maritalStatus).map(([abbr, label]) => (
-                                <option key={abbr} value={abbr}>
+                                <option key={abbr} value={abbr} selected={abbr == resume?.maritalStatus ? true : false}>
                                     {label}
                                 </option>
                             ))}
@@ -223,12 +221,11 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                         <select
                             name="hasChildren"
                             id="hasChildren"
-                            defaultValue={Number(resume?.hasChildren)}
                             required
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
-                            <option value={1}>Sim</option>
-                            <option value={0}>Não</option>
+                            <option value={1} selected={resume?.hasChildren ? true : false}>Sim</option>
+                            <option value={0} selected={!resume?.hasChildren ? true : false}>Não</option>
                         </select>
                     </div>
 
@@ -346,12 +343,11 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                         <select
                             name="state"
                             id="state"
-                            defaultValue={resume?.state}
                             required
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
                             {Object.entries(states).map(([abbr, label]) => (
-                                <option key={abbr} value={abbr}>
+                                <option key={abbr} value={abbr} selected={abbr == resume?.state ? true : false}>
                                     {label}
                                 </option>
                             ))}
@@ -379,12 +375,11 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                         <select
                             name="englishLevel"
                             id="englishLevel"
-                            defaultValue={resume?.englishLevel}
                             required
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
                             {Object.entries(languageLevels).map(([abbr, label]) => (
-                                <option key={abbr} value={abbr}>
+                                <option key={abbr} value={abbr} selected={Number(abbr) == resume?.englishLevel ? true : false}>
                                     {label}
                                 </option>
                             ))}
@@ -399,12 +394,11 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                         <select
                             name="spanishLevel"
                             id="spanishLevel"
-                            defaultValue={resume?.spanishLevel}
                             required
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
                             {Object.entries(languageLevels).map(([abbr, label]) => (
-                                <option key={abbr} value={abbr}>
+                                <option key={abbr} value={abbr} selected={Number(abbr) == resume?.spanishLevel ? true : false}>
                                     {label}
                                 </option>
                             ))}
@@ -432,12 +426,11 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                         <select
                             name="educationLevel"
                             id="educationLevel"
-                            defaultValue={resume?.educationLevel}
                             required
                             className="bg-neutral-900 border border-neutral-900 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
                             {Object.entries(educationLevels).map(([abbr, label]) => (
-                                <option key={abbr} value={abbr}>
+                                <option key={abbr} value={abbr} selected={abbr == resume?.educationLevel ? true : false}>
                                     {label}
                                 </option>
                             ))}

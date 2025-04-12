@@ -59,7 +59,7 @@ export default function ReportForm() {
         {
             name: "educationalBackground",
             placeholder: "Educação",
-            defaultValue: resume ? `${resume.educationDetails ? `Formação:\n${resume.educationDetails}\n` : ""}${resume.additionalCourses ? `Outros cursos:\n${resume.additionalCourses}\n` : ""}${resume.computerSkills ? `Informática:\n${resume.computerSkills}\n` : ""}${resume.englishLevel > 1 && `Nível Inglês:\n${languageLevels[resume.englishLevel]}\n`}${resume.spanishLevel > 1 && `Nível Espanhol:\n${languageLevels[resume.spanishLevel]}\n`}${resume.otherLanguages && `Outras linguas:\n${resume.otherLanguages}`}` : "",
+            defaultValue: resume ? `${resume.educationDetails ? `Formação:\n${resume.educationDetails}\n` : ""}${resume.additionalCourses ? `Outros cursos:\n${resume.additionalCourses}\n` : ""}${resume.computerSkills ? `Informática:\n${resume.computerSkills}\n` : ""}${resume.englishLevel > 1 ? `Nível Inglês:\n${languageLevels[resume.englishLevel]}\n` : ""}${resume.spanishLevel > 1 ? `Nível Espanhol:\n${languageLevels[resume.spanishLevel]}\n` : ""}${resume.otherLanguages ? `Outras linguas:\n${resume.otherLanguages}` : ""}` : "",
         },
         {
             name: "professionalSummary",
