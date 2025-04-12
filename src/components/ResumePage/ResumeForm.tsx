@@ -130,8 +130,10 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             name="gender"
                             id="gender"
                             required
+                            defaultValue={""}
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
+                            <option value={""} disabled>Selecione seu gênero</option>
                             {Object.entries(genders).map(([abbr, label]) => (
                                 <option key={abbr} value={abbr} selected={abbr == resume?.gender ? true : false}>
                                     {label}
@@ -149,8 +151,10 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             name="maritalStatus"
                             id="maritalStatus"
                             required
+                            defaultValue={""}
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
+                            <option value={""} disabled>Selecione seu estado civil</option>
                             {Object.entries(maritalStatus).map(([abbr, label]) => (
                                 <option key={abbr} value={abbr} selected={abbr == resume?.maritalStatus ? true : false}>
                                     {label}
@@ -222,8 +226,10 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             name="hasChildren"
                             id="hasChildren"
                             required
+                            defaultValue={""}
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
+                            <option value={""} disabled>Marque uma opção</option>
                             <option value={1} selected={resume?.hasChildren ? true : false}>Sim</option>
                             <option value={0} selected={!resume?.hasChildren ? true : false}>Não</option>
                         </select>
@@ -344,8 +350,10 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             name="state"
                             id="state"
                             required
+                            defaultValue={""}
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
+                            <option value={""} disabled>Selecione seu estado</option>
                             {Object.entries(states).map(([abbr, label]) => (
                                 <option key={abbr} value={abbr} selected={abbr == resume?.state ? true : false}>
                                     {label}
@@ -376,8 +384,10 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             name="englishLevel"
                             id="englishLevel"
                             required
+                            defaultValue={""}
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
+                            <option value={""} disabled>Selecione seu nível de inglês</option>
                             {Object.entries(languageLevels).map(([abbr, label]) => (
                                 <option key={abbr} value={abbr} selected={Number(abbr) == resume?.englishLevel ? true : false}>
                                     {label}
@@ -395,8 +405,10 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             name="spanishLevel"
                             id="spanishLevel"
                             required
+                            defaultValue={""}
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
+                            <option value={""} disabled>Selecione nível de espanhol</option>
                             {Object.entries(languageLevels).map(([abbr, label]) => (
                                 <option key={abbr} value={abbr} selected={Number(abbr) == resume?.spanishLevel ? true : false}>
                                     {label}
@@ -427,8 +439,10 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             name="educationLevel"
                             id="educationLevel"
                             required
+                            defaultValue={""}
                             className="bg-neutral-900 border border-neutral-900 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
+                            <option value={""} disabled>Selecione sua escolaridade</option>
                             {Object.entries(educationLevels).map(([abbr, label]) => (
                                 <option key={abbr} value={abbr} selected={abbr == resume?.educationLevel ? true : false}>
                                     {label}
