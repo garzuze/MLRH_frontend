@@ -26,9 +26,11 @@ export const cnhLevels = {
 } as const;
 
 export const languageLevels = {
-    1: "Básico",
-    2: "Intermediário",
-    3: "Fluente",
+    N: "Nenhum conhecimento",
+    B: "Básico",
+    I: "Intermediário",
+    A: "Avançado",
+    F: "Fluente",
 } as const;
 
 export const maritalStatus = {
