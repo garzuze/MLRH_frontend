@@ -146,10 +146,10 @@ export default function ProfileForm() {
                 <input type="date" name="date" className="text-sm text-stone-400" placeholder="Data de Criação" />
 
                 <select name="status" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" required>
-                    <option value="A">Ativo</option>
-                    <option value="I">Inativo</option>
+                    <option value="A">Aberto</option>
+                    <option value="F">Fechado</option>
                     <option value="C">Cancelado</option>
-                    <option value="S">Suspenso</option>
+                    <option value="S">Seleção</option>
                 </select>
 
                 <input type="number" name="deadline" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" placeholder="Prazo (dias)" />
