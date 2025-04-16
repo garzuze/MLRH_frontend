@@ -72,7 +72,7 @@ export default function ReportForm() {
         {
             name: "careerObjectives",
             placeholder: "Objetivos de carreira",
-            defaultValue: resume ? `Pretensão salarial: R$${resume.expectedSalary}` : ""
+            defaultValue: resume ? `Pretensão salarial: R$ ${resume.expectedSalary}` : ""
         },
         {
             name: "finalConsiderations",
@@ -91,7 +91,7 @@ export default function ReportForm() {
                     <option value="" disabled>Selecione a vaga</option>
                     {profilesError ? <option disabled>Houve um erro</option> :
                         loadingProfiles || loadingClients ? (<option>Carregando...</option>) :
-                            profiles?.map((profile) => {
+                            profiles?.filter(p => p.status == "A").map((profile) => {
                                 const client = clients?.find(client => client.id === profile.client);
                                 return (
                                     <option key={profile.id} value={profile.id}>{profile.positionStr} - {client?.tradeName ?? "Carregando..."}</option>
