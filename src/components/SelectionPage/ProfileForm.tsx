@@ -3,7 +3,7 @@ import Button from "../ui/Button";
 import { AxiosResponse } from "axios";
 import Snackbar from "../ui/Snackbar";
 import { useClient } from "../../contexts/ClientContext";
-import { educationLevels, maritalStatus, profileStatus } from "../../utils/constants";
+import { contractTypes, educationLevels, maritalStatus, profileStatus } from "../../utils/constants";
 import { fetchClientContactData } from "../../services/useClientContact";
 import { ClientContactType } from "../../types/ClientContactType";
 import { usePositions } from "../../hooks/usePositions";
@@ -135,6 +135,12 @@ export default function ProfileForm() {
                 <select name="educationLevel" defaultValue="" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" required>
                     <option value="" disabled>Selecione o nível educacional</option>
                     {Object.entries(educationLevels).map(([key, value]) => (
+                        <option key={key} value={key}>{value}</option>
+                    ))}
+                </select>
+
+                <select name="contractType" defaultValue="" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" required>
+                    {Object.entries(contractTypes).map(([key, value]) => (
                         <option key={key} value={key}>{value}</option>
                     ))}
                 </select>

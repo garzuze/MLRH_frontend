@@ -82,10 +82,17 @@ export const profileStatus = {
     S: "Seleção",
 } as const;
 
+export const contractTypes = {
+    CLT: "CLT",
+    PJ: "PJ",
+    EST: "Estágio",
+} as const;
+
 export type StateAbbreviation = keyof typeof states;
 export type EducationLevelAbbreviation = keyof typeof educationLevels;
 export type GenderAbbreviation = keyof typeof genders;
 export type languageLevelAbbreviation = keyof typeof languageLevels;
 export type statusAbbreviation = keyof typeof status;
 export type profileStatusAbbreviation = keyof typeof profileStatus;
+export type contractTypesAbbreviation = keyof typeof contractTypes;
 export type maritalStatusAbbreviation = keyof typeof maritalStatus;

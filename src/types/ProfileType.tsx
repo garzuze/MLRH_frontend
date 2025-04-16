@@ -1,4 +1,4 @@
-import { EducationLevelAbbreviation, GenderAbbreviation, maritalStatusAbbreviation, profileStatusAbbreviation } from "../utils/constants";
+import { contractTypesAbbreviation, EducationLevelAbbreviation, GenderAbbreviation, maritalStatusAbbreviation, profileStatusAbbreviation } from "../utils/constants";
 
 export interface ProfileType {
     id: number;
@@ -7,6 +7,7 @@ export interface ProfileType {
     position: number; // posição
     positionStr: string;
     fee: number; // taxa
+    contractType: contractTypesAbbreviation;
     location: string;
     maritalStatus: maritalStatusAbbreviation; // estado civil
     educationLevel: EducationLevelAbbreviation; // educaçãoNível

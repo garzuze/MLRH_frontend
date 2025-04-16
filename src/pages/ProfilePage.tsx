@@ -43,7 +43,7 @@ const ProfilePage: React.FC = () => {
                                     <FiMapPin /> {profileData.location}
                                 </div>
                                 <div className="flex items-center justify-start gap-2 w-full rounded">
-                                    <FiBriefcase /> Efetivo
+                                    <FiBriefcase /> {profileData.contractType}
                                 </div>
                                 <div className="flex items-center justify-start gap-2 w-full rounded">
                                     <FiClock /> {profileData.workSchedule}
