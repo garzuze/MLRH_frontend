@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { educationLevels, genders, languageLevels, maritalStatus, states } from "../../utils/constants";
+import { cnhLevels, educationLevels, genders, languageLevels, maritalStatus, states } from "../../utils/constants";
 import Button from "../ui/Button";
 import { AxiosResponse } from "axios";
 import Snackbar from "../ui/Snackbar";
@@ -246,6 +246,27 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             id="childrenAges"
                             defaultValue={resume?.childrenAges}
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
+                    </div>
+
+                    {/* CNH */}
+                    <div className="flex flex-col items-start">
+                        <label htmlFor="cnh" className="mb-2 text-sm font-medium text-zinc-300">
+                            CNH
+                        </label>
+                        <select
+                            name="cnh"
+                            id="cnh"
+                            required
+                            defaultValue={""}
+                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
+                        >
+                            <option value={""} disabled>Selecione sua CNH</option>
+                            {Object.entries(cnhLevels).map(([abbr, label]) => (
+                                <option key={abbr} value={abbr} selected={abbr == resume?.cnh ? true : false}>
+                                    {label}
+                                </option>
+                            ))}
+                        </select>
                     </div>
 
                     {/* É fumante? */}
@@ -567,7 +588,6 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                         </div>
                     </div>
                 </div>
-                {/* Submit Button */}
                 <Button text="Atualizar Currículo" />
             </form>
             <Snackbar

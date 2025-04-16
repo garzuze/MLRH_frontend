@@ -17,6 +17,14 @@ export const genders = {
     O: "Outro",
 } as const;
 
+export const cnhLevels = {
+    A: "A",
+    B: "B",
+    AB: "AB",
+    C: "C",
+    D: "D",
+} as const;
+
 export const languageLevels = {
     1: "Básico",
     2: "Intermediário",
