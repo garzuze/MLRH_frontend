@@ -67,6 +67,7 @@ export const states = {
     TO: "Tocantins",
 } as const;
 
+// Verificar depois se tem algum objeto que usa o C ou S no momento
 export const status = {
     A: "Ativo",
     I: "Inativo",
@@ -74,9 +75,17 @@ export const status = {
     S: "Suspenso",
 } as const;
 
+export const profileStatus = {
+    A: "Aberto",
+    F: "Fechado",
+    C: "Cancelado",
+    S: "Seleção",
+} as const;
+
 export type StateAbbreviation = keyof typeof states;
 export type EducationLevelAbbreviation = keyof typeof educationLevels;
 export type GenderAbbreviation = keyof typeof genders;
 export type languageLevelAbbreviation = keyof typeof languageLevels;
 export type statusAbbreviation = keyof typeof status;
+export type profileStatusAbbreviation = keyof typeof profileStatus;
 export type maritalStatusAbbreviation = keyof typeof maritalStatus;

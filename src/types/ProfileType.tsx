@@ -1,4 +1,4 @@
-import { EducationLevelAbbreviation, GenderAbbreviation, maritalStatusAbbreviation, statusAbbreviation } from "../utils/constants";
+import { EducationLevelAbbreviation, GenderAbbreviation, maritalStatusAbbreviation, profileStatusAbbreviation } from "../utils/constants";
 
 export interface ProfileType {
     id: number;
@@ -11,7 +11,7 @@ export interface ProfileType {
     maritalStatus: maritalStatusAbbreviation; // estado civil
     educationLevel: EducationLevelAbbreviation; // educaçãoNível
     date: string; // data
-    status: statusAbbreviation; // status
+    status: profileStatusAbbreviation; // status
     deadline: number; // prazo
     estimatedDelivery: number; // estimadoEntrega
     confidential: boolean; // confidencial
