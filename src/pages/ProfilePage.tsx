@@ -51,7 +51,7 @@ const ProfilePage: React.FC = () => {
                                 </div>
                                 {profileData.remuneration && (
                                     <div className="flex items-center justify-start gap-2 w-full rounded">
-                                        <FiDollarSign /> R${profileData.remuneration}
+                                        <FiDollarSign /> R$ {profileData.remuneration}
                                     </div>
                                 )}
                             </div>

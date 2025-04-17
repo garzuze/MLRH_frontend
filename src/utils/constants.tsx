@@ -37,7 +37,7 @@ export const maritalStatus = {
     S: "Solteiro(a)",
     M: "Casado(a)",
     D: "Divorciado(a)",
-    V: "Viúvo(a)",
+    W: "Viúvo(a)",
 } as const;
 
 export const states = {
