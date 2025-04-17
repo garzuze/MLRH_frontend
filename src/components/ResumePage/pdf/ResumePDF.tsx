@@ -149,7 +149,7 @@ const ResumeTemplate = ({ resume, user, experiences }: ResumePDFProps) => (
                     {(resume.englishLevel == "N" || resume.spanishLevel == "N" || resume.otherLanguages) && (
                         <View>
                             <Text style={{ marginBottom: 6, fontFamily: "Times-Bold", fontSize: 12 }}>Idiomas</Text>
-                            <Text>{resume.englishLevel == "N" && `Inglês: ${languageLevels[resume.englishLevel]} |`} {resume.spanishLevel == "N" && `Espanhol: ${languageLevels[resume.spanishLevel]} |`} {resume.otherLanguages && `Outras linguas: ${resume.otherLanguages}`}
+                            <Text>{resume.englishLevel != "N" && `Inglês: ${languageLevels[resume.englishLevel]} |`} {resume.spanishLevel != "N" && `Espanhol: ${languageLevels[resume.spanishLevel]} |`}{resume.otherLanguages && `Outras linguas: ${resume.otherLanguages}`}
                             </Text>
                         </View>
                     )}
@@ -180,25 +180,26 @@ const ResumeTemplate = ({ resume, user, experiences }: ResumePDFProps) => (
                             </View>
                             <View>
                                 <View style={styles.row}>
-                                    <Text>
-                                        <Text style={styles.bold}>Salário: </Text>{experience.salary}
-                                    </Text>
+                                    {experience.salary || Number(experience.salary) < 0 && <Text><Text style={styles.bold}>Salário: </Text> R$ {experience.salary}</Text>}
                                 </View>
                                 <View>
                                     <View>
-                                        <Text style={styles.bold}>Atividades Realizadas: </Text>
+                                        <Text style={{ marginBottom: 6, fontFamily: "Times-Bold" }}>Atividades Realizadas: </Text>
                                         {experience.responsibilities.split(/\r?\n/).map((responsability, key) => (
                                             <Text style={styles.row} key={key}>- {responsability}</Text>
                                         ))}
                                     </View>
                                 </View>
-                                <View>
-                                    <View style={styles.row}>
-                                        <Text>
-                                            <Text style={styles.bold}>Motivo da Saída: </Text>{experience.reasonForLeaving}
-                                        </Text>
+                                {experience.reasonForLeaving && (
+                                    <View>
+                                        <View style={styles.row}>
+                                            <Text>
+                                                <Text style={styles.bold}>Motivo da Saída: </Text>{experience.reasonForLeaving}
+                                            </Text>
+                                        </View>
                                     </View>
-                                </View>
+                                )}
+
                             </View>
                         </View>
 
@@ -206,10 +207,12 @@ const ResumeTemplate = ({ resume, user, experiences }: ResumePDFProps) => (
                     ))}
                 </View>
             </View>
-            <View style={styles.section}>
-                <Text style={styles.sectionHeader}>PRETENSÃO SALARIAL</Text>
-                <Text style={styles}> R$ {resume.expectedSalary}</Text>
-            </View>
+            {resume.expectedSalary && (
+                <View style={styles.section}>
+                    <Text style={styles.sectionHeader}>PRETENSÃO SALARIAL</Text>
+                    <Text style={styles}> R$ {resume.expectedSalary}</Text>
+                </View>
+            )}
             <Text style={styles.footer}>Elaborado por MLRH em {getDate()}.</Text>
         </Page>
     </Document >
