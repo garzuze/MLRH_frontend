@@ -104,15 +104,20 @@ const ResumeTemplate = ({ resume, user, experiences }: ResumePDFProps) => (
                         <Text><Text style={styles.bold}>  Natural de:</Text> {resume.birthPlace}</Text>
                     </View>
                     <View style={styles.row}>
-                        <Text><Text style={styles.bold}>Estado Civil:</Text> {maritalStatus[resume.maritalStatus]}
+                        <Text>
+                            <Text style={styles.bold}>Estado Civil:</Text> {maritalStatus[resume.maritalStatus]}
                             <Text style={styles.bold}> Tem filhos:</Text> {resume.hasChildren ? "Sim" : "Não"}
                             {resume.hasChildren && <Text><Text style={styles.bold}> Idade dos filhos:</Text> {resume.childrenAges}</Text>}
                         </Text>
                     </View>
                     <View style={styles.row}>
-                        <Text><Text style={styles.bold}>Endereço:</Text> {resume.address}
-                            <Text style={styles.bold}>  Bairro:</Text> {resume.neighborhood}</Text>
-                        <Text><Text style={styles.bold}>  Cidade:</Text> {resume.city}/{states[resume.state]}</Text>
+                        <Text>
+                            <Text style={styles.bold}>Endereço:</Text> {resume.address}
+                            <Text style={styles.bold}>  Bairro:</Text> {resume.neighborhood}
+                        </Text>
+                        <Text>
+                            <Text style={styles.bold}>  Cidade:</Text> {resume.city}/{states[resume.state]}
+                        </Text>
                     </View>
                     <View style={styles.row}>
                         <Text>
@@ -141,10 +146,10 @@ const ResumeTemplate = ({ resume, user, experiences }: ResumePDFProps) => (
                             ))}
                         </View>
                     )}
-                    {(resume.englishLevel > 1 || resume.spanishLevel > 1 || resume.otherLanguages) && (
+                    {(resume.englishLevel == "N" || resume.spanishLevel == "N" || resume.otherLanguages) && (
                         <View>
                             <Text style={{ marginBottom: 6, fontFamily: "Times-Bold", fontSize: 12 }}>Idiomas</Text>
-                            <Text>{resume.englishLevel > 1 && `Inglês: ${languageLevels[resume.englishLevel]} |`} {resume.spanishLevel > 1 && `Espanhol: ${languageLevels[resume.spanishLevel]} |`} {resume.otherLanguages && `Outras linguas: ${resume.otherLanguages}`}
+                            <Text>{resume.englishLevel == "N" && `Inglês: ${languageLevels[resume.englishLevel]} |`} {resume.spanishLevel == "N" && `Espanhol: ${languageLevels[resume.spanishLevel]} |`} {resume.otherLanguages && `Outras linguas: ${resume.otherLanguages}`}
                             </Text>
                         </View>
                     )}
@@ -206,7 +211,6 @@ const ResumeTemplate = ({ resume, user, experiences }: ResumePDFProps) => (
                 <Text style={styles}> R$ {resume.expectedSalary}</Text>
             </View>
             <Text style={styles.footer}>Elaborado por MLRH em {getDate()}.</Text>
-
         </Page>
     </Document >
 );

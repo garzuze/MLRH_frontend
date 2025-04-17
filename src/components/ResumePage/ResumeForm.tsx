@@ -8,6 +8,7 @@ import { ResumeFormProps } from "../../types/ResumeFormProps";
 import PositionSelector from "../form/PositionAutocompleteInput";
 import { positionType } from "../../types/positionType";
 import { useQueryClient } from "@tanstack/react-query";
+import PhoneNumberInput from "./PhoneNumberInput";
 
 
 export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
@@ -173,6 +174,8 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             name="email"
                             id="email"
                             defaultValue={user?.email}
+                            disabled
+                            readOnly
                             required
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
                     </div>
@@ -182,13 +185,11 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                         <label htmlFor="phone" className="mb-2 text-sm font-medium text-zinc-300">
                             Telefone
                         </label>
-                        <input
-                            type="text"
-                            name="phone"
-                            id="phone"
-                            defaultValue={resume?.phone}
-                            required
-                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
+                        {/* Uggly but works: */}
+                        {/* {resume && <PhoneNumberInput defaultValue={resume.phone} />}
+                        {!resume && <PhoneNumberInput />} */}
+                        {/* Better: */}
+                        <PhoneNumberInput name="phone" defaultValue={resume?.phone} key={resume?.phone ?? 'empty'} />
                     </div>
 
                     {/* Nome cônjuge */}
@@ -502,6 +503,8 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                         </label>
                         <input
                             type="number"
+                            min="700"
+                            max="100000"
                             name="expectedSalary"
                             id="expectedSalary"
                             defaultValue={resume?.expectedSalary}
@@ -513,12 +516,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                         <label htmlFor="contactPhone" className="mb-2 text-sm font-medium text-zinc-300">
                             Telefone para contato
                         </label>
-                        <input
-                            type="text"
-                            name="contactPhone"
-                            id="contactPhone"
-                            defaultValue={resume?.contactPhone}
-                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
+                        <PhoneNumberInput name="contactPhone" defaultValue={resume?.contactPhone} key={resume?.phone ?? 'empty'} />
                     </div>
 
 

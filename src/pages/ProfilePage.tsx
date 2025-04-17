@@ -5,6 +5,7 @@ import Title from '../components/ui/Title';
 import { AxiosError } from 'axios';
 import { FiBriefcase, FiClock, FiDollarSign, FiMapPin } from "react-icons/fi";
 import Button from '../components/ui/Button';
+import { contractTypes } from '../utils/constants';
 
 const ProfilePage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -43,7 +44,7 @@ const ProfilePage: React.FC = () => {
                                     <FiMapPin /> {profileData.location}
                                 </div>
                                 <div className="flex items-center justify-start gap-2 w-full rounded">
-                                    <FiBriefcase /> {profileData.contractType}
+                                    <FiBriefcase /> {contractTypes[profileData.contractType]}
                                 </div>
                                 <div className="flex items-center justify-start gap-2 w-full rounded">
                                     <FiClock /> {profileData.workSchedule}
