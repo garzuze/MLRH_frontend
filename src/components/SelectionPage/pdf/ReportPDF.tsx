@@ -159,8 +159,10 @@ const ReportPDF = ({ report, profile, resume, experiences, user }: ReportPDFProp
             {/* Histórico educacional */}
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Histórico Educacional</Text>
-                <View style={styles.row}>
-                    <Text>{report.educationalBackground}</Text>
+                <View>
+                    {resume.educationDetails.split(/\r?\n/).map((detail, key) => (
+                        <Text style={styles.row} key={key}>{detail}</Text>
+                    ))}
                 </View>
             </View>
             <Text style={styles.footer}>As informações constantes neste documento são confidenciais, sendo proibida a divulgação das mesmas, sob pena da Lei.</Text>
@@ -189,21 +191,26 @@ const ReportPDF = ({ report, profile, resume, experiences, user }: ReportPDFProp
                                 <Text style={styles.bold}>Cargo: </Text>{experience.positionTitle}
                             </Text>
                         </View>
-                        <View style={styles.row}>
-                            <Text>
-                                <Text style={styles.bold}>Último Salário: </Text>{experience.salary}
-                            </Text>
+                        {experience.salary && (
+                            <View style={styles.row}>
+                                <Text>
+                                    <Text style={styles.bold}>Último Salário: </Text>R$ {experience.salary}
+                                </Text>
+                            </View>
+                        )}
+                        <View>
+                            <Text style={styles.bold}>Atividades Realizadas: </Text>
+                            {experience.responsibilities.split(/\r?\n/).map((responsability, key) => (
+                                <Text style={styles.row} key={key}>- {responsability}</Text>
+                            ))}
                         </View>
-                        <View style={styles.row}>
-                            <Text>
-                                <Text style={styles.bold}>Atividades Realizadas: </Text>{experience.responsibilities}
-                            </Text>
-                        </View>
-                        <View style={styles.row}>
-                            <Text>
-                                <Text style={styles.bold}>Motivo da Saída: </Text>{experience.reasonForLeaving}
-                            </Text>
-                        </View>
+                        {experience.reasonForLeaving && (
+                            <View style={styles.row}>
+                                <Text>
+                                    <Text style={styles.bold}>Motivo da Saída: </Text>{experience.reasonForLeaving}
+                                </Text>
+                            </View>
+                        )}
                         <View style={styles.row}>
                             <Text>
                                 <Text></Text>
@@ -216,7 +223,7 @@ const ReportPDF = ({ report, profile, resume, experiences, user }: ReportPDFProp
             {/* Pretensão Salarial */}
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>
-                    Pretensão salarial
+                    Pretensão Salarial
                 </Text>
                 <View style={styles.row}>
                     <Text>{report.careerObjectives}</Text>
@@ -235,13 +242,23 @@ const ReportPDF = ({ report, profile, resume, experiences, user }: ReportPDFProp
             {report.testResult &&
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>
-                        Resultado do teste
+                        Resultado do Teste
                     </Text>
                     <View style={styles.row}>
                         <Text>{report.testResult}</Text>
                     </View>
                 </View>
             }
+            {report.finalConsiderations && (
+                <View style={styles.section}>
+                <Text style={styles.sectionTitle}>
+                    Considerações Finais
+                </Text>
+                <View style={styles.row}>
+                    <Text>{report.finalConsiderations}</Text>
+                </View>
+            </View>
+            )}
             <Text style={styles.author}>Elaborado por: <Text style={styles.bold}>{user.firstName} {user.lastName}</Text></Text>
             <Text style={styles.footer}>As informações constantes neste documento são confidenciais, sendo proibida a divulgação das mesmas, sob pena da Lei.</Text>
         </Page>

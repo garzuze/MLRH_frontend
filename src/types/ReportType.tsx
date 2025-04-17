@@ -6,7 +6,6 @@ export interface ReportType {
     testResult: string; //testeResultado
     personalFamilyContext: string; //pessoalFamíliaContexto
     educationalBackground: string; //educacionalHistórico
-    professionalSummary: string; //profissionalResumo
     candidateProfile: string; //candidatoPerfil
     careerObjectives: string; //carreiraObjetivos
     finalConsiderations: string; //finalConsiderações
