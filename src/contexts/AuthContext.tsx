@@ -76,7 +76,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 password: password,
             });
 
-            console.log(response)
             const tokenResponse: tokenResponse = response.data;
             const { access, refresh, user } = tokenResponse;
 

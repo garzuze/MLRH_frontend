@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 const PhoneNumberInput = ({name, defaultValue}: {name: string, defaultValue?: string | undefined }) => {
-    console.log(defaultValue);
     const [number, setNumber] = useState<string>(defaultValue ? defaultValue : '');
 
     const handleChange = (phone: string) => {
