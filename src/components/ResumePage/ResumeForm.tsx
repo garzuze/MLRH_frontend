@@ -131,12 +131,13 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             name="gender"
                             id="gender"
                             required
-                            defaultValue={""}
+                            defaultValue={resume?.gender ? resume.gender : ""}
+                            key={resume?.gender ?? 'empty'}
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
                             <option value={""} disabled>Selecione seu gênero</option>
                             {Object.entries(genders).map(([abbr, label]) => (
-                                <option key={abbr} value={abbr} selected={abbr == resume?.gender ? true : false}>
+                                <option key={abbr} value={abbr} >
                                     {label}
                                 </option>
                             ))}
@@ -152,12 +153,13 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             name="maritalStatus"
                             id="maritalStatus"
                             required
-                            defaultValue={""}
+                            defaultValue={resume?.maritalStatus ? resume.maritalStatus : ""}
+                            key={resume?.maritalStatus ?? "empty"}
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
                             <option value={""} disabled>Selecione seu estado civil</option>
                             {Object.entries(maritalStatus).map(([abbr, label]) => (
-                                <option key={abbr} value={abbr} selected={abbr == resume?.maritalStatus ? true : false}>
+                                <option key={abbr} value={abbr} >
                                     {label}
                                 </option>
                             ))}
@@ -227,12 +229,19 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             name="hasChildren"
                             id="hasChildren"
                             required
-                            defaultValue={""}
+                            defaultValue={
+                                resume?.hasChildren === true
+                                  ? "true"
+                                  : resume?.hasChildren === false
+                                  ? "false"
+                                  : ""
+                              }
+                            key={String(resume?.hasChildren) ?? "empty"}
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
                             <option value={""} disabled>Marque uma opção</option>
-                            <option value={1} selected={resume?.hasChildren ? true : false}>Sim</option>
-                            <option value={0} selected={!resume?.hasChildren ? true : false}>Não</option>
+                            <option value={"true"}>Sim</option>
+                            <option value={"false"}>Não</option>
                         </select>
                     </div>
 
@@ -257,12 +266,13 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                         <select
                             name="cnh"
                             id="cnh"
-                            defaultValue={""}
+                            defaultValue={resume?.cnh ? resume.cnh : ""}
+                            key={resume?.cnh ?? "empty"}
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
                             <option value={""} disabled>Selecione sua CNH</option>
                             {Object.entries(cnhLevels).map(([abbr, label]) => (
-                                <option key={abbr} value={abbr} selected={abbr == resume?.cnh ? true : false}>
+                                <option key={abbr} value={abbr} >
                                     {label}
                                 </option>
                             ))}
@@ -371,12 +381,13 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             name="state"
                             id="state"
                             required
-                            defaultValue={""}
+                            defaultValue={resume?.state ? resume.state : ""}
+                            key={resume?.state ?? "empty"}
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
                             <option value={""} disabled>Selecione seu estado</option>
                             {Object.entries(states).map(([abbr, label]) => (
-                                <option key={abbr} value={abbr} selected={abbr == resume?.state ? true : false}>
+                                <option key={abbr} value={abbr} >
                                     {label}
                                 </option>
                             ))}
@@ -405,12 +416,13 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             name="englishLevel"
                             id="englishLevel"
                             required
-                            defaultValue={""}
+                            defaultValue={resume?.englishLevel ? resume.englishLevel : ""}
+                            key={resume?.englishLevel ?? "empty"}
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
                             <option value={""} disabled>Selecione seu nível de inglês</option>
                             {Object.entries(languageLevels).map(([abbr, label]) => (
-                                <option key={abbr} value={abbr} selected={abbr == resume?.englishLevel ? true : false}>
+                                <option key={abbr} value={abbr} >
                                     {label}
                                 </option>
                             ))}
@@ -426,12 +438,13 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             name="spanishLevel"
                             id="spanishLevel"
                             required
-                            defaultValue={""}
+                            defaultValue={resume?.spanishLevel ? resume.spanishLevel : ""}
+                            key={resume?.spanishLevel ?? "empty"}
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
                             <option value={""} disabled>Selecione nível de espanhol</option>
                             {Object.entries(languageLevels).map(([abbr, label]) => (
-                                <option key={abbr} value={abbr} selected={abbr == resume?.spanishLevel ? true : false}>
+                                <option key={abbr} value={abbr} >
                                     {label}
                                 </option>
                             ))}
@@ -460,12 +473,13 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             name="educationLevel"
                             id="educationLevel"
                             required
-                            defaultValue={""}
+                            defaultValue={resume?.educationLevel ? resume.educationLevel : ""}
+                            key={resume?.educationLevel ?? "empty"}
                             className="bg-neutral-900 border border-neutral-900 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
                             <option value={""} disabled>Selecione sua escolaridade</option>
                             {Object.entries(educationLevels).map(([abbr, label]) => (
-                                <option key={abbr} value={abbr} selected={abbr == resume?.educationLevel ? true : false}>
+                                <option key={abbr} value={abbr} >
                                     {label}
                                 </option>
                             ))}
@@ -525,16 +539,6 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             Cargos desejados
                         </label>
                         <PositionSelector selectedPositions={selectedPositions} setSelectedPositions={setSelectedPositions} />
-                        {/* <select multiple={true} defaultValue={resume ? resume.desiredPositions : ""} name="desiredPositions" className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5">
-                            {positionsError ? <option disabled>Houve um error</option> :
-                                loadingPositions ? (<option disabled>Carregando...</option>)
-                                    : (
-                                        positions.map((position) => (
-                                            <option key={position.id} value={position.id}>{position.title}</option>
-                                        ))
-                                    )
-                            }
-                        </select> */}
                     </div>
 
                     {/* Horário comercial? */}
