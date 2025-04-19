@@ -160,7 +160,7 @@ const ReportPDF = ({ report, profile, resume, experiences, user }: ReportPDFProp
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Histórico Educacional</Text>
                 <View>
-                    {resume.educationDetails.split(/\r?\n/).map((detail, key) => (
+                    {report.educationalBackground.split(/\r?\n/).map((detail, key) => (
                         <Text style={styles.row} key={key}>{detail}</Text>
                     ))}
                 </View>
