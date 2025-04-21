@@ -7,6 +7,7 @@ import { ReportType } from "../../types/ReportType";
 import { useResume } from "../../hooks/useResume";
 import { useWorkExperiences } from "../../hooks/useWorkExperiences";
 import { useAuth } from "../../contexts/AuthContext";
+import { useMlrhUser } from "../../hooks/useMlrhUser";
 
 export default function ReportList() {
   const { reports, loadingReports, reportsError } = useReports();
@@ -40,6 +41,14 @@ function Report({ report }: ReportProps) {
     useWorkExperiences(report.resume, { enabled: false });
   const { user } = useAuth();
 
+  const profileData = Array.isArray(profiles) ? profiles[0] : profiles;
+  const resumeData = Array.isArray(resume) ? resume[0] : resume;
+  
+
+  if (fetchingProfiles || fetchingResume || fetchingExperiences) {
+    return <div>Carrendo dados do PDF...</div>;
+  }
+
   const handleCreatePDF = async () => {
     await Promise.all([
       refetchProfiles(),
@@ -48,7 +57,7 @@ function Report({ report }: ReportProps) {
     ]);
     setShowPDF(true);
   };
-
+  
   if (!showPDF) {
     return (
       <div>
@@ -56,19 +65,12 @@ function Report({ report }: ReportProps) {
         <button
           className="p-2 bg-black font-semibold rounded text-stone-100"
           onClick={handleCreatePDF}
-        >
+          >
           Criar PDF
         </button>
       </div>
     );
   }
-
-  if (fetchingProfiles || fetchingResume || fetchingExperiences) {
-    return <div>Carrendo dados do PDF...</div>;
-  }
-
-  const profileData = Array.isArray(profiles) ? profiles[0] : profiles;
-  const resumeData = Array.isArray(resume) ? resume[0] : resume;
 
   if (profileData && resumeData && experiences && user) {
     return (

@@ -18,7 +18,7 @@ export default function ReportForm() {
 
     const { data: profiles, isLoading: loadingProfiles, error: profilesError } = useProfiles(undefined, { enabled: true });
     // Retorna os IDs dos clientes de todos os perfis
-    const clientsIds = profiles?.map((profile) => (profile.client)) || [];
+    const clientsIds = profiles?.filter(p => p.status == "A").map((profile) => (profile.client)) || [];
     // Endpoint de clientes suporta vários ids em uma request só e isso é muito legal 😎
     const { data: clients, isLoading: loadingClients } = useClientMlrh(clientsIds, { enabled: clientsIds.length > 0 });
 

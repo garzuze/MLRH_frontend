@@ -90,7 +90,7 @@ interface ReportPDFProps {
 }
 
 const currentDate = getDate();
-const ReportPDF = ({ report, profile, resume, experiences, user }: ReportPDFProps) => (
+const ReportPDF = ({ report, profile, resume, experiences, user}: ReportPDFProps) => (
     <Document>
         <Page size="A4" style={styles.page}>
             <Image src={logo} style={styles.logo}></Image>
@@ -143,9 +143,9 @@ const ReportPDF = ({ report, profile, resume, experiences, user }: ReportPDFProp
                 <View style={styles.row}>
                     <Text>
                         <Text style={styles.bold}>Celular:</Text> {resume.phone}
-                        <Text style={styles.bold}>  E-mail:</Text> {resume.email}
+                        <Text style={styles.bold}>  E-mail:</Text> {report.userData[0]}
                         <Text style={styles.bold}> CNH:</Text> {resume.cnh ? resume.cnh : "Não tem"}
-                        <Text style={styles.bold}>  CPF:</Text> {resume.cpf}
+                        <Text style={styles.bold}>  CPF:</Text> {report.userData[1]}
                     </Text>
                 </View>
             </View>
@@ -221,7 +221,7 @@ const ReportPDF = ({ report, profile, resume, experiences, user }: ReportPDFProp
 
             </View>
             {/* Pretensão Salarial */}
-            <View style={styles.section}>
+            <View style={styles.section} break>
                 <Text style={styles.sectionTitle}>
                     Pretensão Salarial
                 </Text>
