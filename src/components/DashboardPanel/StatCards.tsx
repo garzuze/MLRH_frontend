@@ -1,10 +1,17 @@
 import { FiTrendingDown, FiTrendingUp } from "react-icons/fi"
+import { useProfiles } from "../../hooks/useProfiles"
+import { useAccountsReceivableTitle } from "../../hooks/useAccountsReceivableTitle";
 
 export default function StatCards() {
+
+    const { data: profiles } = useProfiles();
+    const { data: receivableTitles } = useAccountsReceivableTitle();
+    const invoiced = receivableTitles?.reduce((acc, title) => acc + Number(title.amount), 0);
+
     return <>
-        <Card title="Total em vendas" value="R$20,512" pillText="5.27%" trend="up" period="De 1º de Jan até 2 de Fev" />
-        <Card title="Vagas fechadas" value="53" pillText="17,7%" trend="up" period="De 1º de Jan até 18 de Fev" />
-        <Card title="Clientes novos" value="7" pillText="5%" trend="down" period="De 1º de Jan até 2 de Fev" />
+        <Card title="Total faturado" value={`R$ ${String(invoiced)}`} pillText="5.27%" trend="up" period="Total" />
+        <Card title="Vagas fechadas" value={String(profiles?.filter((p) => p.status == "F").length)} pillText="17,7%" trend="up" period="De 1º de Jan até 18 de Fev" />
+        <Card title="Clientes novos" value="7" pillText="5%" trend="down" period="Total" />
     </>
 }
 
