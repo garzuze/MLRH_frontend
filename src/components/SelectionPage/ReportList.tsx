@@ -8,6 +8,7 @@ import { useResume } from "../../hooks/useResume";
 import { useWorkExperiences } from "../../hooks/useWorkExperiences";
 import { useAuth } from "../../contexts/AuthContext";
 import { useMlrhUser } from "../../hooks/useMlrhUser";
+import { FiDownload, FiFileText } from "react-icons/fi";
 
 export default function ReportList() {
   const { reports, loadingReports, reportsError } = useReports();
@@ -16,7 +17,7 @@ export default function ReportList() {
   if (reportsError) return <div>Erro ao carregar pareceres.</div>;
 
   return (
-    <ul>
+    <ul className="space-y-2">
       {reports.map((report) => (
         <li key={report.id}>
           <Report report={report} />
@@ -43,7 +44,7 @@ function Report({ report }: ReportProps) {
 
   const profileData = Array.isArray(profiles) ? profiles[0] : profiles;
   const resumeData = Array.isArray(resume) ? resume[0] : resume;
-  
+
 
   if (fetchingProfiles || fetchingResume || fetchingExperiences) {
     return <div>Carrendo dados do PDF...</div>;
@@ -57,24 +58,21 @@ function Report({ report }: ReportProps) {
     ]);
     setShowPDF(true);
   };
-  
+
   if (!showPDF) {
     return (
-      <div>
-        <div>{report.strRepresentation}</div>
-        <button
-          className="p-2 bg-black font-semibold rounded text-stone-100"
-          onClick={handleCreatePDF}
-          >
-          Criar PDF
-        </button>
+      <div className="text-sm text-gray-800 px-2 py-1 hover:bg-gray-100 rounded">
+        <div onClick={handleCreatePDF} className="flex items-center justify-between text-stone-600 hover:text-stone-900 hover:cursor-pointer">
+          <p className="w-4/5">{report.strRepresentation}</p>
+          <FiDownload size={14}/>
+        </div>
       </div>
     );
   }
 
   if (profileData && resumeData && experiences && user) {
     return (
-      <div>
+      <div className="text-sm text-stone-900 px-2 py-1 hover:bg-gray-100 rounded">
         <div>{report.strRepresentation}</div>
         <PDFDownloadLink
           document={
@@ -86,6 +84,7 @@ function Report({ report }: ReportProps) {
               user={user}
             />
           }
+          className="flex items-center gap-2 px-3 py-1.5 bg-green-600 text-white text-sm rounded hover:bg-green-700 transition"
           fileName={`${report.strRepresentation}.pdf`}
         >
           {({ loading }) => (loading ? 'Gerando PDF...' : 'Baixar PDF')}
