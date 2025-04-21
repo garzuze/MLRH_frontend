@@ -221,7 +221,7 @@ const ReportPDF = ({ report, profile, resume, experiences, user}: ReportPDFProps
 
             </View>
             {/* Pretensão Salarial */}
-            <View style={styles.section} break>
+            <View style={styles.section}>
                 <Text style={styles.sectionTitle}>
                     Pretensão Salarial
                 </Text>

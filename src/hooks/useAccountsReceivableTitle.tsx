@@ -3,15 +3,15 @@ import { useAxiosClient } from "./useAxiosClient";
 import { useAuth } from "../contexts/AuthContext";
 import { mlrhUser } from "../types/TokenResponse";
 
-export const useMlrhUser = (id?:  number, options = { enabled: true }) => {
+export const useAccountsReceivableTitle = (id?:  number, options = { enabled: true }) => {
     const axiosClient = useAxiosClient();
     const { token } = useAuth();
-    const queryKey = id ? ['user', token, id] : ['user', token];
+    const queryKey = id ? ['receivable_title', token, id] : ['receivable_title', token];
 
-    return useQuery<mlrhUser>({
+    return useQuery<AccountsReceivableTitleType[]>({
         queryKey,
         queryFn: async () => {
-            const url = id ? `users/${id}` : "users"
+            const url = id ? `finance/receivable_title/${id}` : "finance/receivable_title"
             const response = await axiosClient.get(url);
             return response.data;
         },

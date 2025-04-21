@@ -102,7 +102,6 @@ const ResumeTemplate = ({ resume, user, experiences }: ResumePDFProps) => (
                             <Text style={styles.bold}>Data Nasc:</Text> {formatDate(resume.birthDate)}</Text>
                         <Text><Text style={styles.bold}>  Idade:</Text> {resume.age} anos</Text>
                         <Text><Text style={styles.bold}>  Natural de:</Text> {resume.birthPlace}</Text>
-                        <Text><Text style={styles.bold}>  CPF:</Text> {user.cpf}</Text>
                     </View>
                     <View style={styles.row}>
                         <Text>
