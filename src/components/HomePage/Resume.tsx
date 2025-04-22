@@ -130,6 +130,11 @@ export default function Resume() {
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
                             </div>
+                            {/* Honeypot */}
+                            <div className="hidden">
+                                <label>Por favor, não preencha este campo (deixe-o vazio):</label>
+                                <input type="text" name="confirm_email" value="" />
+                            </div>
                             <p className="text-zinc-200 py-2">
                                 {message}
                             </p>
