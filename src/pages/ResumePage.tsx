@@ -9,10 +9,10 @@ import Title from "../components/ui/Title";
 import Button from "../components/ui/Button";
 
 export default function ResumePage() {
-    const { data: resume } = useResume(undefined, { enabled: true });
+    const { data: resume } = useResume();
     const { user } = useAuth();
     const resumeData = Array.isArray(resume) ? resume[0] : resume;
-    const { data: experieces, isLoading: laodingExperiences } = useWorkExperiences(undefined, { enabled: true });
+    const { data: experieces, isLoading: laodingExperiences } = useWorkExperiences();
     if (user) {
         return (
             <main className="w-full mx-auto">

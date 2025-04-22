@@ -3,7 +3,7 @@ import { useAxiosClient } from "../hooks/useAxiosClient";
 import { ResumeType } from "../types/ResumeType";
 import { useAuth } from "../contexts/AuthContext";
 
-export const useResume = (id?:  number, options = { enabled: false }) => {
+export const useResume = (id?:  number, options = { enabled: true }) => {
     const axiosClient = useAxiosClient();
     const { token } = useAuth();
     const queryKey = id ? ['resume', token, id] : ['resume', token];

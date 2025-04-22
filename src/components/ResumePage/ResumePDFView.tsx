@@ -5,8 +5,8 @@ import { mlrhUser } from "../../types/TokenResponse"
 import { useWorkExperiences } from "../../hooks/useWorkExperiences"
 
 const ResumePDFView = () => {
-    const { data: resume } = useResume(9, { enabled: true });
-    const { data: workExperiences } = useWorkExperiences(9, { enabled: true });
+    const { data: resume } = useResume(9);
+    const { data: workExperiences } = useWorkExperiences(9);
     const resumeData = Array.isArray(resume) ? resume[0] : resume;
 
     const user: mlrhUser = {

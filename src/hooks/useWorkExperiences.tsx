@@ -3,7 +3,7 @@ import { WorkExperienceType } from "../types/WorkExperienceType";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "../contexts/AuthContext";
 
-export const useWorkExperiences = (id?: number, options = { enabled: false }) => {
+export const useWorkExperiences = (id?: number, options = { enabled: true }) => {
     const axiosClient = useAxiosClient();
     const { token } = useAuth();
     const queryKey = id ? ['workExperiences', token, id] : ['workExperiences', token];
