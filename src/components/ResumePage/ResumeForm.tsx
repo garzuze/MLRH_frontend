@@ -68,7 +68,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                     {/* Nome */}
                     <div className="flex flex-col items-start">
                         <label htmlFor="name" className="mb-2 text-sm font-medium text-zinc-300">
-                            Nome
+                            Nome *
                         </label>
                         <input
                             type="text"
@@ -76,13 +76,15 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             id="name"
                             defaultValue={resume?.name}
                             required
-                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
+                            placeholder="Seu nome completo"
+                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg
+                            focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5 placeholder:text-sm" />
                     </div>
 
                     {/* CPF */}
                     <div className="flex flex-col items-start">
                         <label htmlFor="cpf" className="mb-2 text-sm font-medium text-zinc-300">
-                            CPF
+                            CPF *
                         </label>
                         <input
                             type="text"
@@ -91,13 +93,14 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             defaultValue={user?.cpf}
                             required
                             readOnly
-                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
+                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg
+                            focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
                     </div>
 
                     {/* Data de Nascimento */}
                     <div className="flex flex-col items-start">
                         <label htmlFor="birthDate" className="mb-2 text-sm font-medium text-zinc-300">
-                            Data de Nascimento
+                            Data de Nascimento *
                         </label>
                         <input
                             type="date"
@@ -105,13 +108,14 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             id="birthDate"
                             defaultValue={resume?.birthDate}
                             required
-                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
+                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg
+                            focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
                     </div>
 
                     {/* Local de Nascimento */}
                     <div className="flex flex-col items-start">
                         <label htmlFor="birthPlace" className="mb-2 text-sm font-medium text-zinc-300">
-                            Local de Nascimento
+                            Local de Nascimento *
                         </label>
                         <input
                             type="text"
@@ -119,13 +123,15 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             id="birthPlace"
                             defaultValue={resume?.birthPlace}
                             required
-                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
+                            placeholder="Cidade - Estado"
+                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg
+                            focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5 placeholder:text-sm" />
                     </div>
 
                     {/* Gênero */}
                     <div className="flex flex-col items-start">
                         <label htmlFor="gender" className="mb-2 text-sm font-medium text-zinc-300">
-                            Gênero
+                            Gênero *
                         </label>
                         <select
                             name="gender"
@@ -133,7 +139,8 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             required
                             defaultValue={resume?.gender ? resume.gender : ""}
                             key={resume?.gender ?? 'empty'}
-                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
+                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg
+                            focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
                             <option value={""} disabled>Selecione seu gênero</option>
                             {Object.entries(genders).map(([abbr, label]) => (
@@ -147,7 +154,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                     {/* Estado Civil */}
                     <div className="flex flex-col items-start">
                         <label htmlFor="maritalStatus" className="mb-2 text-sm font-medium text-zinc-300">
-                            Estado Civil
+                            Estado Civil *
                         </label>
                         <select
                             name="maritalStatus"
@@ -155,7 +162,8 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             required
                             defaultValue={resume?.maritalStatus ? resume.maritalStatus : ""}
                             key={resume?.maritalStatus ?? "empty"}
-                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
+                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg
+                            focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
                             <option value={""} disabled>Selecione seu estado civil</option>
                             {Object.entries(maritalStatus).map(([abbr, label]) => (
@@ -169,7 +177,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                     {/* Email */}
                     <div className="flex flex-col items-start">
                         <label htmlFor="email" className="mb-2 text-sm font-medium text-zinc-300">
-                            Email
+                            Email *
                         </label>
                         <input
                             type="email"
@@ -179,13 +187,14 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             disabled
                             readOnly
                             required
-                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
+                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg
+                            focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
                     </div>
 
                     {/* Telefone */}
                     <div className="flex flex-col items-start">
                         <label htmlFor="phone" className="mb-2 text-sm font-medium text-zinc-300">
-                            Telefone
+                            Telefone *
                         </label>
                         {/* Uggly but works: */}
                         {/* {resume && <PhoneNumberInput defaultValue={resume.phone} />}
@@ -203,8 +212,10 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             type="text"
                             name="spouseName"
                             id="spouseName"
+                            placeholder="Nome completo do seu cônjugue"
                             defaultValue={resume?.spouseName}
-                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
+                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg
+                            focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5 placeholder:text-sm" />
                     </div>
 
                     {/* Profissão do cônjuge */}
@@ -217,13 +228,14 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             name="spouseProfession"
                             id="spouseProfession"
                             defaultValue={resume?.spouseProfession}
-                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
+                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg
+                            focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
                     </div>
 
                     {/* Tem filhos? */}
                     <div className="flex flex-col items-start">
                         <label htmlFor="hasChildren" className="mb-2 text-sm font-medium text-zinc-300">
-                            Tem filhos?
+                            Tem filhos? *
                         </label>
                         <select
                             name="hasChildren"
@@ -231,13 +243,14 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             required
                             defaultValue={
                                 resume?.hasChildren === true
-                                  ? "true"
-                                  : resume?.hasChildren === false
-                                  ? "false"
-                                  : ""
-                              }
+                                    ? "true"
+                                    : resume?.hasChildren === false
+                                        ? "false"
+                                        : ""
+                            }
                             key={String(resume?.hasChildren) ?? "empty"}
-                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
+                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg
+                            focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
                             <option value={""} disabled>Marque uma opção</option>
                             <option value={"true"}>Sim</option>
@@ -254,8 +267,10 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             type="text"
                             name="childrenAges"
                             id="childrenAges"
+                            placeholder="X  e Y anos"
                             defaultValue={resume?.childrenAges}
-                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
+                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg
+                            focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5 placeholder:text-sm" />
                     </div>
 
                     {/* CNH */}
@@ -268,7 +283,8 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             id="cnh"
                             defaultValue={resume?.cnh ? resume.cnh : ""}
                             key={resume?.cnh ?? "empty"}
-                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
+                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg
+                            focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
                             <option value={""} disabled>Selecione sua CNH</option>
                             {Object.entries(cnhLevels).map(([abbr, label]) => (
@@ -313,41 +329,46 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             name="disabilityCid"
                             id="disabilityCid"
                             defaultValue={resume?.disabilityCid}
-                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
+                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg
+                            focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
                     </div>
 
                     {/* CEP   */}
                     <div className="flex flex-col items-start">
                         <label htmlFor="cep" className="mb-2 text-sm font-medium text-zinc-300">
-                            CEP
+                            CEP *
                         </label>
                         <input
                             type="text"
                             name="cep"
                             id="cep"
                             defaultValue={resume?.cep}
+                            placeholder="xxxxx-xxx"
                             required
-                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
+                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg
+                            focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5 placeholder:text-sm" />
                     </div>
 
                     {/* Endereço   */}
                     <div className="flex flex-col items-start">
                         <label htmlFor="address" className="mb-2 text-sm font-medium text-zinc-300">
-                            Endereço
+                            Endereço *
                         </label>
                         <input
                             type="text"
                             name="address"
                             id="address"
+                            placeholder="Rua X, nº Y - Complemento Z"
                             defaultValue={resume?.address}
                             required
-                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
+                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg
+                            focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5 placeholder:text-sm" />
                     </div>
 
                     {/* Bairro   */}
                     <div className="flex flex-col items-start">
                         <label htmlFor="neighborhood" className="mb-2 text-sm font-medium text-zinc-300">
-                            Bairro
+                            Bairro *
                         </label>
                         <input
                             type="text"
@@ -355,13 +376,14 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             id="neighborhood"
                             defaultValue={resume?.neighborhood}
                             required
-                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
+                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg
+                            focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
                     </div>
 
                     {/* Cidade   */}
                     <div className="flex flex-col items-start">
                         <label htmlFor="city" className="mb-2 text-sm font-medium text-zinc-300">
-                            Cidade
+                            Cidade *
                         </label>
                         <input
                             type="text"
@@ -369,13 +391,14 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             id="city"
                             defaultValue={resume?.city}
                             required
-                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
+                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg
+                            focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
                     </div>
 
                     {/* Estado */}
                     <div className="flex flex-col items-start">
                         <label htmlFor="state" className="mb-2 text-sm font-medium text-zinc-300">
-                            Estado
+                            Estado *
                         </label>
                         <select
                             name="state"
@@ -383,11 +406,12 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             required
                             defaultValue={resume?.state ? resume.state : ""}
                             key={resume?.state ?? "empty"}
-                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
+                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg
+                            focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
                             <option value={""} disabled>Selecione seu estado</option>
                             {Object.entries(states).map(([abbr, label]) => (
-                                <option key={abbr} value={abbr} >
+                                <option key={abbr} value={abbr}>
                                     {label}
                                 </option>
                             ))}
@@ -403,14 +427,16 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             type="text"
                             name="linkedin"
                             id="linkedin"
+                            placeholder="Apenas link"
                             defaultValue={resume?.linkedin}
-                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
+                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg
+                            focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5 placeholder:text-sm" />
                     </div>
 
                     {/* Nível de Inglês */}
                     <div className="flex flex-col items-start">
                         <label htmlFor="englishLevel" className="mb-2 text-sm font-medium text-zinc-300">
-                            Nível de Inglês
+                            Nível de Inglês *
                         </label>
                         <select
                             name="englishLevel"
@@ -418,7 +444,8 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             required
                             defaultValue={resume?.englishLevel ? resume.englishLevel : ""}
                             key={resume?.englishLevel ?? "empty"}
-                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
+                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg
+                            focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
                             <option value={""} disabled>Selecione seu nível de inglês</option>
                             {Object.entries(languageLevels).map(([abbr, label]) => (
@@ -432,7 +459,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                     {/* Nível de Espanhol */}
                     <div className="flex flex-col items-start">
                         <label htmlFor="spanishLevel" className="mb-2 text-sm font-medium text-zinc-300">
-                            Nível de Espanhol
+                            Nível de Espanhol *
                         </label>
                         <select
                             name="spanishLevel"
@@ -440,7 +467,8 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             required
                             defaultValue={resume?.spanishLevel ? resume.spanishLevel : ""}
                             key={resume?.spanishLevel ?? "empty"}
-                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
+                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg
+                            focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
                             <option value={""} disabled>Selecione nível de espanhol</option>
                             {Object.entries(languageLevels).map(([abbr, label]) => (
@@ -461,13 +489,14 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             name="otherLanguages"
                             id="otherLanguages"
                             defaultValue={resume?.otherLanguages}
-                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
+                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg
+                            focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
                     </div>
 
                     {/* Nível de escolaridade */}
                     <div className="flex flex-col items-start">
                         <label htmlFor="educationLevel" className="mb-2 text-sm font-medium text-zinc-300">
-                            Escolaridade
+                            Escolaridade *
                         </label>
                         <select
                             name="educationLevel"
@@ -475,7 +504,8 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             required
                             defaultValue={resume?.educationLevel ? resume.educationLevel : ""}
                             key={resume?.educationLevel ?? "empty"}
-                            className="bg-neutral-900 border border-neutral-900 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
+                            className="bg-neutral-900 border border-neutral-900 text-zinc-300 rounded-lg
+                            focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"
                         >
                             <option value={""} disabled>Selecione sua escolaridade</option>
                             {Object.entries(educationLevels).map(([abbr, label]) => (
@@ -491,7 +521,14 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                         <label htmlFor="educationDetails" className="mb-2 text-sm font-medium text-zinc-300">
                             Detalhes da educação
                         </label>
-                        <textarea id="educationDetails" name="educationDetails" defaultValue={resume?.educationDetails} rows={4} className="block p-2.5 w-full text-sm text-zinc-300 bg-neutral-900 rounded-lg border border-neutral-900" required></textarea>
+                        <textarea
+                            id="educationDetails"
+                            name="educationDetails"
+                            defaultValue={resume?.educationDetails}
+                            rows={4}
+                            placeholder="Digite em tópicos separados por linha. Exemplo:&#10;Graduado em x na universidade y;&#10;Ensino Médio técnico em Z;"
+                            className="block p-2.5 w-full text-sm text-zinc-300 bg-neutral-900 rounded-lg border border-neutral-900"
+                            required></textarea>
                     </div>
 
                     {/* Habilidades em informática */}
@@ -499,7 +536,13 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                         <label htmlFor="computerSkills" className="mb-2 text-sm font-medium text-zinc-300">
                             Habilidades em informática
                         </label>
-                        <textarea id="computerSkills" name="computerSkills" defaultValue={resume?.computerSkills} rows={4} className="block p-2.5 w-full text-sm text-zinc-300 bg-neutral-900 rounded-lg border border-neutral-900"></textarea>
+                        <textarea
+                            id="computerSkills"
+                            name="computerSkills"
+                            defaultValue={resume?.computerSkills}
+                            rows={4}
+                            placeholder="Digite em tópicos separados por linha. Exemplo:&#10;Proficiente em Power BI;&#10;Pacote Office;"
+                            className="block p-2.5 w-full text-sm text-zinc-300 bg-neutral-900 rounded-lg border border-neutral-900"></textarea>
                     </div>
 
                     {/* Outros cursos */}
@@ -507,7 +550,13 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                         <label htmlFor="additionalCourses" className="mb-2 text-sm font-medium text-zinc-300">
                             Outros cursos
                         </label>
-                        <textarea id="additionalCourses" name="additionalCourses" defaultValue={resume?.additionalCourses} rows={4} className="block p-2.5 w-full text-sm text-zinc-300 bg-neutral-900 rounded-lg border border-neutral-900"></textarea>
+                        <textarea
+                            id="additionalCourses"
+                            name="additionalCourses"
+                            defaultValue={resume?.additionalCourses}
+                            placeholder="Digite em tópicos separados por linha. Exemplo:&#10;Mecânica Básica na instituição X em ano Y;&#10;Curso do livro Python Crash Course;"
+                            rows={4}
+                            className="block p-2.5 w-full text-sm text-zinc-300 bg-neutral-900 rounded-lg border border-neutral-900"></textarea>
                     </div>
 
                     {/* Expectativa salarial */}
@@ -521,8 +570,10 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             max="100000"
                             name="expectedSalary"
                             id="expectedSalary"
+                            placeholder="Exemplo: 4500,00"
                             defaultValue={resume?.expectedSalary}
-                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
+                            className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg
+                            focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5 placeholder:text-sm" />
                     </div>
 
                     {/* Telefone para contato */}
@@ -534,9 +585,9 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                     </div>
 
 
-                    <div className="flex flex-col items-start">
+                    <div className="space-y-2">
                         <label htmlFor="desiredPositions" className="mb-2 text-sm font-medium text-zinc-300">
-                            Cargos desejados
+                            Cargos desejados *
                         </label>
                         <PositionSelector selectedPositions={selectedPositions} setSelectedPositions={setSelectedPositions} />
                     </div>

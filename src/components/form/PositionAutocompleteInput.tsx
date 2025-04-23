@@ -31,7 +31,7 @@ const PositionSelector = ({ selectedPositions, setSelectedPositions }: { selecte
                 onSelect={addPosition}
                 fetchResults={fetchPositions}
                 getOptionLabel={(position) => position.title}
-                placeholder="Buscar cargos"
+                placeholder="Busque cargos e selecione"
                 inputName="desiredPositions"
                 inputValue={""}
                 className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5"

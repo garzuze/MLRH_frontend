@@ -172,7 +172,7 @@ const ResumeTemplate = ({ resume, user, experiences }: ResumePDFProps) => (
                             <View>
                                 <View style={styles.row}>
                                     <Text>{formatDate(experience.startDate)}  a  {experience.endDate ? formatDate(experience.endDate) : "atual"}  -  </Text>
-                                    <Text style={styles.bold}>{experience.companyName}</Text>
+                                    <Text style={{textTransform: "uppercase", fontFamily: "Times-Bold"}}>{experience.companyName}</Text>
                                 </View>
                                 <View style={styles.row}>
                                     <Text style={styles.bold}>Cargo:</Text><Text> {experience.positionTitle}</Text>

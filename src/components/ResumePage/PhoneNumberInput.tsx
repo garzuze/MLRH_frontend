@@ -17,7 +17,7 @@ const PhoneNumberInput = ({name, defaultValue}: {name: string, defaultValue?: st
         required
         value={number}
         onChange={(e) => handleChange(e.target.value)}
-        className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
+        className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5 placeholder:text-sm" />
 }
 
 function formatNumber(value: string) {
