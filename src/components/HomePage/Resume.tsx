@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useAxiosClient } from "../../hooks/useAxiosClient";
 import React from "react";
 import Snackbar from "../ui/Snackbar";
+import { validateCPF } from "../../utils/validateCPF";
 
 export default function Resume() {
 
@@ -24,7 +25,11 @@ export default function Resume() {
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        if (cpf) {
+        if (!validateCPF(cpf)) {
+            setSnackbarMessage("Por favor, insira um CPF válido!")
+            setIsSnackbarOpen(true);
+        }
+        if (validateCPF(cpf)) {
             try {
                 const response: AxiosResponse = await axiosClient.get(`hr/get_resume_cpf?cpf=${cpf}`)
                 if (response.status === 200) {
@@ -41,7 +46,7 @@ export default function Resume() {
             }
         }
 
-        if (action === "login" && email && password) {
+        if (action === "login" && email && password && validateCPF(cpf)) {
             const response = await login(email, password);
             if (response?.status === 200) {
                 navigate('/curriculo');
@@ -49,7 +54,7 @@ export default function Resume() {
                 setSnackbarMessage("Email ou senha incorretos! Tente novamente")
             }
             setIsSnackbarOpen(true);
-        } else if (action === "register" && email && password) {
+        } else if (action === "register" && email && password && validateCPF(cpf)) {
             // const basicInfo: BasicInfoType = { email: email, cpf: cpf };
             // localStorage.setItem("basic_info", JSON.stringify(basicInfo));
             logout();
