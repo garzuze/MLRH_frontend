@@ -8,14 +8,12 @@ import {
     createColumnHelper,
     flexRender,
 } from '@tanstack/react-table';
-import { ResumeType } from '../../types/ResumeType';
 import { SlimResumeType } from "../../types/SlimResumeType";
-import { useQuery } from '@tanstack/react-query';
 import { useSlimResume } from '../../hooks/useSlimResume';
 import { formatDate } from '../../utils/formatDate';
 export function ResumeTable() {
     const { data: resumes = [], error, isLoading } = useSlimResume();
-    const [globalFilter, setGlobalFilter] = useState("");
+
     const collumnHelper = createColumnHelper<SlimResumeType>();
     const collums = React.useMemo(
         () => [
@@ -33,6 +31,7 @@ export function ResumeTable() {
         data: resumes,
         columns: collums,
         getCoreRowModel: getCoreRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
     })
     if (isLoading) return <div>Carregando...</div>;
     if (error) return <div>Erro: {error.message}</div>
@@ -62,6 +61,23 @@ export function ResumeTable() {
                     ))}
                 </tbody>
             </table>
+            <div>
+                <p>
+                    Página {table.getState().pagination.pageIndex + 1} de {table.getPageCount()}
+                </p>
+                <button
+                    onClick={() => table.previousPage()}
+                    disabled={!table.getCanPreviousPage()}
+                >
+                    {"| <"}
+                </button>
+                {" | "}
+                <button
+                    onClick={() => table.nextPage()}
+                    disabled={!table.getCanNextPage()}>
+                    {" > |"}
+                </button>
+            </div>
         </div>
     );
 
