@@ -7,12 +7,16 @@ import {
     getFilteredRowModel,
     createColumnHelper,
     flexRender,
+    ColumnFiltersState,
 } from '@tanstack/react-table';
 import { SlimResumeType } from "../../types/SlimResumeType";
 import { useSlimResume } from '../../hooks/useSlimResume';
 import { formatDate } from '../../utils/formatDate';
+import { ResumeFilters } from './ResumeFilters';
+import { ColumnFilter } from './ColumnFilter';
 export function ResumeTable() {
     const { data: resumes = [], error, isLoading } = useSlimResume();
+    const [columnFilters, setColumnFilters] = useState<ColumnFilter[]>([]);
 
     const collumnHelper = createColumnHelper<SlimResumeType>();
     const collums = React.useMemo(
@@ -31,12 +35,19 @@ export function ResumeTable() {
         data: resumes,
         columns: collums,
         getCoreRowModel: getCoreRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
+        state: {
+            columnFilters
+        },
+
     })
     if (isLoading) return <div>Carregando...</div>;
     if (error) return <div>Erro: {error.message}</div>
+    console.log(columnFilters)
     return (
         <div>
+            <ResumeFilters columnFilters={columnFilters} setColumnFilters={setColumnFilters} />
             <table>
                 <thead>
                     {table.getHeaderGroups().map((headerGroup) => (
