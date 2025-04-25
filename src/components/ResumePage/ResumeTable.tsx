@@ -91,7 +91,7 @@ export function ResumeTable() {
 
                 </div>
             </div>
-            <div>
+            {/* <div>
                 <p>
                     Página {table.getState().pagination.pageIndex + 1} de {table.getPageCount()}
                 </p>
@@ -107,7 +107,24 @@ export function ResumeTable() {
                     disabled={!table.getCanNextPage()}>
                     {" > |"}
                 </button>
-            </div>
+            </div> */}
+            <nav className="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4" aria-label="Table navigation font-normal">
+                <small className="text-sm font-normal text-stone-500 mb-4 md:mb-0 block w-full md:inline md:w-auto">Página <small className="font-semibold text-stone-900">{table.getState().pagination.pageIndex + 1}</small> de <small className="font-semibold text-stone-900">{table.getPageCount()}</small></small>
+                <div className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
+                    <button className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-stone-500 bg-white border border-stone-300 rounded-s-lg hover:bg-stone-100 hover:text-stone-700"
+                        onClick={() => table.previousPage()}
+                        disabled={!table.getCanPreviousPage()}
+                    >Anterior</button>
+                    <button
+                        onClick={() => table.nextPage()}
+                        disabled={!table.getCanNextPage()}
+                        className="flex items-center justify-center px-3 h-8 leading-tight text-stone-500 bg-white border border-stone-300 rounded-e-lg hover:bg-stone-100 hover:text-stone-700"
+                    >
+                        Próxima
+                    </button>
+                </div>
+
+            </nav>
         </div>
     );
 
