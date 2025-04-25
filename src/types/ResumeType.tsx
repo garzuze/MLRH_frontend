@@ -46,4 +46,5 @@ export interface ResumeType {
     available1236?: boolean; //disponível1236
     availableAsSubstitute?: boolean; //disponívelComoSubstituto
     status: statusAbbreviation; //status
+    updatedAt: string
 }
