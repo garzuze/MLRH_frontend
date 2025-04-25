@@ -55,10 +55,7 @@ export default function Resume() {
             }
             setIsSnackbarOpen(true);
         } else if (action === "register" && email && password && validateCPF(cpf)) {
-            // const basicInfo: BasicInfoType = { email: email, cpf: cpf };
-            // localStorage.setItem("basic_info", JSON.stringify(basicInfo));
             logout();
-            // Tentamos logar um usuário, se não der certo, fazemos seu cadastro e enviamos um email de confirmação
             try {
                 const response = await login(email, password);
                 if (response?.status === 200) {
