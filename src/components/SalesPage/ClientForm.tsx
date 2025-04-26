@@ -33,7 +33,8 @@ export default function ClientForm() {
                     neighborhood: "",
                     tradeName: "",
                     economicActivity: 0,
-                    benefits: []
+                    benefits: [],
+                    description: ""
                 });
                 (document.getElementById('ClientForm') as HTMLFormElement).reset();
             }
@@ -127,6 +128,12 @@ export default function ClientForm() {
                     </select>
                 </div>
 
+                <textarea
+                    name="description"
+                    id="description"
+                    className="text-sm border-b border-stone-300 w-full mt-4 focus:outline-none focus:border-stone-700 placeholder:text-stone-400"
+                    placeholder="Breve descrição da empresa"
+                />
                 <select name="economicActivity" defaultValue={""} className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" required>
                     {economicActivitiesError ? <option defaultValue="" disabled>Houve algum error</option> :
                         <option value="" disabled>Atividade econômica</option>

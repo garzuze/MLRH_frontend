@@ -8,6 +8,7 @@ export interface ClientType{
     neighborhood: string;
     corporateName: string;
     tradeName: string;
+    description: string;
     numberOfEmployees?: number;
     stateRegistration?: string;
     economicActivity: number;
