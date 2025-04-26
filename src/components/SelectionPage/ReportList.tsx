@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { useProfiles } from "../../hooks/useProfiles";
 import { useReports } from "../../hooks/useReports";
@@ -7,8 +7,7 @@ import { ReportType } from "../../types/ReportType";
 import { useResume } from "../../hooks/useResume";
 import { useWorkExperiences } from "../../hooks/useWorkExperiences";
 import { useAuth } from "../../contexts/AuthContext";
-import { useMlrhUser } from "../../hooks/useMlrhUser";
-import { FiDownload, FiFileText } from "react-icons/fi";
+import { FiDownload } from "react-icons/fi";
 
 export default function ReportList() {
   const { reports, loadingReports, reportsError } = useReports();
