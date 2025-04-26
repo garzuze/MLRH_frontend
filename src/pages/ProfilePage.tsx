@@ -55,35 +55,41 @@ const ProfilePage: React.FC = () => {
                                     </div>
                                 )}
                             </div>
+                            {profileData.clientDescription ? <div className='my-4 text-zinc-700 border-b-2 pb-2 border-neutral-400'>
+                                <Title variant='h3' text='Sobre a empresa' mode='light'></Title>
+                                <p className='text-zinc-700 my-2'>
+                                    {profileData.clientDescription}
+                                </p>
+                            </div> : null}
                             <div className='my-4 text-zinc-700 border-b-2 pb-2 border-neutral-400'>
                                 <Title variant='h3' text='Responsabilidades' mode='light'></Title>
-                                <p className='text-zinc-700 my-2'>
+                                <div className='text-zinc-700 my-2'>
                                     <ul className='list-disc list-inside'>
                                         {profileData.jobResponsibilities.split("\r\n").map((responsability, key) => (
                                             <li key={key}>{responsability}</li>
                                         ))}
                                     </ul>
-                                </p>
+                                </div>
                             </div>
                             <div className='my-4 text-zinc-700 border-b-2 pb-2 border-neutral-400'>
                                 <Title variant='h3' text='Atribuições' mode='light'></Title>
-                                <p className='text-zinc-700 my-2'>
+                                <div className='text-zinc-700 my-2'>
                                     <ul className='list-disc list-inside'>
                                         {profileData.professionalExperience.split("\r\n").map((experience, key) => (
                                             <li key={key}>{experience}</li>
                                         ))}
                                     </ul>
-                                </p>
+                                </div>
                             </div>
                             <div className='my-4 text-zinc-700 border-b-2 pb-2 border-neutral-400'>
                                 <Title variant='h3' text='Benefícios' mode='light'></Title>
-                                <p className='text-zinc-700 my-2'>
+                                <div className='text-zinc-700 my-2'>
                                     <ul className='list-disc list-inside'>
                                         {profileData.benefits.map((benefit, key) => (
                                             <li key={key}>{benefit}</li>
                                         ))}
                                     </ul>
-                                </p>
+                                </div>
                             </div>
                             <p className='md:text-lg text-zinc-700 lg:text-xl'>Ficou interesado? Cadastre seu currículo.</p>
                             <Button text={'Cadastrar currículo'} variant='dark' onClick={() => navigate("/#curriculo")}>

@@ -33,6 +33,7 @@ export interface ProfileType {
     additionalNotes: string; // adicionalNotas
     restrictions: string; // restrições
     cancellationReason: string; // cancelamentoMotivo
+    clientDescription: string;
     createdAt: string;
     updateAt: string;
 }
