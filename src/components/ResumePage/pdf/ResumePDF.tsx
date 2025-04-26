@@ -83,11 +83,10 @@ const styles = StyleSheet.create({
 
 interface ResumePDFProps {
     resume: ResumeType;
-    user: mlrhUser;
     experiences: WorkExperienceType[];
 }
 
-const ResumeTemplate = ({ resume, user, experiences }: ResumePDFProps) => (
+const ResumePDF = ({ resume, experiences }: ResumePDFProps) => (
     <Document>
         <Page size="A4" style={styles.page}>
             <View style={styles.headerContainer}>
@@ -122,7 +121,7 @@ const ResumeTemplate = ({ resume, user, experiences }: ResumePDFProps) => (
                     <View style={styles.row}>
                         <Text>
                             <Text style={styles.bold}>Celular:</Text> {resume.phone}
-                            <Text style={styles.bold}>  E-mail:</Text> {user.email}
+                            <Text style={styles.bold}>  E-mail:</Text> {resume.userData.email}
                             {resume.linkedin ? <Text> -
                                 <Link src={resume.linkedin} style={styles.bold}>  LinkedIn  </Link>
                             </Text> : null}
@@ -218,4 +217,4 @@ const ResumeTemplate = ({ resume, user, experiences }: ResumePDFProps) => (
     </Document >
 );
 
-export default ResumeTemplate;
+export default ResumePDF;
