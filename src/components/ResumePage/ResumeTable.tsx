@@ -15,6 +15,7 @@ import { formatDate } from '../../utils/formatDate';
 import { ResumeSearchInput } from './ResumeSearchInput';
 import { ColumnFilter } from '../../types/ColumnFilter';
 import { FiSearch } from 'react-icons/fi';
+import { GetResumePDF } from './GetResumePDF';
 export function ResumeTable() {
     const { data: resumes = [], error, isLoading } = useSlimResume();
     const [columnFilters, setColumnFilters] = useState<ColumnFilter[]>([]);
@@ -29,6 +30,7 @@ export function ResumeTable() {
             collumnHelper.accessor('age', { header: "Idade", cell: (props) => <p>{props.getValue()}</p> }),
             collumnHelper.accessor('positionsStr', { header: "Cargo", cell: (props) => <p>{props.getValue().split("|")[0]}</p> }),
             collumnHelper.accessor('updatedAt', { header: "Atualizado em", cell: (props) => <p>{formatDate(props.getValue().slice(0, 10))}</p> }),
+            collumnHelper.accessor('id', {header: "Ação", cell: (props)=> <GetResumePDF resumeId={Number(props.getValue())} />}),
         ], [collumnHelper])
 
     const table = useReactTable({
