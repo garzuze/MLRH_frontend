@@ -77,7 +77,6 @@ function Report({ report }: ReportProps) {
           document={
             <ReportPDF
               report={report}
-              profile={profileData}
               resume={resumeData}
               experiences={experiences}
               user={user}

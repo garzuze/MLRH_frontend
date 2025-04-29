@@ -2,7 +2,6 @@ export interface ReportType {
     id: number;
     profile: number; //perfil
     resume: number; //currículo
-    userData: string[];
     strRepresentation: string; //strRepresentação
     testResult: string; //testeResultado
     personalFamilyContext: string; //pessoalFamíliaContexto

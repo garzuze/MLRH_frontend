@@ -83,14 +83,13 @@ export const styles = StyleSheet.create({
 
 interface ReportPDFProps {
     report: ReportType;
-    profile: ProfileType;
     resume: ResumeType;
     experiences: WorkExperienceType[];
     user: mlrhUser;
 }
 
 const currentDate = getDate();
-const ReportPDF = ({ report, profile, resume, experiences, user}: ReportPDFProps) => (
+const ReportPDF = ({ report, resume, experiences, user }: ReportPDFProps) => (
     <Document>
         <Page size="A4" style={styles.page}>
             <Image src={logo} style={styles.logo}></Image>
@@ -143,9 +142,9 @@ const ReportPDF = ({ report, profile, resume, experiences, user}: ReportPDFProps
                 <View style={styles.row}>
                     <Text>
                         <Text style={styles.bold}>Celular:</Text> {resume.phone}
-                        <Text style={styles.bold}>  E-mail:</Text> {report.userData[0]}
+                        <Text style={styles.bold}>  E-mail:</Text> {resume.userData["email"]}
                         <Text style={styles.bold}> CNH:</Text> {resume.cnh ? resume.cnh : "Não tem"}
-                        <Text style={styles.bold}>  CPF:</Text> {report.userData[1]}
+                        <Text style={styles.bold}>  CPF:</Text> {resume.userData["cpf"]}
                     </Text>
                 </View>
             </View>
@@ -171,7 +170,7 @@ const ReportPDF = ({ report, profile, resume, experiences, user}: ReportPDFProps
             <Image src={logo} style={styles.logo}></Image>
             <Text style={styles.header}>Parecer da Entrevista</Text>
             {/* Resumo profissional */}
-            <View style={styles.section}>
+            {experiences.length > 0 ? <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Resumo Profissional</Text>
                 {experiences.map((experience, key) => (
                     <View key={key}>
@@ -219,7 +218,8 @@ const ReportPDF = ({ report, profile, resume, experiences, user}: ReportPDFProps
                     </View>
                 ))}
 
-            </View>
+            </View> : null}
+
             {/* Pretensão Salarial */}
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>
@@ -251,13 +251,13 @@ const ReportPDF = ({ report, profile, resume, experiences, user}: ReportPDFProps
             }
             {report.finalConsiderations && (
                 <View style={styles.section}>
-                <Text style={styles.sectionTitle}>
-                    Considerações Finais
-                </Text>
-                <View style={styles.row}>
-                    <Text>{report.finalConsiderations}</Text>
+                    <Text style={styles.sectionTitle}>
+                        Considerações Finais
+                    </Text>
+                    <View style={styles.row}>
+                        <Text>{report.finalConsiderations}</Text>
+                    </View>
                 </View>
-            </View>
             )}
             <Text style={styles.author}>Elaborado por: <Text style={styles.bold}>{user.firstName} {user.lastName}</Text></Text>
             <Text style={styles.footer}>As informações constantes neste documento são confidenciais, sendo proibida a divulgação das mesmas, sob pena da Lei.</Text>
