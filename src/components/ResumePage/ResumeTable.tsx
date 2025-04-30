@@ -1,34 +1,45 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
     useReactTable,
     getCoreRowModel,
     getPaginationRowModel,
-    getSortedRowModel,
     getFilteredRowModel,
     createColumnHelper,
     flexRender,
-    ColumnFiltersState,
     getExpandedRowModel,
+    ExpandedState,
 } from '@tanstack/react-table';
 import { SlimResumeType } from "../../types/SlimResumeType";
 import { useSlimResume } from '../../hooks/useSlimResume';
 import { formatDate } from '../../utils/formatDate';
 import { ResumeSearchInput } from './ResumeSearchInput';
 import { ColumnFilter } from '../../types/ColumnFilter';
-import { FiSearch } from 'react-icons/fi';
+import { FiChevronDown, FiChevronRight, FiSearch } from 'react-icons/fi';
 import { GetResumePDF } from './GetResumePDF';
-import PositionSelector from '../form/PositionAutocompleteInput';
-import { positionType } from '../../types/positionType';
 export function ResumeTable() {
     const { data: resumes = [], error, isLoading } = useSlimResume();
     const [columnFilters, setColumnFilters] = useState<ColumnFilter[]>([]);
     const collumnHelper = createColumnHelper<SlimResumeType>();
+    const [expanded, setExpanded] = useState<ExpandedState>({});
     // const [selectedPositions, setSelectedPositions] = useState<positionType[]>([]);
     const collums = React.useMemo(
         () => [
+            collumnHelper.display({
+                id: 'expander',
+                header: '',  // no header label
+                cell: ({ row }) =>
+                    row.getCanExpand() ? (
+                        <button
+                            onClick={row.getToggleExpandedHandler()}
+                            className='cursor-pointer mx-auto w-full'
+                        >
+                            {row.getIsExpanded() ? <FiChevronDown size={24}/>: <FiChevronRight size={24} />}
+                        </button>
+                    ) : null,
+            }),
             collumnHelper.accessor('name', { header: "Nome", cell: (props) => <p className='px-2 py-2 font-medium text-stone-900 whitespace-nowrap'>{props.getValue()}</p> }),
             collumnHelper.accessor('phone', { header: "Celular", cell: (props) => <p>{props.getValue()}</p> }),
-            collumnHelper.accessor('expectedSalary', { header: "Salário", cell: (props) => <p>R$ {props.getValue()}</p> }),
+            collumnHelper.accessor('expectedSalary', { header: "Salário", cell: (props) => <p className='text-right'>R$ {props.getValue()}</p> }),
             collumnHelper.accessor('neighborhood', { header: "Bairro", cell: (props) => <p>{props.getValue()}</p> }),
             collumnHelper.accessor('city', { header: "Cidade", cell: (props) => <p>{props.getValue()}</p> }),
             collumnHelper.accessor('age', { header: "Idade", cell: (props) => <p>{props.getValue()}</p> }),
@@ -42,12 +53,13 @@ export function ResumeTable() {
         columns: collums,
         getCoreRowModel: getCoreRowModel(),
         getExpandedRowModel: getExpandedRowModel(),
-        getRowCanExpand: (row) => true,
+        getRowCanExpand: row => row.original.workExperiences.length > 0,
         getFilteredRowModel: getFilteredRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
         state: {
-            columnFilters
+            columnFilters, expanded
         },
+        onExpandedChange: setExpanded,
     })
     if (error) return <div>Erro: {error.message}</div>
     return (
@@ -65,7 +77,7 @@ export function ResumeTable() {
                     </div>
                     {/* <PositionSelector selectedPositions={selectedPositions} setSelectedPositions={setSelectedPositions} /> */}
                 </div>
-                <div className='rounded shadow-md relative x-auto'>
+                <div className='rounded shadow-md x-auto'>
                     <table className='w-full text-sm text-left text-stone-500'>
                         <thead className='text-xs text-stone-700 uppercase bg-stone-50 rounded'>
                             {table.getHeaderGroups().map((headerGroup) => (
@@ -90,6 +102,56 @@ export function ResumeTable() {
                                             )
                                         })}
                                     </tr>
+                                    {row.getIsExpanded() && (
+                                        <tr>
+                                            <td colSpan={collums.length} className='pl-10 bg-stone-50'>
+                                                <table className='p-4 w-full'>
+                                                    <thead className='text-xs text-stone-700 uppercase bg-stone-50 rounded'>
+                                                        <tr>
+                                                            <th scope='col' className='px-6 py-3 text-center'>
+                                                                Empresa
+                                                            </th>
+                                                            <th scope='col' className='px-6 py-3 text-center'>
+                                                                Cargo
+                                                            </th>
+                                                            <th scope='col' className='px-6 py-3 text-center'>
+                                                                Salário
+                                                            </th>
+                                                            <th scope='col' className='px-6 py-3 text-center'>
+                                                                Período
+                                                            </th>
+                                                            <th scope='col' className='px-6 py-3 text-center'>
+                                                                Motivo de saída
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {row.original.workExperiences.map((experience, idx) => (
+                                                        <tr key={idx} className='bg-white border-b border-stone-200 hover:bg-stone-50'>
+                                                            <td className='px-2 py-2 font-bold'>
+                                                                {experience.companyName}
+                                                            </td>
+                                                            <td className='px-2 py-2 text-center'>
+                                                                {experience.positionTitle}
+                                                            </td>
+                                                            <td className='px-2 py-2 text-right'>
+                                                            {experience.salary ? `R$ ${experience.salary}` : null}
+                                                            </td>
+                                                            <td className='px-2 py-2 text-center'>
+                                                                {formatDate(experience.startDate)}–
+                                                                {experience.endDate ? formatDate(experience.endDate) : 'Atual'}
+                                                            </td>
+                                                            <td className='px-2 py-2 text-center'>
+                                                                {experience.reasonForLeaving}
+                                                            </td>
+                                                        </tr>
+                                                    ))}
+
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    )}
                                 </React.Fragment>
                             ))}
                         </tbody>
@@ -97,23 +159,6 @@ export function ResumeTable() {
 
                 </div>
             </div>
-            {/* <div>
-                <p>
-                    Página {table.getState().pagination.pageIndex + 1} de {table.getPageCount()}
-                </p>
-                <button
-                    onClick={() => table.previousPage()}
-                    disabled={!table.getCanPreviousPage()}
-                >
-                    {"| <"}
-                </button>
-                {" | "}
-                <button
-                    onClick={() => table.nextPage()}
-                    disabled={!table.getCanNextPage()}>
-                    {" > |"}
-                </button>
-            </div> */}
             <nav className="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4" aria-label="Table navigation font-normal">
                 <small className="text-sm font-normal text-stone-500 mb-4 md:mb-0 block w-full md:inline md:w-auto">Página <small className="font-semibold text-stone-900">{table.getState().pagination.pageIndex + 1}</small> de <small className="font-semibold text-stone-900">{table.getPageCount()}</small></small>
                 <div className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">

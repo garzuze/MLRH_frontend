@@ -14,5 +14,5 @@ export interface SlimResumeType extends Pick<
     | 'updatedAt'
     | 'desiredPositions'
 > {
-    workExperiences?: WorkExperienceType[];
+    workExperiences: WorkExperienceType[];
 }
