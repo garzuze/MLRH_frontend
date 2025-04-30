@@ -1,3 +1,18 @@
 import { ResumeType } from "./ResumeType";
+import { WorkExperienceType } from "./WorkExperienceType";
 
-export type SlimResumeType = Pick<ResumeType, 'id' | 'name' | 'phone' | 'expectedSalary' | 'neighborhood' | 'city' | 'age' | 'positionsStr' | 'updatedAt'>;
+export interface SlimResumeType extends Pick<
+    ResumeType,
+    | 'id'
+    | 'name'
+    | 'phone'
+    | 'expectedSalary'
+    | 'neighborhood'
+    | 'city'
+    | 'age'
+    | 'positionsStr'
+    | 'updatedAt'
+    | 'desiredPositions'
+> {
+    workExperiences?: WorkExperienceType[];
+}
