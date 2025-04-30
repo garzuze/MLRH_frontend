@@ -8,6 +8,7 @@ import {
     createColumnHelper,
     flexRender,
     ColumnFiltersState,
+    getExpandedRowModel,
 } from '@tanstack/react-table';
 import { SlimResumeType } from "../../types/SlimResumeType";
 import { useSlimResume } from '../../hooks/useSlimResume';
@@ -16,13 +17,16 @@ import { ResumeSearchInput } from './ResumeSearchInput';
 import { ColumnFilter } from '../../types/ColumnFilter';
 import { FiSearch } from 'react-icons/fi';
 import { GetResumePDF } from './GetResumePDF';
+import PositionSelector from '../form/PositionAutocompleteInput';
+import { positionType } from '../../types/positionType';
 export function ResumeTable() {
     const { data: resumes = [], error, isLoading } = useSlimResume();
     const [columnFilters, setColumnFilters] = useState<ColumnFilter[]>([]);
     const collumnHelper = createColumnHelper<SlimResumeType>();
+    // const [selectedPositions, setSelectedPositions] = useState<positionType[]>([]);
     const collums = React.useMemo(
         () => [
-            collumnHelper.accessor('name', { header: "Nome", cell: (props) => <p>{props.getValue()}</p> }),
+            collumnHelper.accessor('name', { header: "Nome", cell: (props) => <p className='px-2 py-2 font-medium text-stone-900 whitespace-nowrap'>{props.getValue()}</p> }),
             collumnHelper.accessor('phone', { header: "Celular", cell: (props) => <p>{props.getValue()}</p> }),
             collumnHelper.accessor('expectedSalary', { header: "Salário", cell: (props) => <p>R$ {props.getValue()}</p> }),
             collumnHelper.accessor('neighborhood', { header: "Bairro", cell: (props) => <p>{props.getValue()}</p> }),
@@ -30,13 +34,15 @@ export function ResumeTable() {
             collumnHelper.accessor('age', { header: "Idade", cell: (props) => <p>{props.getValue()}</p> }),
             collumnHelper.accessor('positionsStr', { header: "Cargo", cell: (props) => <p>{props.getValue().split("|")[0]}</p> }),
             collumnHelper.accessor('updatedAt', { header: "Atualizado em", cell: (props) => <p>{formatDate(props.getValue().slice(0, 10))}</p> }),
-            collumnHelper.accessor('id', {header: "Ação", cell: (props)=> <GetResumePDF resumeId={Number(props.getValue())} />}),
+            collumnHelper.accessor('id', { header: "Ação", cell: (props) => <GetResumePDF resumeId={Number(props.getValue())} /> }),
         ], [collumnHelper])
 
     const table = useReactTable({
         data: resumes,
         columns: collums,
         getCoreRowModel: getCoreRowModel(),
+        getExpandedRowModel: getExpandedRowModel(),
+        getRowCanExpand: (row) => true,
         getFilteredRowModel: getFilteredRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
         state: {
@@ -48,14 +54,16 @@ export function ResumeTable() {
         <div className='space-y-4 px-4 bg-white'>
             {/* <ResumeFilters columnFilters={columnFilters} setColumnFilters={setColumnFilters} /> */}
             <div className=''>
-                <div className="pb-4 bg-white">
-                    <label htmlFor="table-search" className="sr-only">Search</label>
+                <div className="pb-4 bg-white grid grid-cols-3 gap-4">
                     <div className="relative mt-1">
                         <div className="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
                             <FiSearch />
                         </div>
-                        <ResumeSearchInput columnFilters={columnFilters} setColumnFilters={setColumnFilters} />
+                        <div>
+                            <ResumeSearchInput columnFilters={columnFilters} setColumnFilters={setColumnFilters} />
+                        </div>
                     </div>
+                    {/* <PositionSelector selectedPositions={selectedPositions} setSelectedPositions={setSelectedPositions} /> */}
                 </div>
                 <div className='rounded shadow-md relative x-auto'>
                     <table className='w-full text-sm text-left text-stone-500'>
@@ -72,21 +80,17 @@ export function ResumeTable() {
                         </thead>
                         <tbody>
                             {table.getRowModel().rows.map((row) => (
-                                <tr key={row.id} className='bg-white border-b border-stone-200 hover:bg-stone-50'>
-                                    {row.getVisibleCells().length > 0 ? (
-                                        row.getVisibleCells().map((cell) => {
+                                <React.Fragment key={row.id}>
+                                    <tr key={row.id} className='bg-white border-b border-stone-200 hover:bg-stone-50'>
+                                        {row.getVisibleCells().map((cell) => {
                                             return (
-                                                <td {...{
-                                                    key: cell.id,
-                                                    className: cell.id.endsWith('name') ? 'px-2 py-2 font-medium text-stone-900 whitespace-nowrap' : 'px-2 py-2',
-
-                                                }}>
+                                                <td key={cell.id} className='px-2 py-2'>
                                                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                                 </td>
                                             )
-                                        })) : "Não há registros"
-                                    }
-                                </tr>
+                                        })}
+                                    </tr>
+                                </React.Fragment>
                             ))}
                         </tbody>
                     </table>

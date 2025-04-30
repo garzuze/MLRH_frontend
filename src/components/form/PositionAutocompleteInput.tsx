@@ -1,4 +1,3 @@
-import { useState } from "react";
 import AutocompleteInput from "./AutocompleteInput";
 import { positionType } from "../../types/positionType";
 import { useAxiosClient } from "../../hooks/useAxiosClient";
