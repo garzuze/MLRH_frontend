@@ -4,13 +4,13 @@ import { useAccountsReceivableTitle } from "../../hooks/useAccountsReceivableTit
 
 export default function StatCards() {
 
-    const { data: profiles } = useProfiles();
-    const { data: receivableTitles } = useAccountsReceivableTitle();
+    const { data: profiles, isLoading: isProfileLoading } = useProfiles();
+    const { data: receivableTitles, isLoading: isLoadingReceivableTitles} = useAccountsReceivableTitle();
     const invoiced = receivableTitles?.reduce((acc, title) => acc + Number(title.amount), 0);
 
     return <>
-        <Card title="Total faturado" value={`R$ ${String(invoiced)}`} pillText="5.27%" trend="up" period="Total" />
-        <Card title="Vagas fechadas" value={String(profiles?.filter((p) => p.status == "F").length)} pillText="17,7%" trend="up" period="De 1º de Jan até 18 de Fev" />
+        <Card title="Total faturado" value={isLoadingReceivableTitles? "Carregando..." : `R$ ${String(invoiced)}`} pillText="5.27%" trend="up" period="Total" />
+        <Card title="Vagas fechadas" value={isProfileLoading ? "Carregando..." : String(profiles?.filter((p) => p.status == "F").length)} pillText="17,7%" trend="up" period="De 1º de Jan até 18 de Fev" />
         <Card title="Clientes novos" value="7" pillText="5%" trend="down" period="Total" />
     </>
 }
