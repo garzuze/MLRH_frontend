@@ -12,14 +12,12 @@ import {
 import { SlimResumeType } from "../../types/SlimResumeType";
 import { useSlimResume } from '../../hooks/useSlimResume';
 import { formatDate } from '../../utils/formatDate';
-import { ResumeSearchInput } from './ResumeSearchInput';
-import { ColumnFilter } from '../../types/ColumnFilter';
 import { FiChevronDown, FiChevronRight, FiSearch } from 'react-icons/fi';
 import { GetResumePDF } from './GetResumePDF';
 export function ResumeTable() {
     const { data: resumes = [], error, isLoading } = useSlimResume();
-    const [columnFilters, setColumnFilters] = useState<ColumnFilter[]>([]);
     const collumnHelper = createColumnHelper<SlimResumeType>();
+    const [globalFilter, setGlobalFilter] = useState<any>([])
     const [expanded, setExpanded] = useState<ExpandedState>({});
     // const [selectedPositions, setSelectedPositions] = useState<positionType[]>([]);
     const collums = React.useMemo(
@@ -33,7 +31,7 @@ export function ResumeTable() {
                             onClick={row.getToggleExpandedHandler()}
                             className='cursor-pointer mx-auto w-full'
                         >
-                            {row.getIsExpanded() ? <FiChevronDown size={24}/>: <FiChevronRight size={24} />}
+                            {row.getIsExpanded() ? <FiChevronDown size={24} /> : <FiChevronRight size={24} />}
                         </button>
                     ) : null,
             }),
@@ -46,6 +44,7 @@ export function ResumeTable() {
             collumnHelper.accessor('positionsStr', { header: "Cargo", cell: (props) => <p>{props.getValue().split("|")[0]}</p> }),
             collumnHelper.accessor('updatedAt', { header: "Atualizado em", cell: (props) => <p>{formatDate(props.getValue().slice(0, 10))}</p> }),
             collumnHelper.accessor('id', { header: "Ação", cell: (props) => <GetResumePDF resumeId={Number(props.getValue())} /> }),
+            // collumnHelper.accessor((row) => row.workExperiences.map((e) => e.companyName).join(" "),{header: "empresas"}),
         ], [collumnHelper])
 
     const table = useReactTable({
@@ -57,9 +56,11 @@ export function ResumeTable() {
         getFilteredRowModel: getFilteredRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
         state: {
-            columnFilters, expanded
+            globalFilter, expanded
         },
         onExpandedChange: setExpanded,
+        globalFilterFn: 'includesString',
+        onGlobalFilterChange: setGlobalFilter,
     })
     if (error) return <div>Erro: {error.message}</div>
     return (
@@ -72,7 +73,14 @@ export function ResumeTable() {
                             <FiSearch />
                         </div>
                         <div>
-                            <ResumeSearchInput columnFilters={columnFilters} setColumnFilters={setColumnFilters} />
+                            <fieldset>
+                                <input
+                                    type="text"
+                                    placeholder="Pesquisar globalmente..."
+                                    onChange={e => table.setGlobalFilter(String(e.target.value))}
+                                    className="block py-2 ps-10 text-sm text-stone-900 border border-stone-300 rounded-lg w-80 bg-stone-50 focus:ring-purple-500 focus:border-purple-500"
+                                ></input>
+                            </fieldset>
                         </div>
                     </div>
                     {/* <PositionSelector selectedPositions={selectedPositions} setSelectedPositions={setSelectedPositions} /> */}
@@ -126,26 +134,26 @@ export function ResumeTable() {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                    {row.original.workExperiences.map((experience, idx) => (
-                                                        <tr key={idx} className='bg-white border-b border-stone-200 hover:bg-stone-50'>
-                                                            <td className='px-2 py-2 font-bold'>
-                                                                {experience.companyName}
-                                                            </td>
-                                                            <td className='px-2 py-2 text-center'>
-                                                                {experience.positionTitle}
-                                                            </td>
-                                                            <td className='px-2 py-2 text-right'>
-                                                            {experience.salary ? `R$ ${experience.salary}` : null}
-                                                            </td>
-                                                            <td className='px-2 py-2 text-center'>
-                                                                {formatDate(experience.startDate)}–
-                                                                {experience.endDate ? formatDate(experience.endDate) : 'Atual'}
-                                                            </td>
-                                                            <td className='px-2 py-2 text-center'>
-                                                                {experience.reasonForLeaving}
-                                                            </td>
-                                                        </tr>
-                                                    ))}
+                                                        {row.original.workExperiences.map((experience, idx) => (
+                                                            <tr key={idx} className='bg-white border-b border-stone-200 hover:bg-stone-50'>
+                                                                <td className='px-2 py-2 font-bold'>
+                                                                    {experience.companyName}
+                                                                </td>
+                                                                <td className='px-2 py-2 text-center'>
+                                                                    {experience.positionTitle}
+                                                                </td>
+                                                                <td className='px-2 py-2 text-right'>
+                                                                    {experience.salary ? `R$ ${experience.salary}` : null}
+                                                                </td>
+                                                                <td className='px-2 py-2 text-center'>
+                                                                    {formatDate(experience.startDate)}–
+                                                                    {experience.endDate ? formatDate(experience.endDate) : 'Atual'}
+                                                                </td>
+                                                                <td className='px-2 py-2 text-center'>
+                                                                    {experience.reasonForLeaving}
+                                                                </td>
+                                                            </tr>
+                                                        ))}
 
                                                     </tbody>
                                                 </table>
