@@ -27,7 +27,6 @@ export default function ResumePage() {
                                     document={
                                         <ResumePDF
                                             resume={resumeData}
-                                            user={user}
                                             experiences={experieces}
                                         />
                                     }
