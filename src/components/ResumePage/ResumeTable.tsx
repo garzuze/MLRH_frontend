@@ -14,6 +14,7 @@ import { useSlimResume } from '../../hooks/useSlimResume';
 import { formatDate } from '../../utils/formatDate';
 import { FiChevronDown, FiChevronRight, FiSearch } from 'react-icons/fi';
 import { GetResumePDF } from './GetResumePDF';
+import globalFilterFn from './globalFilterFn';
 export function ResumeTable() {
     const { data: resumes = [], error, isLoading } = useSlimResume();
     const collumnHelper = createColumnHelper<SlimResumeType>();
@@ -59,7 +60,7 @@ export function ResumeTable() {
             globalFilter, expanded
         },
         onExpandedChange: setExpanded,
-        globalFilterFn: 'includesString',
+        globalFilterFn: globalFilterFn,
         onGlobalFilterChange: setGlobalFilter,
     })
     if (error) return <div>Erro: {error.message}</div>
