@@ -17,13 +17,14 @@ import { GetResumePDF } from './GetResumePDF';
 import globalFilterFn from './globalFilterFn';
 export function ResumeTable() {
     const { data: resumes = [], error, isLoading } = useSlimResume();
-    const collumnHelper = createColumnHelper<SlimResumeType>();
+    const columnHelper = createColumnHelper<SlimResumeType>();
     const [globalFilter, setGlobalFilter] = useState<any>([])
     const [expanded, setExpanded] = useState<ExpandedState>({});
+    
     // const [selectedPositions, setSelectedPositions] = useState<positionType[]>([]);
-    const collums = React.useMemo(
+    const columns = React.useMemo(
         () => [
-            collumnHelper.display({
+            columnHelper.display({
                 id: 'expander',
                 header: '',  // no header label
                 cell: ({ row }) =>
@@ -36,21 +37,21 @@ export function ResumeTable() {
                         </button>
                     ) : null,
             }),
-            collumnHelper.accessor('name', { header: "Nome", cell: (props) => <p className='px-2 py-2 font-medium text-stone-900 whitespace-nowrap'>{props.getValue()}</p> }),
-            collumnHelper.accessor('phone', { header: "Celular", cell: (props) => <p>{props.getValue()}</p> }),
-            collumnHelper.accessor('expectedSalary', { header: "Salário", cell: (props) => <p className='text-right'>R$ {props.getValue()}</p> }),
-            collumnHelper.accessor('neighborhood', { header: "Bairro", cell: (props) => <p>{props.getValue()}</p> }),
-            collumnHelper.accessor('city', { header: "Cidade", cell: (props) => <p>{props.getValue()}</p> }),
-            collumnHelper.accessor('age', { header: "Idade", cell: (props) => <p>{props.getValue()}</p> }),
-            collumnHelper.accessor('positionsStr', { header: "Cargo", cell: (props) => <p>{props.getValue().split("|")[0]}</p> }),
-            collumnHelper.accessor('updatedAt', { header: "Atualizado em", cell: (props) => <p>{formatDate(props.getValue().slice(0, 10))}</p> }),
-            collumnHelper.accessor('id', { header: "Ação", cell: (props) => <GetResumePDF resumeId={Number(props.getValue())} /> }),
-            // collumnHelper.accessor((row) => row.workExperiences.map((e) => e.companyName).join(" "),{header: "empresas"}),
-        ], [collumnHelper])
+            columnHelper.accessor('name', { header: "Nome", cell: (props) => <p className='px-2 py-2 font-medium text-stone-900 whitespace-nowrap'>{props.getValue()}</p> }),
+            columnHelper.accessor('phone', { header: "Celular", cell: (props) => <p>{props.getValue()}</p> }),
+            columnHelper.accessor('expectedSalary', { header: "Salário", cell: (props) => <p className='text-right'>R$ {props.getValue()}</p> }),
+            columnHelper.accessor('neighborhood', { header: "Bairro", cell: (props) => <p>{props.getValue()}</p> }),
+            columnHelper.accessor('city', { header: "Cidade", cell: (props) => <p>{props.getValue()}</p> }),
+            columnHelper.accessor('age', { header: "Idade", cell: (props) => <p>{props.getValue()}</p> }),
+            columnHelper.accessor('positionsStr', { header: "Cargo", cell: (props) => <p>{props.getValue().split("|")[0]}</p> }),
+            columnHelper.accessor('updatedAt', { header: "Atualizado em", cell: (props) => <p>{formatDate(props.getValue().slice(0, 10))}</p> }),
+            columnHelper.accessor('id', { header: "Ação", cell: (props) => <GetResumePDF resumeId={Number(props.getValue())} />}),
+            // columnHelper.accessor((row) => row.workExperiences.map((e) => e.companyName).join(" "),{header: "empresas"}),
+        ], [columnHelper])
 
     const table = useReactTable({
         data: resumes,
-        columns: collums,
+        columns: columns,
         getCoreRowModel: getCoreRowModel(),
         getExpandedRowModel: getExpandedRowModel(),
         getRowCanExpand: row => row.original.workExperiences.length > 0,
@@ -65,7 +66,7 @@ export function ResumeTable() {
     })
     if (error) return <div>Erro: {error.message}</div>
     return (
-        <div className='space-y-4 px-4 bg-white'>
+        <div className='space-y-4 px-4 bg-white w-full overflow-x-auto'>
             {/* <ResumeFilters columnFilters={columnFilters} setColumnFilters={setColumnFilters} /> */}
             <div className=''>
                 <div className="pb-4 bg-white grid grid-cols-3 gap-4">
@@ -86,7 +87,7 @@ export function ResumeTable() {
                     </div>
                     {/* <PositionSelector selectedPositions={selectedPositions} setSelectedPositions={setSelectedPositions} /> */}
                 </div>
-                <div className='rounded shadow-md x-auto'>
+                <div className='rounded shadow-md mx-auto'>
                     <table className='w-full text-sm text-left text-stone-500'>
                         <thead className='text-xs text-stone-700 uppercase bg-stone-50 rounded'>
                             {table.getHeaderGroups().map((headerGroup) => (
@@ -113,7 +114,7 @@ export function ResumeTable() {
                                     </tr>
                                     {row.getIsExpanded() && (
                                         <tr>
-                                            <td colSpan={collums.length} className='pl-10 bg-stone-50'>
+                                            <td colSpan={columns.length} className='pl-10 bg-stone-50'>
                                                 <table className='p-4 w-full'>
                                                     <thead className='text-xs text-stone-700 uppercase bg-stone-50 rounded'>
                                                         <tr>

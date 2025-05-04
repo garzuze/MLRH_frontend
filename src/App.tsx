@@ -9,9 +9,8 @@ import ResumePage from "./pages/ResumePage"
 import VerifyEmailPage from "./pages/VerifyEmailPage";
 import SelectionPage from "./pages/SelectionPage";
 import ProfilePage from "./pages/ProfilePage";
-import ResumePDFView from "./components/ResumePage/ResumePDFView";
-import { ResumeTable } from "./components/ResumePage/ResumeTable";
 import ResumeListPage from "./pages/ResumeListPage";
+import FinancePage from "./pages/FinancePage";
 
 function App() {
   return (
@@ -28,6 +27,7 @@ function App() {
             <Route path="dashboard" element={<DashboardPanel />}></Route>
             <Route path="vendas" element={<SalesPage />}></Route>
             <Route path="selecao" element={<SelectionPage />}></Route>
+            <Route path="financeiro" element={<FinancePage />}></Route>
             <Route path="curriculos" element={<ResumeListPage/>} />
           </Route>
         </Route>

@@ -10,7 +10,7 @@ export default function RouteSelect() {
         { icon: FiBriefcase, title: "Vendas", destination: "vendas/" },
         { icon: FiUsers, title: "Seleção", destination: "selecao/" },
         { icon: FiDollarSign, title: "Financeiro", destination: "financeiro/" },
-        { icon: FiFileText, title: "Currículos", destination: "curriculos" }
+        { icon: FiFileText, title: "Currículos", destination: "curriculos/" }
     ]
 
     return (
