@@ -1,11 +1,11 @@
 import { FiTrendingDown, FiTrendingUp } from "react-icons/fi"
 import { useProfiles } from "../../hooks/useProfiles"
-import { useAccountsReceivableTitle } from "../../hooks/useAccountsReceivableTitle";
+import { useReceivableTitle } from "../../hooks/useReceivableTitle";
 
 export default function StatCards() {
 
     const { data: profiles, isLoading: isProfileLoading } = useProfiles();
-    const { data: receivableTitles, isLoading: isLoadingReceivableTitles} = useAccountsReceivableTitle();
+    const { data: receivableTitles, isLoading: isLoadingReceivableTitles} = useReceivableTitle();
     const invoiced = receivableTitles?.reduce((acc, title) => acc + Number(title.amount), 0);
 
     return <>
