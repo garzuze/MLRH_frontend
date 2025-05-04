@@ -1,15 +1,13 @@
 import { AxiosResponse } from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ClientSelector from "../form/ClientAutocompletInput";
 import { ClientType } from "../../types/ClientType";
 import { useQueryClient } from "@tanstack/react-query";
 import { useAxiosClient } from "../../hooks/useAxiosClient";
-import { maritalStatus, educationLevels, contractTypes, profileStatus } from "../../utils/constants";
 import Button from "../ui/Button";
 import Snackbar from "../ui/Snackbar";
 import { useProfiles } from "../../hooks/useProfiles";
 import { useClientMlrh } from "../../hooks/useClientMlrh";
-import { ProfileType } from "../../types/ProfileType";
 
 const ReceivableTitleForm = () => {
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
@@ -29,7 +27,7 @@ const ReceivableTitleForm = () => {
     try {
       const response: AxiosResponse = await axiosClient.post("/finance/receivable_title/", formData);
       if (response.status === 201) {
-        setSnackbarMessage("Perfil criado com sucesso!")
+        setSnackbarMessage("Título criado com sucesso!")
         queryClient.invalidateQueries({ queryKey: ['receivable_titles'] });
         (document.getElementById('ReceivableTitleForm') as HTMLFormElement).reset();
       }
@@ -86,7 +84,7 @@ const ReceivableTitleForm = () => {
           Data de vencimento
         </label>
         <br />
-        <input type="date" name="dueDate" className="text-sm text-stone-400" placeholder="Previsão de Entrega" />
+        <input type="date" name="dueDate" className="text-sm text-stone-400" placeholder="Data de vencimento" />
         <br />
 
         <label className="text-sm text-stone-400">
@@ -95,7 +93,7 @@ const ReceivableTitleForm = () => {
         <br />
         <input type="date" name="paymentDate" className="text-sm text-stone-400" placeholder="Data de pagamento" />
 
-        <Button text={"Cadastrar Perfil"} variant="dark" className="w-full mx-0 p-2 text-sm mt-4"></Button>
+        <Button text={"Cadastrar Título"} variant="dark" className="w-full mx-0 p-2 text-sm mt-4"></Button>
 
       </form>
       <Snackbar
