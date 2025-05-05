@@ -37,13 +37,17 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
         getPositionData();
     }, [resume])
 
-    async function createOrUpdateResume(formData: FormData) {
+    async function saveResume(formData: FormData) {
+        const isUpdate = Boolean(resume?.id);
+        const url = isUpdate ? `/hr/resume/${resume?.id}/` : '/hr/resume/';
+        const method: 'patch' | 'post' = isUpdate ? 'patch' : 'post';
         try {
-            const response: AxiosResponse = await axiosClient.post("/hr/resume/", formData);
-            if (response.status === 200 || response.status === 201) {
-                setSnackbarMessage("Currículo atualizado com sucesso!")
-                localStorage.removeItem("basic_info");
-                queryClient.invalidateQueries({ queryKey: ["resume"] })
+            const response = await axiosClient[method](url, formData);
+            if ([200, 201].includes(response.status)) {
+                setSnackbarMessage(isUpdate
+                    ? 'Currículo atualizado com sucesso!'
+                    : 'Currículo criado com sucesso!');
+                queryClient.invalidateQueries({ queryKey: ['resume'] });
             }
         } catch (error) {
             setSnackbarMessage("Ops... Alguma coisa deu errado.")
@@ -58,7 +62,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
             formData.append("desired_positions", position.id.toString());
         });
 
-        createOrUpdateResume(formData);
+        saveResume(formData);
     }
 
     return (
@@ -90,7 +94,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             type="text"
                             name="cpf"
                             id="cpf"
-                            defaultValue={user?.cpf}
+                            defaultValue={user?.isSuperuser ? resume?.userData.cpf : user?.cpf}
                             required
                             readOnly
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg
@@ -183,7 +187,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                             type="email"
                             name="email"
                             id="email"
-                            defaultValue={user?.email}
+                            defaultValue={user?.isSuperuser ? resume?.userData.email : user?.email}
                             disabled
                             readOnly
                             required
