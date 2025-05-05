@@ -143,8 +143,8 @@ export function ResumeTable() {
                                                     <tbody>
                                                         {row.original.workExperiences.map((experience, idx) => (
                                                             <tr key={idx} className='bg-white border-b border-stone-200 hover:bg-stone-50'>
-                                                                <td className='px-2 py-2 font-bold'>
-                                                                    {experience.companyName}
+                                                                <td className='px-2 py-2 font-bold hover:underline'>
+                                                                <a href={`https://www.google.com/search?q=${encodeURIComponent(experience.companyName)}`} target="_blank" rel="noopener noreferrer">{experience.companyName}</a>
                                                                 </td>
                                                                 <td className='px-2 py-2 text-center'>
                                                                     {experience.positionTitle}
