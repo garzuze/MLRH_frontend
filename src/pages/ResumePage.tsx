@@ -7,13 +7,15 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import ResumePDF from "../components/ResumePage/pdf/ResumePDF";
 import Title from "../components/ui/Title";
 import Button from "../components/ui/Button";
+import { useParams } from "react-router-dom";
 
 export default function ResumePage() {
-    const { data: resume } = useResume();
+    const { id } = useParams<{ id: string }>();
     const { user } = useAuth();
+    const { data: resume, error: resumeError } = useResume(id && user?.isSuperuser ? Number(id) : undefined);
+    const { data: experieces, isLoading: laodingExperiences } = useWorkExperiences(id && user?.isSuperuser ? Number(id) : undefined);
     const resumeData = Array.isArray(resume) ? resume[0] : resume;
-    const { data: experieces, isLoading: laodingExperiences } = useWorkExperiences();
-    if (user) {
+    if (user && !resumeError) {
         return (
             <main className="w-full mx-auto">
                 <div className="px-6 py-8 font-roboto bg-gradient-to-br from-neutral-950 via-neutral-900 to-indigo-900">

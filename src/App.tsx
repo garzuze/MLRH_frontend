@@ -18,7 +18,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/curriculo" element={<ResumePage />} />
+        <Route path="/curriculo/:id?" element={<ResumePage />} />
         <Route path="/verify-email" element={<VerifyEmailPage />} />
         <Route path="/vaga/:id" element={<ProfilePage />}/>
         <Route element={<PrivateRoute />}>
