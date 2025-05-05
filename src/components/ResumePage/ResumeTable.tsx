@@ -15,11 +15,13 @@ import { formatDate } from '../../utils/formatDate';
 import { FiChevronDown, FiChevronRight, FiSearch } from 'react-icons/fi';
 import { GetResumePDF } from './GetResumePDF';
 import globalFilterFn from './globalFilterFn';
+import { useNavigate } from 'react-router-dom';
 export function ResumeTable() {
     const { data: resumes = [], error, isLoading } = useSlimResume();
     const columnHelper = createColumnHelper<SlimResumeType>();
     const [globalFilter, setGlobalFilter] = useState<any>([])
     const [expanded, setExpanded] = useState<ExpandedState>({});
+    const navigate = useNavigate();
     
     // const [selectedPositions, setSelectedPositions] = useState<positionType[]>([]);
     const columns = React.useMemo(
@@ -37,7 +39,10 @@ export function ResumeTable() {
                         </button>
                     ) : null,
             }),
-            columnHelper.accessor('name', { header: "Nome", cell: (props) => <p className='px-2 py-2 font-medium text-stone-900 whitespace-nowrap'>{props.getValue()}</p> }),
+            columnHelper.accessor('name', {
+                header: "Nome", cell: (props) => <button onClick={() => navigate(`/curriculo/${props.row.original.id}`)} className='px-2 py-2 font-medium text-stone-900 whitespace-nowrap cursor-pointer hover:underline'>
+                    {props.getValue()}</button>
+            }),
             columnHelper.accessor('phone', { header: "Celular", cell: (props) => <p>{props.getValue()}</p> }),
             columnHelper.accessor('expectedSalary', { header: "Salário", cell: (props) => <p className='text-right'>R$ {props.getValue()}</p> }),
             columnHelper.accessor('neighborhood', { header: "Bairro", cell: (props) => <p>{props.getValue()}</p> }),
