@@ -9,6 +9,7 @@ import PositionSelector from "../form/PositionAutocompleteInput";
 import { positionType } from "../../types/positionType";
 import { useQueryClient } from "@tanstack/react-query";
 import PhoneNumberInput from "./PhoneNumberInput";
+import { ResumeType } from "../../types/ResumeType";
 
 
 export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
@@ -37,12 +38,12 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
         getPositionData();
     }, [resume])
 
-    async function saveResume(formData: FormData) {
+    async function saveResume(payload: ResumeType) {
         const isUpdate = Boolean(resume?.id);
         const url = isUpdate ? `/hr/resume/${resume?.id}/` : '/hr/resume/';
         const method: 'patch' | 'post' = isUpdate ? 'patch' : 'post';
         try {
-            const response = await axiosClient[method](url, formData);
+            const response = await axiosClient[method](url, payload);
             if ([200, 201].includes(response.status)) {
                 setSnackbarMessage(isUpdate
                     ? 'Currículo atualizado com sucesso!'
@@ -57,12 +58,13 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        const formData = new FormData(event.currentTarget);
-        selectedPositions.forEach((position) => {
-            formData.append("desired_positions", position.id.toString());
-        });
+        const data = Object.fromEntries(new FormData(event.currentTarget));
+        const payload: ResumeType = {
+            ...(data as unknown as Omit<ResumeType, 'desired_positions'>),
+            desiredPositions: selectedPositions.map(p => Number(p.id))
+        }
 
-        saveResume(formData);
+        saveResume(payload);
     }
 
     return (
