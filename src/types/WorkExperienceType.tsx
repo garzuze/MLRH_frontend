@@ -1,5 +1,6 @@
 export interface WorkExperienceType {
     id: number;
+    resume: number;
     companyName: string; // Nome da empresa
     positionTitle: string; // Cargo
     startDate: string; // Data de início

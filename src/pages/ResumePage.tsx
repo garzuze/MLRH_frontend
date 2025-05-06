@@ -42,10 +42,10 @@ export default function ResumePage() {
                     {resumeData && (
                         <>
                             <Title variant="h3" text={`Experiências`} className="text-center pb-2 my-6" />
-                            <WorkExperienceForm />
+                            <WorkExperienceForm resumeId={resumeData.id} />
                             {!laodingExperiences && experieces &&
                                 experieces.map((experience) => (
-                                    <WorkExperienceForm key={experience.id} experience={experience} />
+                                    <WorkExperienceForm key={experience.id} resumeId={resumeData.id} experience={experience} />
                                 ))
                             }</>
                     )}

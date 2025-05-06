@@ -8,19 +8,27 @@ import { useQueryClient } from "@tanstack/react-query";
 
 interface WorkExperienceFormProps {
     experience?: WorkExperienceType;
+    resumeId: number;
 }
 
-export const WorkExperienceForm: React.FC<WorkExperienceFormProps> = ({ experience }) => {
+export const WorkExperienceForm: React.FC<WorkExperienceFormProps> = ({ experience, resumeId }) => {
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const axiosClient = useAxiosClient();
     const queryClient = useQueryClient();
 
-    async function createOrUpdateWorkExperience(formData: FormData) {
+    async function saveWorkExperience(payload: WorkExperienceType) {
+        const isUpdate = Boolean(experience?.resume);
+        const url = isUpdate ? `/hr/work_experience/${experience?.id}/` : '/hr/work_experience/';
+        const method: 'patch' | 'post' = isUpdate ? 'patch' : 'post';
         try {
-            await axiosClient.post("/hr/work_experience/", formData);
-            queryClient.invalidateQueries({ queryKey: ['workExperiences'] });
-            setSnackbarMessage("Experiência atualizada com sucesso!");
+            const response = await axiosClient[method](url, payload);
+            if ([200, 201].includes(response.status)) {
+                setSnackbarMessage(isUpdate
+                    ? 'Experiência atualizada com sucesso!'
+                    : 'Experiência criada com sucesso!');
+                queryClient.invalidateQueries({ queryKey: ['workExperiences'] });
+            }
             (document.getElementById('WorkExperienceForm') as HTMLFormElement).reset();
         } catch (error) {
             setSnackbarMessage("Ops... Alguma coisa deu errado.")
@@ -30,8 +38,15 @@ export const WorkExperienceForm: React.FC<WorkExperienceFormProps> = ({ experien
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        const formData = new FormData(event.currentTarget);
-        createOrUpdateWorkExperience(formData);
+        const formData = new FormData(event.currentTarget)
+        const data = Object.fromEntries(Array.from(formData.entries()).filter(
+            ([_, value]) => value !== ""
+        ));
+        const payload: WorkExperienceType = {
+            ...(data as unknown as Omit<WorkExperienceType, 'resume'>),
+            resume: resumeId,
+        }
+        saveWorkExperience(payload);
     }
 
     return (
@@ -129,7 +144,9 @@ export const WorkExperienceForm: React.FC<WorkExperienceFormProps> = ({ experien
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5" />
                     </div>
                 </div>
-                <Button text="Atualizar Experiência" className="w-64" />
+                <Button text={Boolean(experience?.id)
+                    ? 'Atualizar Experiência'
+                    : 'Cadastrar Experiência'} className="w-64" />
                 <Snackbar
                     message={snackbarMessage}
                     isOpen={isSnackbarOpen}
