@@ -43,7 +43,9 @@ export function ResumeTable() {
                 header: "Nome", cell: (props) => <button onClick={() => navigate(`/curriculo/${props.row.original.id}`)} className='px-2 py-2 font-medium text-stone-900 whitespace-nowrap cursor-pointer hover:underline'>
                     {props.getValue()}</button>
             }),
-            columnHelper.accessor('phone', { header: "Celular", cell: (props) => <p>{props.getValue()}</p> }),
+            columnHelper.accessor('phone', {
+                header: "Celular", cell: (props) => <a href={`https://wa.me/${props.getValue().replace(/[^\d]/g, "")}?text=${encodeURIComponent(`Olá, ${props.row.original.name}! Tudo bem?\n\nSomos da MLRH. Recebemos seu currículo e gostaríamos de conversar sobre a vaga de emprego que temos em aberto.\n\nGrato, Marlon Cordeiro.`)}`} className='hover:underline'>{props.getValue()}</a>
+            }),
             columnHelper.accessor('expectedSalary', { header: "Salário", cell: (props) => <p className='text-right'>R$ {props.getValue()}</p> }),
             columnHelper.accessor('neighborhood', { header: "Bairro", cell: (props) => <p>{props.getValue()}</p> }),
             columnHelper.accessor('city', { header: "Cidade", cell: (props) => <p>{props.getValue()}</p> }),
