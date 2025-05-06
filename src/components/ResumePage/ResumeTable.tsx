@@ -110,7 +110,7 @@ export function ResumeTable() {
                         <tbody>
                             {table.getRowModel().rows.map((row) => (
                                 <React.Fragment key={row.id}>
-                                    <tr key={row.id} className='bg-white border-b border-stone-200 hover:bg-stone-50'>
+                                    <tr key={row.id} className='bg-white border-b border-stone-200 hover:bg-stone-100 odd:bg-white even:bg-stone-50'>
                                         {row.getVisibleCells().map((cell) => {
                                             return (
                                                 <td key={cell.id} className='px-2 py-2'>
