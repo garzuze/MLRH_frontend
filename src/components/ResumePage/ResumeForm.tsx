@@ -646,7 +646,9 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                         </div>
                     </div>
                 </div>
-                <Button text="Atualizar Currículo" />
+                <Button text={Boolean(resume?.id)
+                    ? 'Atualizar currículo'
+                    : 'Criar currículo'} />
             </form>
             <Snackbar
                 message={snackbarMessage}
