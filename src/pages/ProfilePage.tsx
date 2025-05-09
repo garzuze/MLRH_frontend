@@ -72,7 +72,7 @@ const ProfilePage: React.FC = () => {
                                 </div>
                             </div>
                             <div className='my-4 text-zinc-700 border-b-2 pb-2 border-neutral-400'>
-                                <Title variant='h3' text='Atribuições' mode='light'></Title>
+                                <Title variant='h3' text='Requisitos' mode='light'></Title>
                                 <div className='text-zinc-700 my-2'>
                                     <ul className='list-disc list-inside'>
                                         {profileData.professionalExperience.split("\r\n").map((experience, key) => (
