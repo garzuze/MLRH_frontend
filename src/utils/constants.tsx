@@ -1,6 +1,3 @@
-import axios, { AxiosRequestConfig, RawAxiosRequestHeaders } from "axios";
-const token = localStorage.getItem("access_token");
-
 export const educationLevels = {
     EF: "Ensino Fundamental",
     EM: "Ensino Médio",
