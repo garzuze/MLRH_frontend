@@ -1,18 +1,29 @@
 import { createColumnHelper, ExpandedState, flexRender, getCoreRowModel, getExpandedRowModel, useReactTable } from "@tanstack/react-table";
 import { useSlimProfiles } from "../../hooks/useSlimProfiles";
 import { SlimProfileType } from "../../types/SlimProfileType";
-import { useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { FiChevronDown, FiChevronRight } from "react-icons/fi";
-import { status } from "../../utils/constants";
-import React from "react";
+import { profileStatus, profileStatusAbbreviation, status } from "../../utils/constants";
 import { formatDate } from "../../utils/formatDate";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAxiosClient } from "../../hooks/useAxiosClient";
 
 const ProfileTable = () => {
-    const { data: profiles = [], error, isLoading } = useSlimProfiles();
+    const { data: profiles = [], error, isLoading } = useSlimProfiles(null, ["A", "F"]);
     const columnHelper = createColumnHelper<SlimProfileType>();
     const [expanded, setExpanded] = useState<ExpandedState>({});
+    const axiosClient = useAxiosClient();
+    const queryClient = useQueryClient();
 
-    const columns = React.useMemo(
+    const updateStatus = useMutation({
+        mutationFn: ({ id, status }: { id: number; status: profileStatusAbbreviation }) =>
+            axiosClient.patch(`hr/slim_profile/${id}/`, { status }),
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: ['profiles'] }),
+
+    });
+
+
+    const columns = useMemo(
         () => [
             columnHelper.display({
                 id: 'expander',
@@ -37,7 +48,23 @@ const ProfileTable = () => {
                 header: "Cargo", cell: (props) => <p>{props.getValue()}</p>
             }),
             columnHelper.accessor('status', {
-                header: "Status", cell: (props) => <p>{status[props.getValue()]}</p>
+                header: "Status", cell: ({ getValue, row }) => {
+                    const current = getValue();
+                    return (
+                        <select
+                            name="status"
+                            className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full"
+                            value={current}
+                            onChange={(e) =>
+                                updateStatus.mutate({ id: row.original.id, status: e.target.value as profileStatusAbbreviation })
+                            }
+                        >
+                            {Object.entries(profileStatus).map(([key, value]) => (
+                                <option key={key} value={key}>{value}</option>
+                            ))}
+                        </select>
+                    )
+                }
             })
         ], [columnHelper]
     )
@@ -73,7 +100,7 @@ const ProfileTable = () => {
                     </thead>
                     <tbody>
                         {table.getRowModel().rows.map((row) => (
-                            <React.Fragment key={row.id}>
+                            <Fragment key={row.id}>
                                 <tr key={row.id} className='bg-white border-b border-stone-200 hover:bg-stone-100 odd:bg-white even:bg-stone-50'>
                                     {row.getVisibleCells().map((cell) => {
                                         return (
@@ -126,7 +153,7 @@ const ProfileTable = () => {
                                         </td>
                                     </tr>
                                 )}
-                            </React.Fragment>))}
+                            </Fragment>))}
                     </tbody>
                 </table>
             </div>

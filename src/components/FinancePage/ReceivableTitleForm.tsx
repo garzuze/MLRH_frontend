@@ -19,7 +19,7 @@ const ReceivableTitleForm = () => {
   const [client, setClient] = useState<ClientType | null>(null);
   const [amount, setAmount] = useState<number>(0)
 
-  const { data: profiles, isLoading: loadingProfiles, error: profilesError } = useProfiles(undefined, { enabled: true });
+  const { data: profiles, isLoading: loadingProfiles, error: profilesError } = useProfiles(undefined, undefined, { enabled: true });
   const clientsIds = profiles?.filter(p => p.status == "A").map((profile) => (profile.client)) || [];
   const { data: clients, isLoading: loadingClients } = useClientMlrh(clientsIds, { enabled: clientsIds.length > 0 });
 
