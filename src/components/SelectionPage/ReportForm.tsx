@@ -16,9 +16,9 @@ export default function ReportForm() {
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
 
-    const { data: profiles, isLoading: loadingProfiles, error: profilesError } = useProfiles(undefined, { enabled: true });
+    const { data: profiles, isLoading: loadingProfiles, error: profilesError } = useProfiles(undefined, ["A"], { enabled: true });
     // Retorna os IDs dos clientes de todos os perfis
-    const clientsIds = profiles?.filter(p => p.status == "A").map((profile) => (profile.client)) || [];
+    const clientsIds = profiles?.map((profile) => (profile.client)) || [];
     // Endpoint de clientes suporta vários ids em uma request só e isso é muito legal 😎
     const { data: clients, isLoading: loadingClients } = useClientMlrh(clientsIds, { enabled: clientsIds.length > 0 });
 

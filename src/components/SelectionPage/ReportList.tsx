@@ -34,7 +34,7 @@ function Report({ report }: ReportProps) {
   const [showPDF, setShowPDF] = useState(false);
 
   const { data: profiles, refetch: refetchProfiles, isFetching: fetchingProfiles } =
-    useProfiles(report.profile, { enabled: false });
+    useProfiles(report.profile, undefined, { enabled: false });
   const { data: resume, refetch: refetchResume, isFetching: fetchingResume } =
     useResume(report.resume, { enabled: false });
   const { data: experiences, refetch: refetchExperiences, isFetching: fetchingExperiences } =

@@ -2,7 +2,7 @@ import { useProfiles } from "../../hooks/useProfiles"
 import Title from "../ui/Title"
 import Vacancy from "./Vacancy"
 export default function Vacancies() {
-    const { data: profiles, isLoading: loadingProfiles, error: profilesError } = useProfiles(undefined, { enabled: true });
+    const { data: profiles, isLoading: loadingProfiles, error: profilesError } = useProfiles(undefined, ["A"], { enabled: true });
     return (
         <div className="bg-gradient-to-br from-neutral-950 via-neutral-900 to-indigo-900" id="vagas">
             <div className="w-full font-roboto 2xl:max-w-screen-xl mx-auto">
@@ -13,7 +13,7 @@ export default function Vacancies() {
                     {profilesError ? (<div>Houve um erro</div>) :
                         loadingProfiles ? (<div>Carregando...</div>)
                             : (
-                                profiles?.filter(p => p.status === "A").map(profile => (
+                                profiles?.map(profile => (
                                     <Vacancy profile={profile} key={profile.id} />
                                 ))
                             )
