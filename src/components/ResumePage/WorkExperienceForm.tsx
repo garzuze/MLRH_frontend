@@ -116,6 +116,8 @@ export const WorkExperienceForm: React.FC<WorkExperienceFormProps> = ({ experien
                         </label>
                         <input
                             type="number"
+                            min="500"
+                            max="100000"
                             name="salary"
                             defaultValue={experience?.salary}
                             id="salary"

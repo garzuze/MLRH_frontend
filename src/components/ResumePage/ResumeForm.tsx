@@ -572,11 +572,11 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({ resume, user }) => {
                         </label>
                         <input
                             type="number"
-                            min="700"
+                            min="500"
                             max="100000"
                             name="expectedSalary"
                             id="expectedSalary"
-                            placeholder="Exemplo: 4500,00"
+                            placeholder="Exemplo: 4500.00"
                             defaultValue={resume?.expectedSalary}
                             className="bg-neutral-900 border border-neutral-800 text-zinc-300 rounded-lg
                             focus:ring-slate-600 focus:border-slate-600 w-full md:w-64 p-2.5 placeholder:text-sm" />

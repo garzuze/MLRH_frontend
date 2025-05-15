@@ -3,10 +3,11 @@ import { useSlimProfiles } from "../../hooks/useSlimProfiles";
 import { SlimProfileType } from "../../types/SlimProfileType";
 import { Fragment, useMemo, useState } from "react";
 import { FiChevronDown, FiChevronRight } from "react-icons/fi";
-import { profileStatus, profileStatusAbbreviation, status } from "../../utils/constants";
+import { profileStatus, profileStatusAbbreviation } from "../../utils/constants";
 import { formatDate } from "../../utils/formatDate";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAxiosClient } from "../../hooks/useAxiosClient";
+import ReportTable from "./ReportTable";
 
 const ProfileTable = () => {
     const { data: profiles = [], error, isLoading } = useSlimProfiles(null, ["A", "F"]);
@@ -110,46 +111,13 @@ const ProfileTable = () => {
                                         )
                                     })}
                                 </tr>
-                                {row.getIsExpanded() && (
+                                {row?.getIsExpanded() && (
                                     <tr>
                                         <td colSpan={columns.length} className='pl-10 bg-stone-50'>
-                                            <table className='p-4 w-full'>
-                                                <thead className='text-xs text-stone-700 uppercase bg-stone-50 rounded'>
-                                                    <tr>
-                                                        <th scope='col' className='px-6 py-3 text-center'>
-                                                            Nome
-                                                        </th>
-                                                        <th scope='col' className='px-6 py-3 text-center'>
-                                                            Cargo
-                                                        </th>
-                                                        <th scope='col' className='px-6 py-3 text-center'>
-                                                            Salário
-                                                        </th>
-                                                        <th scope='col' className='px-6 py-3 text-center'>
-                                                            Data de início
-                                                        </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {row.original.reports.map((report, idx) => (
-                                                        <tr key={idx} className='bg-white border-b border-stone-200 hover:bg-stone-50'>
-                                                            <td className='px-2 py-2 font-bold'>
-                                                                {report.resumeName}
-                                                            </td>
-                                                            <td className='px-2 py-2 text-center'>
-                                                                {report.positionName}
-                                                            </td>
-                                                            <td className='px-2 py-2 text-right'>
-                                                                {report.agreedSalary ? `R$ ${report.agreedSalary}` : null}
-                                                            </td>
-                                                            <td className='px-2 py-2 text-center'>
-                                                                {report.candidateStartDate ? formatDate(report.candidateStartDate) : null}
-                                                            </td>
-                                                        </tr>
-                                                    ))}
-
-                                                </tbody>
-                                            </table>
+                                            <ReportTable
+                                                parentId={row.original.id}
+                                                reports={row.original.reports}
+                                            />
                                         </td>
                                     </tr>
                                 )}

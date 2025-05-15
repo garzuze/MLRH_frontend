@@ -3,7 +3,7 @@ export interface SlimReportType {
     profile: number;
     resume: number;
     agreedSalary: number;
-    candidateStartDate: string | null;
+    candidateStartDate: string;
     resumeName: string;
     positionName: string;
 }
