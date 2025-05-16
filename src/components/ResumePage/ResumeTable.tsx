@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
     useReactTable,
     getCoreRowModel,
@@ -24,7 +24,7 @@ export function ResumeTable() {
     const navigate = useNavigate();
     
     // const [selectedPositions, setSelectedPositions] = useState<positionType[]>([]);
-    const columns = React.useMemo(
+    const columns = useMemo(
         () => [
             columnHelper.display({
                 id: 'expander',

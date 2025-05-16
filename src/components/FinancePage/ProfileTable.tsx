@@ -4,7 +4,6 @@ import { SlimProfileType } from "../../types/SlimProfileType";
 import { Fragment, useMemo, useState } from "react";
 import { FiChevronDown, FiChevronRight } from "react-icons/fi";
 import { profileStatus, profileStatusAbbreviation } from "../../utils/constants";
-import { formatDate } from "../../utils/formatDate";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAxiosClient } from "../../hooks/useAxiosClient";
 import ReportTable from "./ReportTable";
@@ -19,8 +18,7 @@ const ProfileTable = () => {
     const updateStatus = useMutation({
         mutationFn: ({ id, status }: { id: number; status: profileStatusAbbreviation }) =>
             axiosClient.patch(`hr/slim_profile/${id}/`, { status }),
-        onSuccess: () => queryClient.invalidateQueries({ queryKey: ['profiles'] }),
-
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: ['slim_profiles'] }),
     });
 
 
@@ -83,7 +81,6 @@ const ProfileTable = () => {
     if (error) return <div>Erro: {error.message}</div>
     if (isLoading) return <div>Carregando...</div>
 
-
     return (
         <div className='bg-white w-full overflow-x-auto'>
             <div className='rounded shadow-md mx-auto'>
@@ -111,7 +108,7 @@ const ProfileTable = () => {
                                         )
                                     })}
                                 </tr>
-                                {row?.getIsExpanded() && (
+                                {row.getIsExpanded() && (
                                     <tr>
                                         <td colSpan={columns.length} className='pl-10 bg-stone-50'>
                                             <ReportTable

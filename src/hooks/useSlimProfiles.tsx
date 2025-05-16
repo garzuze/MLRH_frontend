@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 export const useSlimProfiles = (id?: number | null, status?: profileStatusAbbreviation[], options = { enabled: true }) => {
     const { token } = useAuth();
     const axiosClient = useAxiosClient();
-    const queryKey = id ? ['profiles', token, id] : ['profiles', token];
+    const queryKey = id ? ['slim_profiles', token, id] : ['slim_profiles', token];
 
     return useQuery<SlimProfileType[]>({
         queryKey,

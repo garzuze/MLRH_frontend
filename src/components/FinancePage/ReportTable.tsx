@@ -19,14 +19,14 @@ const ReportTable = ({ parentId, reports }: ReportTableProps) => {
         mutationFn: ({ id, candidateStartDate }: { id: number; candidateStartDate: string }) =>
             axiosClient.patch(`hr/report/${id}/`, { candidateStartDate }),
         onSuccess: () =>
-            queryClient.invalidateQueries({ queryKey: ['profiles'] })
+            queryClient.invalidateQueries({ queryKey: ['slim_profiles'] })
     })
 
     const updateSalary = useMutation({
         mutationFn: ({ id, agreedSalary }: { id: number; agreedSalary: number }) =>
             axiosClient.patch(`hr/report/${id}/`, { agreedSalary }),
         onSuccess: () =>
-            queryClient.invalidateQueries({ queryKey: ['profiles'] })
+            queryClient.invalidateQueries({ queryKey: ['slim_profiles'] })
     })
 
     const columns = useMemo(
