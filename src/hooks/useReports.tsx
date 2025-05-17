@@ -3,17 +3,20 @@ import { ReportType } from "../types/ReportType";
 import { useAxiosClient } from "./useAxiosClient";
 import { useQuery } from "@tanstack/react-query";
 
-export const useReports = () => {
-    const { token } = useAuth();    
+export const useReports = (id?: number | number[], options = { enabled: true }) => {
+    const { token } = useAuth();
     const axiosClient = useAxiosClient();
-    const { data: reports = [], isLoading: loadingReports, error: reportsError } = useQuery<ReportType[]>({
-        queryKey: ['reports', token],
+    const queryKey = id ? ['reports', token, id] : ['reports', token];
+
+    return useQuery<ReportType[]>({
+        queryKey: queryKey,
         queryFn: async () => {
-            const response = await axiosClient.get("hr/report/");
+            const url = id ? `hr/report/?id=${Array.isArray(id) ? id.join(",") : id}` : "hr/report/"
+            const response = await axiosClient.get(url);
             return response.data;
         },
         staleTime: 300000,
+        retry: false,
+        ...options
     })
-
-    return { reports, loadingReports, reportsError };
 }

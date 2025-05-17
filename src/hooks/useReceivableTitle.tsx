@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useAxiosClient } from "./useAxiosClient";
 import { useAuth } from "../contexts/AuthContext";
+import { ReceivableTitleType } from "../types/ReceivableTitleType";
 
 export const useReceivableTitle = (id?:  number, options = { enabled: true }) => {
     const axiosClient = useAxiosClient();
@@ -10,7 +11,7 @@ export const useReceivableTitle = (id?:  number, options = { enabled: true }) =>
     return useQuery<ReceivableTitleType[]>({
         queryKey,
         queryFn: async () => {
-            const url = id ? `finance/receivable_title/${id}` : "finance/receivable_title"
+            const url = id ? `finance/receivable_title/${id}` : "finance/receivable_title/"
             const response = await axiosClient.get(url);
             return response.data;
         },

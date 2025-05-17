@@ -7,7 +7,6 @@ import {
     Link,
 } from '@react-pdf/renderer';
 import { ResumeType } from '../../../types/ResumeType';
-import { mlrhUser } from '../../../types/TokenResponse';
 import { WorkExperienceType } from '../../../types/WorkExperienceType';
 import { formatDate } from '../../../utils/formatDate';
 import { languageLevels, maritalStatus, states } from '../../../utils/constants';

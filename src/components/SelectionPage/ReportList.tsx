@@ -10,14 +10,14 @@ import { useAuth } from "../../contexts/AuthContext";
 import { FiDownload } from "react-icons/fi";
 
 export default function ReportList() {
-  const { reports, loadingReports, reportsError } = useReports();
+  const { data: reports, isLoading: loadingReports, error: reportsError } = useReports();
 
   if (loadingReports) return <div>Carregando pareceres...</div>;
   if (reportsError) return <div>Erro ao carregar pareceres.</div>;
 
   return (
     <ul className="space-y-2">
-      {reports.map((report) => (
+      {reports?.map((report) => (
         <li key={report.id}>
           <Report report={report} />
         </li>
