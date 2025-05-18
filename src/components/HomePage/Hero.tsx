@@ -3,8 +3,8 @@ import Title from "../ui/Title"
 
 export default function Hero() {
     return (
-        <div className="hero 2xl:max-w-screen-xl mx-auto font-roboto text-center" id="home">
-            <div className="w-full pt-36 pb-36 px-8 text-white">
+        <div className="hero 2xl:max-w-screen-xl mx-auto font-roboto text-center xl:pt-36 xl:pb-36 pb-16 pt-16 px-8" id="home">
+            <div className="w-full text-white">
                 <Title variant={"h1"} text={"As melhores vagas da região ao seu alcance."} className={"py-1 w-full md:w-3/4 mx-auto"}></Title>
                 <p className="subtitle md:text-lg text-gray-400 lg:text-xl my-8 sm:w-1/2 mx-auto">
                     Conectamos talentos ao sucesso com compromisso, agilidade e excelência nos serviços personalizados.

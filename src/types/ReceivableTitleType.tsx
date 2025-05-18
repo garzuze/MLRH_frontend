@@ -1,5 +1,5 @@
-interface ReceivableTitleType {
-    id: 1;
+export interface ReceivableTitleType {
+    id: number;
     document: string;
     dueDate: string;
     amount: string;
@@ -7,6 +7,7 @@ interface ReceivableTitleType {
     createdAt: string;
     updatedAt: string;
     client: number;
-    profile: number;
+    clientContact: number;
+    reports: number[]
     strRepresentation: string;
 }
