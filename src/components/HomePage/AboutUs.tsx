@@ -4,7 +4,8 @@ import Button from "../ui/Button";
 
 export default function AboutUs() {
     return (
-        <div className="w-full font-roboto max-w-screen-lg mx-auto p-8 mb-12" id="sobre-nos">
+        <div className="bg-neutral-950">
+            <div className="w-full font-roboto max-w-screen-lg mx-auto p-8 pb-12" id="sobre-nos">
             <Title variant={"h2"} text={"Sobre nós"} className={"text-center md:text-left mb-8"}></Title>
             <div className="grid grid-cols-5 gap-8">
                 <div className="md:col-span-3 col-span-5 text-pretty">
@@ -15,6 +16,7 @@ export default function AboutUs() {
                 </div>
                     <img src={logo} className="p-8 mx-auto border-2 border-neutral-800 rounded-lg shadow-sm col-span-5 md:col-span-2"></img>
             </div>
+        </div>
         </div>
     );
 }
