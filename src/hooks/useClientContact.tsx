@@ -11,7 +11,7 @@ export const useClientContact = (id?: number, options = { enabled: true }) => {
     return useQuery<ClientContactType[]>({
         queryKey,
         queryFn: async () => {
-            const url = id ? `/clients/get_client_contacts/?q=${id}` : "clients/client_contact/"
+            const url = id ? `/clients/client_contact/${id}` : "clients/client_contact/"
             const response = await axiosClient.get(url);
             return response.data;
         },
