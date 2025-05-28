@@ -6,9 +6,12 @@ export interface ReportType {
     testResult: string; //testeResultado
     personalFamilyContext: string; //pessoalFamíliaContexto
     educationalBackground: string; //educacionalHistórico
-    candidateProfile: string; //candidatoPerfil
+    candidateProfile: string | null; //candidatoPerfil
     careerObjectives: string; //carreiraObjetivos
     finalConsiderations: string; //finalConsiderações
-    agreedSalary: number; //acordadoSalário
-    candidateStartDate: string; //candidatoDataInício
+    agreedSalary: number | null; //acordadoSalário
+    candidateStartDate: string | null; //candidatoDataInício,
+    createdAt: string;
+    updatedAt: string;
+    profileFee: number;
 }
