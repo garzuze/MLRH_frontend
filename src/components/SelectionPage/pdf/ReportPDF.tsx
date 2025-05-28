@@ -1,21 +1,20 @@
 import {
     Document,
-    Page,
-    Text,
-    View,
-    StyleSheet,
     Image,
-    Link
+    Link,
+    Page,
+    StyleSheet,
+    Text,
+    View
 } from "@react-pdf/renderer";
-import { ProfileType } from "../../../types/ProfileType";
+import logo from "../../../assets/logo_mlrh.png";
 import { ReportType } from "../../../types/ReportType";
 import { ResumeType } from "../../../types/ResumeType";
+import { mlrhUser } from "../../../types/TokenResponse";
 import { WorkExperienceType } from "../../../types/WorkExperienceType";
 import { maritalStatus, states } from "../../../utils/constants";
-import getDate from "../../../utils/getDate";
-import { mlrhUser } from "../../../types/TokenResponse";
-import logo from "../../../assets/logo_mlrh.png"
 import { formatDate } from "../../../utils/formatDate";
+import getDate from "../../../utils/getDate";
 
 export const styles = StyleSheet.create({
     page: {
