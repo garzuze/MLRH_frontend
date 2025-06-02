@@ -3,15 +3,20 @@ import { ReportType } from "../types/ReportType";
 import { useAxiosClient } from "./useAxiosClient";
 import { useQuery } from "@tanstack/react-query";
 
-export const useReports = (id?: number | number[], options = { enabled: true }) => {
+interface Filter {
+    id?: number | number[];
+    invoiceable?: boolean;
+}
+
+export const useReports = (filter?: Filter, options = { enabled: true }) => {
     const { token } = useAuth();
     const axiosClient = useAxiosClient();
-    const queryKey = id ? ['reports', token, id] : ['reports', token];
+    const queryKey = filter?.id ? ['reports', token, filter?.id] : ['reports', token];
 
     return useQuery<ReportType[]>({
         queryKey: queryKey,
         queryFn: async () => {
-            const url = id ? `hr/report/?id=${Array.isArray(id) ? id.join(",") : id}` : "hr/report/"
+            const url = filter?.id ? `hr/report/?id=${Array.isArray(filter?.id) ? filter?.id.join(",") : filter?.id}` : filter?.invoiceable ? "hr/report/?invoiceable=true" :"hr/report/"
             const response = await axiosClient.get(url);
             return response.data;
         },
