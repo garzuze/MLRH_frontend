@@ -1,9 +1,9 @@
 export interface ReceivableTitleType {
     id: number;
     document: string;
-    dueDate: string;
+    dueDate?: string;
     amount: string;
-    paymentDate: string;
+    paymentDate?: string;
     createdAt: string;
     updatedAt: string;
     client: number;

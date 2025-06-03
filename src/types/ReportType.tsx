@@ -14,4 +14,10 @@ export interface ReportType {
     createdAt: string;
     updatedAt: string;
     profileFee: number;
+    clientData: clientData
+}
+
+export interface clientData{
+    client: number;
+    clientContact: number;
 }
