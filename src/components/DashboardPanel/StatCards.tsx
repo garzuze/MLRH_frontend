@@ -5,13 +5,14 @@ import { useReceivableTitle } from "../../hooks/useReceivableTitle";
 export default function StatCards() {
 
     const { data: profiles, isLoading: isProfileLoading } = useProfiles();
-    const { data: receivableTitles, isLoading: isLoadingReceivableTitles} = useReceivableTitle();
+    const { data: receivableTitles, isLoading: isLoadingReceivableTitles } = useReceivableTitle();
     const invoiced = receivableTitles?.reduce((acc, title) => acc + Number(title.amount), 0);
+    const sold = profiles?.reduce((acc, profile) => acc + profile.quantity * (Number(profile.remuneration) * Number(profile.serviceFee) / 100), 0)
 
     return <>
-        <Card title="Total faturado" value={isLoadingReceivableTitles? "Carregando..." : `R$ ${String(invoiced)}`} pillText="5.27%" trend="up" period="Total" />
-        <Card title="Vagas fechadas" value={isProfileLoading ? "Carregando..." : String(profiles?.filter((p) => p.status == "F").length)} pillText="17,7%" trend="up" period="De 1º de Jan até 18 de Fev" />
-        <Card title="Clientes novos" value="7" pillText="5%" trend="down" period="Total" />
+        <Card title="Vendas" value={isProfileLoading ? "Carregando" : `R$ ${String(sold)}`} pillText="-%" trend="up" period="Total" />
+        <Card title="Total faturado" value={isLoadingReceivableTitles ? "Carregando..." : `R$ ${String(invoiced)}`} pillText="-%" trend="up" period="Total" />
+        <Card title="Vagas fechadas" value={isProfileLoading ? "Carregando..." : String(profiles?.filter((p) => p.status == "F").length)} pillText="-%" trend="up" period="De 1º de Jan até 18 de Fev" />
     </>
 }
 
