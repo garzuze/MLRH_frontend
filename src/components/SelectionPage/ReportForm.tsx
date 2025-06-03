@@ -87,7 +87,7 @@ export default function ReportForm() {
                     <option value="" disabled>Selecione a vaga</option>
                     {profilesError ? <option disabled>Houve um erro</option> :
                         loadingProfiles || loadingClients ? (<option>Carregando...</option>) :
-                            profiles?.map((profile) => {
+                            profiles?.filter(p => p.status === "A").map((profile) => {
                                 const client = clients?.find(client => client.id === profile.client);
                                 return (
                                     <option key={profile.id} value={profile.id}>{profile.positionStr} - {client?.tradeName ?? "Carregando..."}</option>

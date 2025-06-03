@@ -11,7 +11,7 @@ export const useClientMlrh = (id?: number | number[], options = { enabled: true 
     return useQuery<ClientType[]>({
         queryKey,
         queryFn: async () => {
-            const url = id ? `clients/clients/?id=${Array.isArray(id) ? id.join(",") : id}` : "clients/clients"
+            const url = id ? `clients/clients/?id=${Array.isArray(id) ? id.join(",") : id}` : "clients/clients/"
             const response = await axiosClient.get(url);
             return response.data;
         },

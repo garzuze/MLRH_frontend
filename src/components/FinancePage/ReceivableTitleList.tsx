@@ -34,7 +34,7 @@ interface InvoiceProps {
 
 function Invoice({ title }: InvoiceProps) {
   const [showPDF, setShowPDF] = useState(false);
-  const { data: reports, isFetching: fetchingReports, error: reportsError, refetch: refetchReports } = useReports(title.reports, { enabled: false });
+  const { data: reports, isFetching: fetchingReports, error: reportsError, refetch: refetchReports } = useReports({id: title.reports}, { enabled: false });
   const { data: client, isFetching: fetchingClient, error: clientError, refetch: refetchClients } = useClientMlrh(title.client, { enabled: false })
   const { data: clientContact, isFetching: fetchingClientContact, error: clientContactError, refetch: refetchClientContacts } = useClientContact(title.clientContact, { enabled: false })
 

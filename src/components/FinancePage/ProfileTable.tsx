@@ -9,7 +9,7 @@ import { useAxiosClient } from "../../hooks/useAxiosClient";
 import ReportTable from "./ReportTable";
 
 const ProfileTable = () => {
-    const { data: profiles = [], error, isLoading } = useSlimProfiles(null, ["A", "F"]);
+    const { data: profiles = [], error, isLoading } = useSlimProfiles(null, ["A"]);
     const columnHelper = createColumnHelper<SlimProfileType>();
     const [expanded, setExpanded] = useState<ExpandedState>({});
     const axiosClient = useAxiosClient();
