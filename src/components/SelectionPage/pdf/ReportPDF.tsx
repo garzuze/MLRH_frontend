@@ -189,13 +189,13 @@ const ReportPDF = ({ report, resume, experiences, user }: ReportPDFProps) => (
                                 <Text style={styles.bold}>Cargo: </Text>{experience.positionTitle}
                             </Text>
                         </View>
-                        {experience.salary && (
+                        {experience.salary && Number(experience.salary) > 0 ? (
                             <View style={styles.row}>
                                 <Text>
-                                    <Text style={styles.bold}>Último Salário: </Text>R$ {experience.salary}
+                                    <Text style={styles.bold}>Último Salário: </Text>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(experience.salary))}
                                 </Text>
                             </View>
-                        )}
+                        ): null}
                         <View>
                             <Text style={styles.bold}>Atividades Realizadas: </Text>
                             {experience.responsibilities.split(/\r?\n/).map((responsability, key) => (
