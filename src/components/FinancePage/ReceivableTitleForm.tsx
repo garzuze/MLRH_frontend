@@ -127,7 +127,7 @@ const ReceivableTitleForm = () => {
 
         </ul>
 
-        <input type="number" name="amount" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" placeholder="Valor do título" value={amount} onChange={(e) => setAmount(Number(e.target.value))} />
+        <input type="number" name="amount" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" placeholder="Valor do título" value={amount} onChange={(e) => setAmount(Number(e.target.value))} step="0.01" />
         <input type="text" name="document" className="text-sm placeholder:text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" placeholder="Número do documento" required />
 
         <label className="text-sm text-stone-400">

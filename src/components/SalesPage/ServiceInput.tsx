@@ -28,12 +28,13 @@ const ServiceInput: React.FC<ServiceInputProps> = ({ serviceId, label, clientFee
                 type="number"
                 name="value"
                 placeholder="Valor"
+                step="0.01"
                 className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700"
                 onChange={(e) => onChange(serviceId, e.target.name, Number(e.target.value))}
                 value={clientFees.find(fee => fee.service === serviceId)?.value || ""}
             />
             <input
-                type="number"
+                step="0.01"
                 name="deadline"
                 placeholder="Prazo"
                 className="placeholder:text-sm placeholder:text-stone-400 text-sm border-b border-stone-300 w-1/3 mt-4 focus:outline-none focus:border-stone-700"

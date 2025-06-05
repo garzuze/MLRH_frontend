@@ -50,6 +50,7 @@ const ReportTable = ({ parentId, reports }: ReportTableProps) => {
                     return (
                         <input
                             type="number"
+                            step="0.01"
                             value={salary}
                             onChange={(e) => setSalary(Number(e.target.value))}
                             onBlur={() => {

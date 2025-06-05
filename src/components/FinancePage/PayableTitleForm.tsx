@@ -40,7 +40,7 @@ const PayableTitleForm = () => {
 
         <input type="text" name="supplier" className="text-sm placeholder:text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" placeholder="Fornecedor" />
 
-        <input type="number" name="amount" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" placeholder="Valor do título" />
+        <input type="number" name="amount" className="text-sm text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" placeholder="Valor do título" step="0.01" />
         <input type="text" name="description" className="text-sm placeholder:text-stone-400 border-b border-stone-300 mt-4 focus:outline-none focus:border-stone-700 w-full" placeholder="Descrição do Título" />
 
         <label className="text-sm text-stone-400">
