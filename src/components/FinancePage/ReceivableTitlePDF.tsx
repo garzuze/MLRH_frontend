@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
   column: {
     width: '11%',
     fontSize: 8,
+    textAlign: 'right'
   },
   wideColumn: {
     width: '35%',
@@ -202,9 +203,9 @@ const ReceivableTitlePDF = ({ client, clientContact, reports, title }: Receivabl
             <Text style={styles.wideColumn}>{report.strRepresentation.split("-")[0]}</Text>
             <Text style={styles.wideColumn}>{report.strRepresentation.split("-")[2]}</Text>
             <Text style={styles.column}>{report.candidateStartDate ? formatDate(report.candidateStartDate) : " - "}</Text>
-            <Text style={styles.column}>R$ {report.agreedSalary}</Text>
+            <Text style={styles.column}>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(report.agreedSalary))}</Text>
             <Text style={styles.column}>{report.profileFee}%</Text>
-            <Text style={styles.column}>R$ {(Number(report.agreedSalary) * report.profileFee) / 100}</Text>
+            <Text style={styles.column}>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format((Number(report.agreedSalary) * report.profileFee) / 100)}</Text>
           </View>
         )) : null}
         <View style={styles.tableRow}>
@@ -213,7 +214,7 @@ const ReceivableTitlePDF = ({ client, clientContact, reports, title }: Receivabl
           <Text style={styles.column}>{' '}</Text>
           <Text style={styles.column}>{' '}</Text>
           <Text style={styles.column}><Text style={styles.bold}>Total: </Text></Text>
-          <Text style={styles.column}><Text style={styles.bold}>R$ {geReportsAmount(reports)}</Text></Text>
+          <Text style={styles.column}><Text style={styles.bold}>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(geReportsAmount(reports))}</Text></Text>
         </View>
       </View>
 
