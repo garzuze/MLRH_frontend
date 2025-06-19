@@ -8,11 +8,12 @@ export default function StatCards() {
     const { data: receivableTitles, isLoading: isLoadingReceivableTitles } = useReceivableTitle();
     const invoiced = Number(receivableTitles?.reduce((acc, title) => acc + Number(title.amount), 0));
     const sold = Number(profiles?.reduce((acc, profile) => acc + profile.quantity * ((profile.remuneration * profile.serviceFee) / 100), 0))
+    const openProfiles = Number(profiles?.filter(f => f.status == "A").reduce((acc, profile) => acc + profile.quantity * ((profile.remuneration * profile.serviceFee) / 100), 0))
 
     return <>
         <Card title="Vendas" value={isProfileLoading ? "Carregando" : new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(sold)} pillText="-%" trend="up" period="Total" />
         <Card title="Total faturado" value={isLoadingReceivableTitles ? "Carregando..." : new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(invoiced)} pillText="-%" trend="up" period="Total" />
-        <Card title="Vagas fechadas" value={isProfileLoading ? "Carregando..." : String(profiles?.filter((p) => p.status == "F").length)} pillText="-%" trend="up" period="De 1º de Jan até 18 de Fev" />
+        <Card title="Vagas abertas" value={isLoadingReceivableTitles ? "Carregando..." : new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(openProfiles)} pillText="-%" trend="up" period="De 1º de Jan até 18 de Fev" />
     </>
 }
 
