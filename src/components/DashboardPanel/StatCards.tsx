@@ -13,7 +13,9 @@ export default function StatCards() {
     return <>
         <Card title="Vendas" value={isProfileLoading ? "Carregando" : new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(sold)} pillText="-%" trend="up" period="Total" />
         <Card title="Total faturado" value={isLoadingReceivableTitles ? "Carregando..." : new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(invoiced)} pillText="-%" trend="up" period="Total" />
-        <Card title="Vagas abertas" value={isLoadingReceivableTitles ? "Carregando..." : new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(openProfiles)} pillText="-%" trend="up" period="De 1º de Jan até 18 de Fev" />
+        <Card title="Faturável (vagas abertas)" value={isLoadingReceivableTitles ? "Carregando..." : new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(openProfiles)} pillText="-%" trend="up" period={`${profiles?.filter(p => p.status === "A").length} vagas abertas`} />
+        {/* <Card title="ABERTAS" value={profiles?.filter(p => p.status === "A").map(p => <p>{p.positionStr}  - {p.remuneration} * {p.serviceFee} | FATURAR: {(p.remuneration * p.serviceFee) / 100}</p>)}></Card>
+        <Card title="SELEÇÃO" value={profiles?.filter(p => p.status === "S").map(p => <p>{p.positionStr}  - {p.remuneration} * {p.serviceFee} | FATURAR: {(p.remuneration * p.serviceFee) / 100}</p>)}></Card> */}
     </>
 }
 
